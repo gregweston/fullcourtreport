@@ -57,7 +57,7 @@ exports.getTeamStats = (year, month, day, team, next) ->
         '/nba/team-stats/' +
         year +
         month +
-        day + '-' +
+        day +
         '.json?team_id=' + team_id
     handler.retrieveData url, next
     

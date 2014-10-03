@@ -166,27 +166,51 @@ buildBasketsChart = (svg, teamShortNames, away, home, bar_width) ->
     svg.appendChild home_misses_text
     svg.appendChild home_makes_text
     
-buildScoreDeviationPoints = (away_stats, home_stats) ->
+buildDeviationPoints = (away_stats, home_stats, radius) ->
     
     highest = Math.max(
-        away_stats.points, away_stats.ppg, away_stats.opponent_ppg_allowed, home_stats.points, home_stats.ppg, home_stats.opponent_ppg_allowed
+        away_stats.this_game, away_stats.avg_per_game, away_stats.opponent_avg_allowed, home_stats.this_game, home_stats.avg_per_game, home_stats.opponent_avg_allowed
     )
     lowest = Math.min(
-        away_stats.points, away_stats.ppg, away_stats.opponent_ppg_allowed, home_stats.points, home_stats.ppg, home_stats.opponent_ppg_allowed
+        away_stats.this_game, away_stats.avg_per_game, away_stats.opponent_avg_allowed, home_stats.this_game, home_stats.avg_per_game, home_stats.opponent_avg_allowed
     )
     difference = highest - lowest
-    multiplier = 90/difference
+    multiplier = 84/difference
     
     return {
         away:
-            points: [(away_stats.points * multiplier) - (lowest * multiplier) + 5,  20, 5]
-            ppg: [(away_stats.ppg * multiplier) - (lowest * multiplier) + 5,  20, 5]
-            opponent_ppg_allowed: [(away_stats.opponent_ppg_allowed * multiplier) - (lowest * multiplier) + 5,  20, 5]
+            this_game:
+                path: [(away_stats.this_game * multiplier) - (lowest * multiplier) + 8,  20, radius]
+                value: away_stats.this_game
+            avg_per_game:
+                path: [(away_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8,  20, radius]
+                value: away_stats.avg_per_game
+            opponent_avg_allowed:
+                path: [(away_stats.opponent_avg_allowed * multiplier) - (lowest * multiplier) + 8,  20, radius]
+                value: away_stats.opponent_avg_allowed
         home:
-            points: [(home_stats.points * multiplier) - (lowest * multiplier) + 5,  60, 5]
-            ppg: [(home_stats.ppg * multiplier) - (lowest * multiplier) + 5,  60, 5]
-            opponent_ppg_allowed: [(home_stats.opponent_ppg_allowed * multiplier) - (lowest * multiplier) + 5,  60, 5]
+            this_game:
+                path: [(home_stats.this_game * multiplier) - (lowest * multiplier) + 8,  60, radius]
+                value: home_stats.this_game
+            avg_per_game:
+                path: [(home_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8,  60, radius]
+                value: home_stats.avg_per_game
+            opponent_avg_allowed:
+                path: [(home_stats.opponent_avg_allowed * multiplier) - (lowest * multiplier) + 8,  60, radius]
+                value: home_stats.opponent_avg_allowed
     }
+    
+buildDeviationChart = (svg, teamShortNames, away_stats, home_stats)->
+    
+    deviation_points = buildDeviationPoints away_stats, home_stats, 8
+    
+    for team, stats of deviation_points
+        for stat, info of stats
+            info.path.push teamShortNames[team]
+            circle = createSVGCircle.apply null, info.path
+            label = createSVGText info.value, 'middle', info.path[0], info.path[1], teamShortNames[team] + ' secondary'
+            svg.appendChild circle
+            svg.appendChild label
 
 
 $(document).ready ->
@@ -247,25 +271,15 @@ $(document).ready ->
         # Score deviation
         
         away_score_data =
-            points: response.box_score.away_totals.points
-            ppg: parseFloat response.away_team_stats.team_stats[0].stats.points_per_game_string
-            opponent_ppg_allowed: parseFloat response.home_team_stats.team_stats[0].stats_opponent.points_per_game_string
+            this_game: response.box_score.away_totals.points
+            avg_per_game: parseFloat response.away_team_stats.team_stats[0].stats.points_per_game_string
+            opponent_avg_allowed: parseFloat response.home_team_stats.team_stats[0].stats_opponent.points_per_game_string
         home_score_data =
-            points: response.box_score.home_totals.points
-            ppg: parseFloat response.home_team_stats.team_stats[0].stats.points_per_game_string
-            opponent_ppg_allowed: parseFloat response.away_team_stats.team_stats[0].stats_opponent.points_per_game_string
+            this_game: response.box_score.home_totals.points
+            avg_per_game: parseFloat response.home_team_stats.team_stats[0].stats.points_per_game_string
+            opponent_avg_allowed: parseFloat response.away_team_stats.team_stats[0].stats_opponent.points_per_game_string
         
-        score_deviation_points = buildScoreDeviationPoints away_score_data, home_score_data
-        
-        svg = $('#score-deviation svg').get(0)
-        
-        for team, stats of score_deviation_points
-            for stat, values of stats
-                values.push teamShortNames[team]
-                circle = createSVGCircle.apply null, values
-                svg.appendChild circle
-        
-        
+        buildDeviationChart $('#score-deviation svg').get(0), teamShortNames, away_score_data, home_score_data
         
         
         

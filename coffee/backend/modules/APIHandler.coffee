@@ -1,6 +1,7 @@
 
 Memcached = require 'memcached'
 https = require 'https'
+zlib = require 'zlib'
 config = require '../config'
 
 class APIHandler
@@ -17,25 +18,36 @@ class APIHandler
         cache.get url, (err, data) =>
             return next(err) if err?
             if data?
-                console.log 'from cache'
+                console.log 'retrieving from cache: ' + url
                 return next JSON.parse(data)
             @callAPI url, cache, next
     
+    handleResponseBody: (cache, url, body, next) ->
+        cache.set url, body, 3600 * 24, (err) ->
+            return next(err) if err?
+        next JSON.parse(body)
+    
     callAPI: (url, cache, next) ->
-        console.log 'from api'
+        console.log 'retrieving from api: ' + url
         options =
             host: @host
             path: url
             headers:
+                'Accept-Encoding': 'gzip'
                 'Authorization': 'Bearer ' + @apiKey
                 'User-Agent': @userAgent
-        https.get options, (res) ->
-            body = ''
+        https.get options, (res) =>
+            chunks = []
             res.on 'data', (chunk) ->
-                body += chunk
-            res.on 'end', ->
-                cache.set url, body, 3600 * 24, (err) ->
-                    return next(err) if err?
-                next JSON.parse(body)
+                chunks.push chunk
+            res.on 'end', =>
+                buffer = Buffer.concat chunks
+                encoding = res.headers['content-encoding']
+                if encoding is 'gzip'
+                    zlib.gunzip buffer, (err, body) =>
+                        return next(err) if err?
+                        @handleResponseBody cache, url, body, next
+                else
+                    @handleResponseBody cache, url, body, next
                 
 module.exports = APIHandler

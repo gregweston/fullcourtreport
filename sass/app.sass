@@ -1,0 +1,112 @@
+@import "teamcolors"
+
+$large-width: 1600px
+$medium-width: 1280px
+$small-width: 780px
+
+@each $team, $colors in $teamcolors
+    $primary: map-get($colors, primary)
+    $secondary: map-get($colors, secondary)
+    $tertiary: map-get($colors, tertiary)
+    .team.#{$team}
+        background-color: map-get($colors, primary)
+        color: map-get($colors, secondary)
+    path.team.#{$team}, circle.team.#{$team}
+        stroke: #FFF
+        fill: $primary
+        &.secondary
+            @if $secondary == #FFFFFF or $secondary == #ffffff or $secondary == #FFF or $secondary == #fff
+                @if $tertiary
+                    fill: $tertiary
+            @else
+                fill: $secondary
+    text.team.#{$team}
+        fill: map-get($colors, secondary)
+        &.secondary
+            @if $secondary == #FFFFFF or $secondary == #ffffff or $secondary == #FFF or $secondary == #fff
+                fill: $secondary
+            @else
+                fill: $tertiary
+
+@mixin prefix($property, $value)
+    -moz-#{$property}: $value
+    -webkit-#{$property}: $value
+    -ms-#{$property}: $value
+    #{$property}: $value
+
+@mixin max-breakpoint($size)
+    @if $size == large
+        @media (max-width: $large-width)
+            @content
+    @if $size == medium 
+        @media (max-width: $medium-width)
+            @content
+    @if $size == small
+        @media (max-width: $small-width)
+            @content
+@mixin min-breakpoint($size)
+    @if $size == large
+        @media (min-width: $large-width + 1px)
+            @content
+    @if $size == medium 
+        @media (min-width: $medium-width + 1px)
+            @content
+    @if $size == small
+        @media (min-width: $small-width + 1px)
+            @content
+
+@mixin flexbox($direction: row, $justify: space-between, $align: center)
+    display: -webkit-flex
+    display: flex
+    @include prefix(flex-direction, $direction)
+    @include prefix(flex-wrap, wrap)
+    @include prefix(justify-content, $justify)
+    @include prefix(align-items, $align)
+
+*
+    margin: 0
+    padding: 0
+    border: 0
+    font-size: 100%
+    font-weight: normal
+    box-sizing: border-box
+    
+ul 
+    list-style-type: none
+
+h2
+    margin-bottom: 2rem
+    font-size: 1.2rem
+    @include flexbox
+    span
+        &.team
+            font-size: 1.5rem
+            padding: .5rem 1rem
+            width: 43%
+            @include max-breakpoint(small)
+                width: 100%
+                text-align: center
+    #away-team-name
+        text-align: right
+#graphs
+    @include flexbox
+    width: 85%
+    margin: 0 auto
+    &>div
+        position: relative
+        width: 20rem
+        padding: 1.5rem
+        padding-bottom: 0
+        border-radius: 2px
+        border: 1px solid #C5C5C5
+        margin: 1rem
+        h4
+            font-size: 1.2rem
+            text-align: center
+            margin-bottom: 1rem
+        svg
+            display: block
+            width: 100%
+            text
+                font-size: 5px
+   

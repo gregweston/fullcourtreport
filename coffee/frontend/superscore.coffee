@@ -1,42 +1,56 @@
-#total_score = away_total_points + home_total_points
-#multiplier = 100/total_score
-#vertical_start = 100
-#
-#path_strings = buildPeriodScoringPathStrings away_total_points, home_total_points, multiplier, vertical_start, bar_height
-#    
-#away_path = createSVGPath path_strings.away, teamShortNames.away
-#away_text = createSVGText away_total_points, "start", 0, (vertical_start + bar_height/2)
-#
-#home_path = createSVGPath path_strings.home, teamShortNames.home
-#home_text = createSVGText home_total_points, "end", 100, (vertical_start + bar_height/2)
-#
-#scoringSVG.appendChild away_path
-#scoringSVG.appendChild home_path
-#scoringSVG.appendChild away_text
-#scoringSVG.appendChild home_text
+
+round = (float, decimal_spaces) ->
+    return Math.round(float * (Math.pow(10, decimal_spaces))) / Math.pow(10, decimal_spaces)
+
+createSVGLine = (x1, y1, x2, y2, width, classname) ->
+    line = document.createElementNS 'http://www.w3.org/2000/svg', 'line'
+    line.setAttributeNS null, 'x1', x1
+    line.setAttributeNS null, 'y1', y1
+    line.setAttributeNS null, 'x2', x2
+    line.setAttributeNS null, 'y2', y2
+    line.setAttributeNS null, 'stroke-width', width
+    line.setAttributeNS null, 'class', 'team ' + classname
+    return line
 
 createSVGCircle = (cx, cy, r, classname) ->
     circle = document.createElementNS 'http://www.w3.org/2000/svg', 'circle'
-    circle.setAttributeNS null, "cx", cx
-    circle.setAttributeNS null, "cy", cy
-    circle.setAttributeNS null, "r", r
-    circle.setAttributeNS null, "class", "team " + classname
+    circle.setAttributeNS null, 'cx', cx
+    circle.setAttributeNS null, 'cy', cy
+    circle.setAttributeNS null, 'r', r
+    circle.setAttributeNS null, 'class', 'team ' + classname
     return circle
+
+#Create rectangle centered on provided point
+createSVGRect = (x, y, width, height, classname) ->
+    rect = document.createElementNS 'http://www.w3.org/2000/svg', 'rect'
+    rect.setAttributeNS null, 'x', x - width/2
+    rect.setAttributeNS null, 'y', y - height/2
+    rect.setAttributeNS null, 'width', width
+    rect.setAttributeNS null, 'height', height
+    rect.setAttributeNS null, 'class', 'team ' + classname
+    return rect
+
+#Create triangle centered on provided point
+createSVGTriangle = (x, y, width, height, classname) ->
+    rect = document.createElementNS 'http://www.w3.org/2000/svg', 'polygon'
+    rect.setAttributeNS null, 'points', (x-width/2) + ',' + (y+height/2) + ' ' + x + ',' + (y-height/2) + ' ' + (x+width/2) + ',' + (y+height/2)
+    rect.setAttributeNS null, 'class', 'team ' + classname
+    return rect
 
 createSVGPath = (pathString, classname) ->
     path = document.createElementNS 'http://www.w3.org/2000/svg', 'path'
-    path.setAttributeNS null, "d", pathString
-    path.setAttributeNS null, "class", "team " + classname
-    path.setAttributeNS null, "stroke-linecap", "round"
-    path.setAttributeNS null, "stroke-linejoin", "round"
+    path.setAttributeNS null, 'd', pathString
+    path.setAttributeNS null, 'class', 'team ' + classname
+    path.setAttributeNS null, 'stroke-linecap', 'round'
+    path.setAttributeNS null, 'stroke-linejoin', 'round'
     return path
 
 createSVGText = (content, anchor, x, y, classname) ->
     text = document.createElementNS 'http://www.w3.org/2000/svg', 'text'
-    text.setAttributeNS null, "class", "team " + classname
-    text.setAttributeNS null, "text-anchor", anchor
-    text.setAttributeNS null, "x", x
-    text.setAttributeNS null, "y", y
+    text.setAttributeNS null, 'class', 'team ' + classname
+    text.setAttributeNS null, 'text-anchor', anchor
+    text.setAttributeNS null, 'x', x
+    text.setAttributeNS null, 'y', y + 2
     text.innerHTML = content
     return text
 
@@ -64,27 +78,27 @@ buildPeriodScoringPathStrings = (away_score, home_score, multiplier, vertical_st
         home: home_path_string
     }
 
-buildScoringChart = (scoringSVG, teamShortNames, away_period_scores, home_period_scores, away_total_points, home_total_points, bar_height) ->
+buildScoringChart = (scoringSVG, teamShortNames, away_period_scores, home_period_scores, away_total_points, home_total_points) ->
     max_period_score = 0
+    bar_height = 100/away_period_scores.length
     for index in [0..3]
         if away_period_scores[index] > max_period_score
             max_period_score = away_period_scores[index]
         if home_period_scores[index] > max_period_score
             max_period_score = home_period_scores[index]
-            
     multiplier = 50/max_period_score
-    for index in [0..3]
+    for score, index in away_period_scores
         total_period_score = away_period_scores[index] + home_period_scores[index]        
         
-        vertical_start = (index * 20) + (index * 3)
+        vertical_start = index * bar_height
             
         path_strings = buildPeriodScoringPathStrings away_period_scores[index], home_period_scores[index], multiplier, vertical_start, bar_height
         
         away_path = createSVGPath path_strings.away, teamShortNames.away
-        away_text = createSVGText away_period_scores[index], "end", 48, (vertical_start + 10), teamShortNames.away
+        away_text = createSVGText away_period_scores[index], "end", 48, (vertical_start + bar_height/2), teamShortNames.away
         
         home_path = createSVGPath path_strings.home, teamShortNames.home
-        home_text = createSVGText home_period_scores[index], "start", 52, (vertical_start + 10), teamShortNames.home
+        home_text = createSVGText home_period_scores[index], "start", 52, (vertical_start + bar_height/2), teamShortNames.home
         
         scoringSVG.appendChild away_path
         scoringSVG.appendChild home_path
@@ -136,7 +150,7 @@ buildBasketsChart = (svg, teamShortNames, away, home, bar_width) ->
         'middle',
         away_bar_start + bar_width/2,
         path_strings.away.makes.vertical_center,
-        teamShortNames.away + ' secondary'
+        teamShortNames.away + ' primary'
     )
     
     home_attempts_path = createSVGPath path_strings.home.misses.path_string, teamShortNames.home
@@ -153,7 +167,7 @@ buildBasketsChart = (svg, teamShortNames, away, home, bar_width) ->
         'middle',
         home_bar_start + bar_width/2,
         path_strings.home.makes.vertical_center,
-        teamShortNames.home + ' secondary'
+        teamShortNames.home + ' primary'
     )
     
     svg.appendChild away_attempts_path
@@ -181,35 +195,43 @@ buildDeviationPoints = (away_stats, home_stats, radius) ->
         away:
             this_game:
                 path: [(away_stats.this_game * multiplier) - (lowest * multiplier) + 8,  20, radius]
-                value: away_stats.this_game
+                value: round away_stats.this_game, 1
             avg_per_game:
                 path: [(away_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8,  20, radius]
-                value: away_stats.avg_per_game
+                value: round away_stats.avg_per_game, 1
             opponent_avg_allowed:
                 path: [(away_stats.opponent_avg_allowed * multiplier) - (lowest * multiplier) + 8,  20, radius]
-                value: away_stats.opponent_avg_allowed
+                value: round away_stats.opponent_avg_allowed, 1
         home:
             this_game:
                 path: [(home_stats.this_game * multiplier) - (lowest * multiplier) + 8,  60, radius]
-                value: home_stats.this_game
+                value: round home_stats.this_game, 1
             avg_per_game:
                 path: [(home_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8,  60, radius]
-                value: home_stats.avg_per_game
+                value: round home_stats.avg_per_game, 1
             opponent_avg_allowed:
                 path: [(home_stats.opponent_avg_allowed * multiplier) - (lowest * multiplier) + 8,  60, radius]
-                value: home_stats.opponent_avg_allowed
+                value: round home_stats.opponent_avg_allowed, 1
     }
     
 buildDeviationChart = (svg, teamShortNames, away_stats, home_stats)->
     
     deviation_points = buildDeviationPoints away_stats, home_stats, 8
-    
+    away_line = createSVGLine 0, 20, 100, 20, 3, teamShortNames.away + ' secondary'
+    home_line = createSVGLine 0, 60, 100, 60, 3, teamShortNames.home + ' secondary'
+    svg.appendChild away_line
+    svg.appendChild home_line
     for team, stats of deviation_points
         for stat, info of stats
             info.path.push teamShortNames[team]
-            circle = createSVGCircle.apply null, info.path
+            if stat?
+                shape = createSVGCircle.apply null, info.path
+            else if stat is 'avg_per_game'
+                shape = createSVGRect info.path[0], info.path[1], info.path[2] * 2, info.path[2] * 2, teamShortNames[team]
+            else
+                shape = createSVGTriangle info.path[0], info.path[1], info.path[2] * 2, info.path[2] * 2, teamShortNames[team]
             label = createSVGText info.value, 'middle', info.path[0], info.path[1], teamShortNames[team] + ' secondary'
-            svg.appendChild circle
+            svg.appendChild shape
             svg.appendChild label
 
 
@@ -232,8 +254,7 @@ $(document).ready ->
             response.box_score.away_period_scores,
             response.box_score.home_period_scores,
             response.box_score.away_totals.points,
-            response.box_score.home_totals.points,
-            20
+            response.box_score.home_totals.points
         )
         
         # Field goals
@@ -280,6 +301,32 @@ $(document).ready ->
             opponent_avg_allowed: parseFloat response.away_team_stats.team_stats[0].stats_opponent.points_per_game_string
         
         buildDeviationChart $('#score-deviation svg').get(0), teamShortNames, away_score_data, home_score_data
+        
+        # Field goal percent deviation
+        
+        away_fg_data =
+            this_game: response.box_score.away_totals.field_goal_percentage * 100
+            avg_per_game: parseFloat response.away_team_stats.team_stats[0].stats.field_goal_percentage * 100
+            opponent_avg_allowed: parseFloat response.home_team_stats.team_stats[0].stats_opponent.field_goal_percentage * 100
+        home_fg_data =
+            this_game: response.box_score.home_totals.field_goal_percentage * 100
+            avg_per_game: parseFloat response.home_team_stats.team_stats[0].stats.field_goal_percentage * 100
+            opponent_avg_allowed: parseFloat response.away_team_stats.team_stats[0].stats_opponent.field_goal_percentage * 100
+        
+        buildDeviationChart $('#field-goal-percent-deviation svg').get(0), teamShortNames, away_fg_data, home_fg_data
+        
+        # 3pt percent deviation
+        
+        away_3pt_data =
+            this_game: response.box_score.away_totals.three_point_percentage * 100
+            avg_per_game: parseFloat response.away_team_stats.team_stats[0].stats.three_point_percentage * 100
+            opponent_avg_allowed: parseFloat response.home_team_stats.team_stats[0].stats_opponent.three_point_percentage * 100
+        home_3pt_data =
+            this_game: response.box_score.home_totals.three_point_percentage * 100
+            avg_per_game: parseFloat response.home_team_stats.team_stats[0].stats.three_point_percentage * 100
+            opponent_avg_allowed: parseFloat response.away_team_stats.team_stats[0].stats_opponent.three_point_percentage * 100
+        
+        buildDeviationChart $('#3pt-percent-deviation svg').get(0), teamShortNames, away_3pt_data, home_3pt_data
         
         
         

@@ -11,7 +11,7 @@ $small-width: 780px
     .team.#{$team}
         background-color: map-get($colors, primary)
         color: map-get($colors, secondary)
-    path.team.#{$team}, circle.team.#{$team}
+    path.team.#{$team}, circle.team.#{$team}, rect.team.#{$team}, polygon.team.#{$team}
         stroke: #FFF
         fill: $primary
         &.secondary
@@ -20,13 +20,16 @@ $small-width: 780px
                     fill: $tertiary
             @else
                 fill: $secondary
-    text.team.#{$team}
-        fill: map-get($colors, secondary)
+    line.team.#{$team}
+        stroke: $primary
         &.secondary
             @if $secondary == #FFFFFF or $secondary == #ffffff or $secondary == #FFF or $secondary == #fff
-                fill: $secondary
+                @if $tertiary
+                    stroke: $tertiary
             @else
-                fill: $tertiary
+                stroke: $secondary
+    text.team.#{$team}
+        fill: #FFF
 
 @mixin prefix($property, $value)
     -moz-#{$property}: $value
@@ -95,10 +98,6 @@ h2
     &>div
         position: relative
         width: 20rem
-        padding: 1.5rem
-        padding-bottom: 0
-        border-radius: 2px
-        border: 1px solid #C5C5C5
         margin: 1rem
         h4
             font-size: 1.2rem
@@ -108,5 +107,5 @@ h2
             display: block
             width: 100%
             text
-                font-size: 5px
+                font-size: 6px
    

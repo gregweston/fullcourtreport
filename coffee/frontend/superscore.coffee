@@ -289,6 +289,22 @@ $(document).ready ->
             40
         )
         
+        # 3 pointers
+        
+        buildBasketsChart(
+            $('#3-pointers svg').get(0),
+            teamShortNames,
+            {
+                attempts: response.box_score.away_totals.three_point_field_goals_attempted
+                makes: response.box_score.away_totals.three_point_field_goals_made
+            },
+            {
+                attempts: response.box_score.home_totals.three_point_field_goals_attempted
+                makes: response.box_score.home_totals.three_point_field_goals_made
+            },
+            40
+        )
+        
         # Score deviation
         
         away_score_data =

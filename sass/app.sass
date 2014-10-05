@@ -30,6 +30,8 @@ $small-width: 780px
                 stroke: $secondary
     text.team.#{$team}
         fill: #FFF
+        &.legend
+            fill: #000
 
 @mixin prefix($property, $value)
     -moz-#{$property}: $value
@@ -108,4 +110,10 @@ h2
             width: 100%
             text
                 font-size: 6px
+                color: #000
+                &.legend
+                    font-size: 3px
+            polygon, rect, path, circle
+                &:not(.team)
+                    fill: #000
    

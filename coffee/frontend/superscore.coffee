@@ -212,25 +212,26 @@ buildDeviationPoints = (away_stats, home_stats, radius) ->
         labels: buildDeviationChartAxis highest, lowest, multiplier
         points:
             away:
-                this_game:
-                    path: [30, 100 - ((away_stats.this_game * multiplier) - (lowest * multiplier) + 8), radius]
-                    value: round away_stats.this_game, 1
-                avg_per_game:
-                    path: [30, 100 - ((away_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8), radius]
-                    value: round away_stats.avg_per_game, 1
                 opponent_avg_allowed:
                     path: [30, 100 - ((away_stats.opponent_avg_allowed * multiplier) - (lowest * multiplier) + 8), radius]
                     value: round away_stats.opponent_avg_allowed, 1
-            home:
-                this_game:
-                    path: [70, 100 - ((home_stats.this_game * multiplier) - (lowest * multiplier) + 8), radius]
-                    value: round home_stats.this_game, 1
                 avg_per_game:
-                    path: [70, 100 - ((home_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8), radius]
-                    value: round home_stats.avg_per_game, 1
+                    path: [30, 100 - ((away_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8), radius]
+                    value: round away_stats.avg_per_game, 1
+                this_game:
+                    path: [30, 100 - ((away_stats.this_game * multiplier) - (lowest * multiplier) + 8), radius]
+                    value: round away_stats.this_game, 1
+                
+            home:
                 opponent_avg_allowed:
                     path: [70, 100 - ((home_stats.opponent_avg_allowed * multiplier) - (lowest * multiplier) + 8), radius]
                     value: round home_stats.opponent_avg_allowed, 1
+                avg_per_game:
+                    path: [70, 100 - ((home_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8), radius]
+                    value: round home_stats.avg_per_game, 1
+                this_game:
+                    path: [70, 100 - ((home_stats.this_game * multiplier) - (lowest * multiplier) + 8), radius]
+                    value: round home_stats.this_game, 1
     }
     
 buildDeviationChart = (svg, teamShortNames, away_stats, home_stats) ->
@@ -245,15 +246,13 @@ buildDeviationChart = (svg, teamShortNames, away_stats, home_stats) ->
     for team, stats of deviation_data.points
         for stat, info of stats
             info.path.push teamShortNames[team]
-            if stat is 'this_game'
+            if stat is 'opponent_avg_allowed'
                 shape = createSVGRect info.path[0], info.path[1], info.path[2] * 2, info.path[2] * 2, teamShortNames[team]
             else if stat is 'avg_per_game'
                 shape = createSVGCircle.apply null, info.path
             else
                 shape = createSVGTriangle info.path[0], info.path[1], info.path[2] * 2, info.path[2] * 2, teamShortNames[team]
-            #label = createSVGText info.value, 'middle', info.path[0], info.path[1], teamShortNames[team] + ' secondary'
             svg.appendChild shape
-            #svg.appendChild label
     top_label = createSVGText deviation_data.labels.highest.value, 'start', 0, deviation_data.labels.highest.point
     middle_label = createSVGText deviation_data.labels.middle.value, 'start', 0, deviation_data.labels.middle.point
     bottom_label = createSVGText deviation_data.labels.lowest.value, 'start', 0, deviation_data.labels.lowest.point
@@ -263,14 +262,46 @@ buildDeviationChart = (svg, teamShortNames, away_stats, home_stats) ->
 
 buildDeviationLegend = (svg) ->
     icons_and_labels = [
-        createSVGRect 5, 10, 8, 8
-        createSVGText 'This Game', 'start', 10, 10, 'legend'
-        createSVGCircle 35, 10, 4
-        createSVGText 'Avg. Per Game', 'start', 40, 10, 'legend'
-        createSVGTriangle 70, 10, 8, 8
-        createSVGText 'Opp. Avg. Allowed', 'start', 74, 10, 'legend'
+        createSVGTriangle 5, 10, 8, 8
+        createSVGText 'This Game', 'start', 9, 10, 'legend'
+        createSVGCircle 30, 10, 4
+        createSVGText 'Avg. Per Game', 'start', 35, 10, 'legend'
+        createSVGRect 60, 10, 8, 8
+        createSVGText 'Opp. Avg. Allowed', 'start', 66, 10, 'legend'
     ]
     svg.appendChild element for element in icons_and_labels
+    
+getLeaders = (players, stat) ->
+    leaders = []
+    for player in players
+        if player[stat] > 0
+            leaders.push {
+                name: player.first_name[0] + '. ' + player.last_name
+                value: player[stat]
+            }
+    leaders.sort (a, b) ->
+        if a.value > b.value then return -1
+        if a.value < b.value then return 1 else return 0
+    return leaders
+            
+buildPieChart = (svg, teamShortName, players, total_points, stat) ->
+    radian_converter = (2*Math.PI)/total_points 
+    leaders = getLeaders players, stat
+    next_starting_point =
+        x: 100
+        y: 50
+    last_angle = 0
+    for leader, index in leaders
+        angle = last_angle + (radian_converter * leader.value)
+        last_angle = angle
+        ending_point =
+            x: 50 + (50 * Math.cos(angle))
+            y: 50 + (50 * Math.sin(angle))
+        path_string = 'M' + next_starting_point.x + ' ' + next_starting_point.y + ' A 50 50, 0, 0, 1, ' + ending_point.x + ' ' + ending_point.y + ' L50 50 Z'
+        #classname = if index%2 is 0 then teamShortName + ' secondary' else teamShortName
+        arc = createSVGPath path_string, teamShortName + ' secondary'
+        svg.appendChild arc
+        next_starting_point = ending_point
 
 $(document).ready ->
     $.getJSON '/data' + location.pathname, (response) ->
@@ -384,5 +415,9 @@ $(document).ready ->
         buildDeviationChart $('#3pt-percent-deviation svg.chart').get(0), teamShortNames, away_3pt_data, home_3pt_data
         buildDeviationLegend $('#3pt-percent-deviation svg.legend').get(0)
         
+        # Scoring Leaders
         
+        buildPieChart $('#scoring-leaders-away svg').get(0), teamShortNames.away, response.box_score.away_stats, response.box_score.away_totals.points, 'points'
+        
+        buildPieChart $('#scoring-leaders-home svg').get(0), teamShortNames.home, response.box_score.home_stats, response.box_score.home_totals.points, 'points'
         

@@ -5,6 +5,7 @@ team_ids =
     "hawks":         "atlanta-"
     "celtics":       "boston-"
     "nets":          "brooklyn-"
+    "bobcats":       "charlotte-"
     "hornets":       "charlotte-"
     "bulls":         "chicago-",
     "cavaliers":     "cleveland-"

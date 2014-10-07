@@ -2,14 +2,14 @@
 round = (float, decimal_spaces) ->
     return Math.round(float * (Math.pow(10, decimal_spaces))) / Math.pow(10, decimal_spaces)
 
-createSVGLine = (x1, y1, x2, y2, width, classname) ->
+createSVGLine = (x1, y1, x2, y2, width = 1, classname = '') ->
     line = document.createElementNS 'http://www.w3.org/2000/svg', 'line'
     line.setAttributeNS null, 'x1', x1
     line.setAttributeNS null, 'y1', y1
     line.setAttributeNS null, 'x2', x2
     line.setAttributeNS null, 'y2', y2
     line.setAttributeNS null, 'stroke-width', width
-    line.setAttributeNS null, 'class', 'team ' + classname
+    line.setAttributeNS null, 'class', classname
     return line
 
 createSVGCircle = (cx, cy, r, classname) ->
@@ -237,8 +237,8 @@ buildDeviationPoints = (away_stats, home_stats, radius) ->
 buildDeviationChart = (svg, teamShortNames, away_stats, home_stats) ->
     
     deviation_data = buildDeviationPoints away_stats, home_stats, 8
-    away_line = createSVGLine 30, 0, 30, 100, 3, teamShortNames.away + ' secondary'
-    home_line = createSVGLine 70, 0, 70, 100, 3, teamShortNames.home + ' secondary'
+    away_line = createSVGLine 30, 0, 30, 100, 3, teamShortNames.away + ' team secondary'
+    home_line = createSVGLine 70, 0, 70, 100, 3, teamShortNames.home + ' team secondary'
     svg.appendChild away_line
     svg.appendChild home_line
     min_value = null
@@ -284,24 +284,40 @@ getLeaders = (players, stat) ->
         if a.value < b.value then return 1 else return 0
     return leaders
             
-buildPieChart = (svg, teamShortName, players, total_points, stat) ->
+buildPieChart = (svg, teamShortName, width, players, total_points, stat) ->
     radian_converter = (2*Math.PI)/total_points 
     leaders = getLeaders players, stat
     next_starting_point =
-        x: 100
+        x: 100 - (100 - width)/2
         y: 50
     last_angle = 0
     for leader, index in leaders
         angle = last_angle + (radian_converter * leader.value)
-        last_angle = angle
         ending_point =
-            x: 50 + (50 * Math.cos(angle))
-            y: 50 + (50 * Math.sin(angle))
-        path_string = 'M' + next_starting_point.x + ' ' + next_starting_point.y + ' A 50 50, 0, 0, 1, ' + ending_point.x + ' ' + ending_point.y + ' L50 50 Z'
+            x: 50 + ((width/2) * Math.cos(angle))
+            y: 50 + ((width/2) * Math.sin(angle))
+        
+        path_string = 'M' + next_starting_point.x + ' ' + next_starting_point.y + ' A ' + (width/2) + ' ' + (width/2) + ', 0, 0, 1, ' + ending_point.x + ' ' + ending_point.y + ' L50 50 Z'
         #classname = if index%2 is 0 then teamShortName + ' secondary' else teamShortName
         arc = createSVGPath path_string, teamShortName + ' secondary'
         svg.appendChild arc
+        
+        # Halfway point on arc between starting point and ending point
+        label_spot =
+            x: 50 + ((width/2.2) * Math.cos(angle - (angle-last_angle)/2))
+            y: 50 + ((width/2.2) * Math.sin(angle - (angle-last_angle)/2))
+            
+        # Getting slope of line that will extend from inside of "slice" to label
+        line_slope =
+            x: (label_spot.x - 50)/5
+            y: (label_spot.y - 50)/5
+        line = createSVGLine label_spot.x, label_spot.y, label_spot.x + line_slope.x, label_spot.y + line_slope.y, .25
+        label_anchor = if label_spot.x + line_slope.x < 50 then 'end' else 'start'
+        label = createSVGText leader.name + ', ' + leader.value, label_anchor, label_spot.x + line_slope.x, label_spot.y + line_slope.y, 'legend'
+        svg.appendChild line
+        svg.appendChild label
         next_starting_point = ending_point
+        last_angle = angle
 
 $(document).ready ->
     $.getJSON '/data' + location.pathname, (response) ->
@@ -417,7 +433,7 @@ $(document).ready ->
         
         # Scoring Leaders
         
-        buildPieChart $('#scoring-leaders-away svg').get(0), teamShortNames.away, response.box_score.away_stats, response.box_score.away_totals.points, 'points'
+        buildPieChart $('#scoring-leaders-away svg').get(0), teamShortNames.away, 60, response.box_score.away_stats, response.box_score.away_totals.points, 'points'
         
-        buildPieChart $('#scoring-leaders-home svg').get(0), teamShortNames.home, response.box_score.home_stats, response.box_score.home_totals.points, 'points'
+        buildPieChart $('#scoring-leaders-home svg').get(0), teamShortNames.home, 60, response.box_score.home_stats, response.box_score.home_totals.points, 'points'
         

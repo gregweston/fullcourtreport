@@ -84,49 +84,53 @@ buildBasketsChart = (svg, teamShortNames, away, home, bar_width) ->
         away: buildBasketsPathStrings away.attempts, away.makes, multiplier, away_bar_start, bar_width
         home: buildBasketsPathStrings home.attempts, home.makes, multiplier, home_bar_start, bar_width
     
-    away_attempts_path = SVGBuilder.createSVGPath path_strings.away.misses.path_string, teamShortNames.away
-    away_makes_path = SVGBuilder.createSVGPath path_strings.away.makes.path_string, teamShortNames.away + ' secondary'
-    away_misses_text = SVGBuilder.createSVGText(
-        (away.attempts - away.makes) + ' misses',
-        'middle',
-        away_bar_start + bar_width/2,
-        path_strings.away.misses.vertical_center,
-        teamShortNames.away
-    )
-    away_makes_text = SVGBuilder.createSVGText(
-        away.makes + ' makes',
-        'middle',
-        away_bar_start + bar_width/2,
-        path_strings.away.makes.vertical_center,
-        teamShortNames.away + ' primary'
-    )
+    if away.attempts - away.makes > 0
+        away_misses_path = SVGBuilder.createSVGPath path_strings.away.misses.path_string, teamShortNames.away
+        away_misses_text = SVGBuilder.createSVGText(
+                (away.attempts - away.makes) + ' misses',
+                'middle',
+                away_bar_start + bar_width/2,
+                path_strings.away.misses.vertical_center,
+                teamShortNames.away
+        )
+        svg.appendChild away_misses_path
+        svg.appendChild away_misses_text
     
-    home_attempts_path = SVGBuilder.createSVGPath path_strings.home.misses.path_string, teamShortNames.home
-    home_makes_path = SVGBuilder.createSVGPath path_strings.home.makes.path_string, teamShortNames.home + ' secondary'
-    home_misses_text = SVGBuilder.createSVGText(
-        (home.attempts - home.makes) + ' misses',
-        'middle',
-        home_bar_start + bar_width/2,
-        path_strings.home.misses.vertical_center,
-        teamShortNames.home
-    )
-    home_makes_text = SVGBuilder.createSVGText(
-        home.makes + ' makes',
-        'middle',
-        home_bar_start + bar_width/2,
-        path_strings.home.makes.vertical_center,
-        teamShortNames.home + ' primary'
-    )
+    if away.makes > 0
+        away_makes_path = SVGBuilder.createSVGPath path_strings.away.makes.path_string, teamShortNames.away + ' secondary'
+        away_makes_text = SVGBuilder.createSVGText(
+                away.makes + ' makes',
+                'middle',
+                away_bar_start + bar_width/2,
+                path_strings.away.makes.vertical_center,
+                teamShortNames.away + ' primary'
+        )
+        svg.appendChild away_makes_path
+        svg.appendChild away_makes_text
     
-    svg.appendChild away_attempts_path
-    svg.appendChild away_makes_path
-    svg.appendChild away_misses_text
-    svg.appendChild away_makes_text
+    if home.attempts - home.makes > 0
+        home_misses_path = SVGBuilder.createSVGPath path_strings.home.misses.path_string, teamShortNames.home
+        home_misses_text = SVGBuilder.createSVGText(
+                (home.attempts - home.makes) + ' misses',
+                'middle',
+                home_bar_start + bar_width/2,
+                path_strings.home.misses.vertical_center,
+                teamShortNames.home
+        )
+        svg.appendChild home_misses_path
+        svg.appendChild home_misses_text
     
-    svg.appendChild home_attempts_path
-    svg.appendChild home_makes_path
-    svg.appendChild home_misses_text
-    svg.appendChild home_makes_text
+    if home.makes > 0
+        home_makes_path = SVGBuilder.createSVGPath path_strings.home.makes.path_string, teamShortNames.home + ' secondary'
+        home_makes_text = SVGBuilder.createSVGText(
+                home.makes + ' makes',
+                'middle',
+                home_bar_start + bar_width/2,
+                path_strings.home.makes.vertical_center,
+                teamShortNames.home + ' primary'
+        )
+        svg.appendChild home_makes_path
+        svg.appendChild home_makes_text
 
 buildDeviationChartAxis = (highest, lowest, multiplier) ->
     rounded_highest = round highest, 0

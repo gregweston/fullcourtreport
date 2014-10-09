@@ -4,12 +4,28 @@ h2
     span#home-team-name.team
 div#graphs
 
-    div#scoring-leaders-away.large
+    div#individual-scoring-away.large
         h4 Individual Scoring (Away)
         svg(width="100%", viewBox="0 0 100 100")
         
-    div#scoring-leaders-home.large
+    div#individual-scoring-home.large
         h4 Individual Scoring (Home)
+        svg(width="100%", viewBox="0 0 100 100")
+        
+    div#individual-rebounding-away.large
+        h4 Individual Rebounding (Away)
+        svg(width="100%", viewBox="0 0 100 100")
+        
+    div#individual-rebounding-home.large
+        h4 Individual Rebounding (Home)
+        svg(width="100%", viewBox="0 0 100 100")
+        
+    div#individual-assists-away.large
+        h4 Individual Assists (Away)
+        svg(width="100%", viewBox="0 0 100 100")
+        
+    div#individual-assists-home.large
+        h4 Individual Assists (Home)
         svg(width="100%", viewBox="0 0 100 100")
     
     div#score-deviation
@@ -27,8 +43,8 @@ div#graphs
         svg.chart(width="100%", viewBox="0 0 100 100")
         svg.legend(width="100%", viewBox="0 0 100 20")
     
-    div#scoring-by-quarter
-        h4 Scoring by Quarter
+    div#scoring-by-period
+        h4 Scoring by Period
         svg(width="100%", viewBox="0 0 100 100")
         
     div#field-goals

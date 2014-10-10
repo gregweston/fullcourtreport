@@ -10,10 +10,10 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
             home_score_width = home_score * multiplier
             total_width = away_score_width + home_score_width
             
-            away_path_start = 50 - away_score_width #(100 - total_width)/2
-            away_path_end = 50 #away_path_start + away_score_width
-            home_path_start = 50 + home_score_width #100 - ((100 - total_width)/2)
-            home_path_end = 50 #home_path_start - home_score_width
+            away_path_start = 50 - away_score_width
+            away_path_end = 50
+            home_path_start = 50 + home_score_width
+            home_path_end = 50
             
             away_path_string =
                     "M" + away_path_start  + " " + vertical_start + " L" + away_path_end + " " + vertical_start +
@@ -79,15 +79,23 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                 
         buildBasketsChart: (svg, teamShortNames, away, home, bar_width) ->
             max_attempts = Math.max away.attempts, home.attempts
-            multiplier = 100/max_attempts
+            multiplier = 90/max_attempts
             away_bar_start = (50 - bar_width)/2
             home_bar_start = 100 - away_bar_start - bar_width
             path_strings =
                 away: this.buildBasketsPathStrings away.attempts, away.makes, multiplier, away_bar_start, bar_width
                 home: this.buildBasketsPathStrings home.attempts, home.makes, multiplier, home_bar_start, bar_width
             
+            away_attempts_text = SVGBuilder.createSVGText(
+                away.attempts + ' attempts',
+                'middle',
+                away_bar_start + bar_width/2
+                5
+            )
+            svg.appendChild away_attempts_text
+            
             if away.attempts - away.makes > 0
-                away_misses_path = SVGBuilder.createSVGPath path_strings.away.misses.path_string, teamShortNames.away
+                away_misses_path = SVGBuilder.createSVGPath path_strings.away.misses.path_string, teamShortNames.away + ' secondary'
                 away_misses_text = SVGBuilder.createSVGText(
                         (away.attempts - away.makes) + ' misses',
                         'middle',
@@ -99,7 +107,7 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                 svg.appendChild away_misses_text
             
             if away.makes > 0
-                away_makes_path = SVGBuilder.createSVGPath path_strings.away.makes.path_string, teamShortNames.away + ' secondary'
+                away_makes_path = SVGBuilder.createSVGPath path_strings.away.makes.path_string, teamShortNames.away
                 away_makes_text = SVGBuilder.createSVGText(
                         away.makes + ' makes',
                         'middle',
@@ -110,8 +118,16 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                 svg.appendChild away_makes_path
                 svg.appendChild away_makes_text
             
+            home_attempts_text = SVGBuilder.createSVGText(
+                home.attempts + ' attempts',
+                'middle',
+                home_bar_start + bar_width/2
+                5
+            )
+            svg.appendChild home_attempts_text
+            
             if home.attempts - home.makes > 0
-                home_misses_path = SVGBuilder.createSVGPath path_strings.home.misses.path_string, teamShortNames.home
+                home_misses_path = SVGBuilder.createSVGPath path_strings.home.misses.path_string, teamShortNames.home + ' secondary'
                 home_misses_text = SVGBuilder.createSVGText(
                         (home.attempts - home.makes) + ' misses',
                         'middle',
@@ -123,7 +139,7 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                 svg.appendChild home_misses_text
             
             if home.makes > 0
-                home_makes_path = SVGBuilder.createSVGPath path_strings.home.makes.path_string, teamShortNames.home + ' secondary'
+                home_makes_path = SVGBuilder.createSVGPath path_strings.home.makes.path_string, teamShortNames.home
                 home_makes_text = SVGBuilder.createSVGText(
                         home.makes + ' makes',
                         'middle',
@@ -137,15 +153,23 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
         buildDeviationChartAxis: (highest, lowest, multiplier) ->
             rounded_highest = this.round highest, 0
             rounded_lowest = this.round lowest, 0
+            rounded_middle = (rounded_highest + rounded_lowest)/2
             highest_point = 8 - (rounded_highest - highest)
             lowest_point = 92 - (rounded_lowest - lowest)
+            middle_point = (highest_point + lowest_point)/2
             return {
                 highest:
                     point: highest_point 
                     value: rounded_highest
+                high_middle:
+                    point: (highest_point + middle_point)/2
+                    value: (rounded_highest + rounded_middle)/2
                 middle:
-                    point: (highest_point + lowest_point)/2
-                    value: (rounded_highest + rounded_lowest)/2
+                    point: middle_point
+                    value: rounded_middle
+                low_middle:
+                    point: (middle_point + lowest_point)/2
+                    value: (rounded_middle + rounded_lowest)/2
                 lowest:
                     point: lowest_point 
                     value: rounded_lowest
@@ -207,12 +231,10 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                     else
                         shape = SVGBuilder.createSVGTriangle info.path[0], info.path[1], info.path[2] * 2, info.path[2] * 2, teamShortNames[team]
                     svg.appendChild shape
-            top_label = SVGBuilder.createSVGText deviation_data.labels.highest.value, 'start', 0, deviation_data.labels.highest.point
-            middle_label = SVGBuilder.createSVGText deviation_data.labels.middle.value, 'start', 0, deviation_data.labels.middle.point
-            bottom_label = SVGBuilder.createSVGText deviation_data.labels.lowest.value, 'start', 0, deviation_data.labels.lowest.point
-            svg.appendChild top_label
-            svg.appendChild middle_label
-            svg.appendChild bottom_label
+                    
+            for key, label of deviation_data.labels
+                this_label = SVGBuilder.createSVGText label.value, 'start', 0, label.point
+                svg.appendChild this_label
         
         buildDeviationLegend: (svg) ->
             icons_and_labels = [
@@ -283,5 +305,28 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                 svg.appendChild line
                 svg.appendChild label
                 next_starting_point = ending_point
-                last_angle = angle   
+                last_angle = angle
+                
+        buildBarGraph: (svg, teamShortName, players, bar_height) ->
+            bar_width = 80/players.length
+            max_value = 0
+            for player in players
+                max_value = player.value if player.value > max_value
+            height_multiplier = bar_height/max_value
+            for player, index in players
+                height = bar_height - (player.value * height_multiplier)
+                path_string = 'M' + (bar_width * index) + ' ' + bar_height + ' L' + (bar_width * index) + ' ' + height +
+                    ' L' + (bar_width * (index + 1)) + ' ' + height + ' L' + (bar_width * (index + 1)) + ' ' + bar_height + ' Z'
+                bar = SVGBuilder.createSVGPath path_string, teamShortName + ' secondary'
+                label = SVGBuilder.createSVGText(
+                    player.name + ', ' + player.label,
+                    'start',
+                    (bar_width * (index + .5)), # X-anchor is in center of corresponding bar
+                    bar_height + 2, # Y-anchor is just below bottom of bar 
+                    'legend',
+                    'rotate(50 ' + (bar_width * (index + .5)) + ',' + (bar_height + 2) + ')'
+                )
+                svg.appendChild bar
+                svg.appendChild label
+        
     }

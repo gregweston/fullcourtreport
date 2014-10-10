@@ -44,12 +44,13 @@ scorevision.service 'SVGBuilder', ->
             path.setAttributeNS null, 'stroke-linejoin', 'round'
             return path
         
-        createSVGText: (content, anchor, x, y, classname = '') ->
+        createSVGText: (content, anchor, x, y, classname = '', transform = '') ->
             text = document.createElementNS 'http://www.w3.org/2000/svg', 'text'
             text.setAttributeNS null, 'class', 'team ' + classname
             text.setAttributeNS null, 'text-anchor', anchor
             text.setAttributeNS null, 'x', x
             text.setAttributeNS null, 'y', y + 2
+            text.setAttributeNS(null, 'transform', transform) if transform?
             text.innerHTML = content
             return text
     }

@@ -33,6 +33,14 @@ div(data-ng-controller="GameController")
             svg#individual-rebounding-home(width="100%", viewBox="0 0 100 100")
             
         div.large
+            h4 Rebounding Efficiency ({{ team_short_names.away }})
+            svg#rebounding-efficiency-away(width="100%", viewBox="0 0 100 100")
+            
+        div.large
+            h4 Rebounding Efficiency ({{ team_short_names.home }})
+            svg#rebounding-efficiency-home(width="100%", viewBox="0 0 100 100")
+            
+        div.large
             h4 Individual Assists ({{ team_short_names.away }})
             svg#individual-assists-away(width="100%", viewBox="0 0 100 100")
             

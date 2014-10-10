@@ -32,7 +32,10 @@ exports.gameData = (req, res) ->
         gameData = gameDataReady box_score, away_team_stats, home_team_stats
         res.json(gameData) if gameData
         
-exports.index = (req, res) ->
-    res.write 'Hello index.'
-    res.end()
+exports.day = (req, res) ->
+    games_for_day = NBADataGetter.getGamesForDay req.params['year'], req.params['month'], req.params['day'], (data) ->
+        res.render 'day', {
+            date: req.params['day'] + '/' + req.params['month'] + '/' + req.params['year']
+            games: data
+        }
     

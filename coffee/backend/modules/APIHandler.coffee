@@ -38,6 +38,8 @@ class APIHandler
                 'User-Agent': @userAgent
         https.get options, (res) =>
             chunks = []
+            res.on 'error', (e) ->
+                console.log e
             res.on 'data', (chunk) ->
                 chunks.push chunk
             res.on 'end', =>
@@ -48,6 +50,6 @@ class APIHandler
                         return next(err) if err?
                         @handleResponseBody cache, url, body, next
                 else
-                    @handleResponseBody cache, url, body, next
+                    @handleResponseBody cache, url, buffer, next
                 
 module.exports = APIHandler

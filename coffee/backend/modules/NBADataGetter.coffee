@@ -62,3 +62,14 @@ exports.getTeamStats = (year, month, day, team, next) ->
         '.json?team_id=' + team_id
     handler.retrieveData url, next
     
+exports.getGamesForDay = (year, month, day, next) ->
+    handler = new APIHandler()
+    month = str(month).padLeft(2, '0')
+    day = str(day).padLeft(2, '0')
+    url = '/events.json?date=' +
+        year +
+        month +
+        day +
+        '&sport=nba'
+    handler.retrieveData url, next
+    

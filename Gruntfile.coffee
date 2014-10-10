@@ -16,7 +16,7 @@ module.exports = (grunt) ->
                 files: './coffee/backend/modules/*.coffee'
                 tasks: ['coffee:compileModules']
             coffeeApp:
-                files: './coffee/backend/app.coffee'
+                files: './coffee/backend/server.coffee'
                 tasks: ['coffee:compileApp']
             sass:
                 files: './sass/*.sass'

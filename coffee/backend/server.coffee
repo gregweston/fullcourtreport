@@ -20,6 +20,7 @@ app.configure 'production', ->
 
 app.get('/data/:year/:month/:day/:away_team/:home_team', routes.gameData)
 app.get(/^\/\d{4}\/\d{1,2}\/\d{1,2}\/(\w)+\/(\w+)\/?$/, routes.game)
+app.get('/games/:year/:month/:day', routes.day)
 
 app.get '/', routes.index
 

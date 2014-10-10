@@ -4,8 +4,10 @@ html
     title SuperScore
     meta(name="viewport",  content="width=device-width")
     link(href='http://fonts.googleapis.com/css?family=Oswald', rel='stylesheet')
-    link(rel='stylesheet', href='/css/compiled/app.css')
-  body
+    link(rel='stylesheet', href='/css/compiled/scorevision.css')
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js")
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-touch.js")
+    script(src="/js/compiled/scorevision.js")
+  body(data-ng-app="ScoreVision")
     main!= body
-    script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
-    script(src="/js/compiled/app.js")
+    

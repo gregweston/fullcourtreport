@@ -82,17 +82,18 @@ ul
 h2
     margin-bottom: 2rem
     font-size: 1.2rem
-    @include flexbox
-    span
+    @include flexbox(row, center)
+    &>span
         &.team
             font-size: 1.5rem
-            padding: .5rem 1rem
-            width: 43%
+            padding: .5rem 2rem
             @include max-breakpoint(small)
                 width: 100%
                 text-align: center
-    #away-team-name
-        text-align: right
+        .score
+            margin-left: 1rem
+            font-size: 1.7rem
+            
         
 body
     font-family: 'Oswald', sans-serif

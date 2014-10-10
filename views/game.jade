@@ -1,60 +1,80 @@
-h2
-    span#away-team-name.team
-    span vs.
-    span#home-team-name.team
-div#graphs
-
-    div#individual-scoring-away.large
-        h4 Individual Scoring (Away)
-        svg(width="100%", viewBox="0 0 100 100")
-        
-    div#individual-scoring-home.large
-        h4 Individual Scoring (Home)
-        svg(width="100%", viewBox="0 0 100 100")
-        
-    div#individual-rebounding-away.large
-        h4 Individual Rebounding (Away)
-        svg(width="100%", viewBox="0 0 100 100")
-        
-    div#individual-rebounding-home.large
-        h4 Individual Rebounding (Home)
-        svg(width="100%", viewBox="0 0 100 100")
-        
-    div#individual-assists-away.large
-        h4 Individual Assists (Away)
-        svg(width="100%", viewBox="0 0 100 100")
-        
-    div#individual-assists-home.large
-        h4 Individual Assists (Home)
-        svg(width="100%", viewBox="0 0 100 100")
+div(data-ng-controller="GameController")
+    h2
+        span(class="team {{ team_nicknames.away }}")
+            span.team-name {{ away_full_name }}
+            span.score {{ away_final_score }}
+        span(class="team {{ team_nicknames.home }}")
+            span.team-name {{ home_full_name }}
+            span.score {{ home_final_score }}
+    div#graphs
     
-    div#score-deviation
-        h4 Score Deviation
-        svg.chart(width="100%", viewBox="0 0 100 100")
-        svg.legend(width="100%", viewBox="0 0 100 20")
+        div.large
+            h4 Individual Scoring ({{ team_short_names.away }})
+            svg#individual-scoring-away(width="100%", viewBox="0 0 100 100")
+            
+        div.large
+            h4 Individual Scoring ({{ team_short_names.home }})
+            svg#individual-scoring-home(width="100%", viewBox="0 0 100 100")
+            
+        div.large
+            h4 Scoring Efficiency ({{ team_short_names.away }})
+            svg#scoring-efficiency-away(width="100%", viewBox="0 0 100 100")
+            
+        div.large
+            h4 Scoring Efficiency ({{ team_short_names.home }})
+            svg#scoring-efficiency-home(width="100%", viewBox="0 0 100 100")
+            
+        div.large
+            h4 Individual Rebounding ({{ team_short_names.away }})
+            svg#individual-rebounding-away(width="100%", viewBox="0 0 100 100")
+            
+        div.large
+            h4 Individual Rebounding ({{ team_short_names.home }})
+            svg#individual-rebounding-home(width="100%", viewBox="0 0 100 100")
+            
+        div.large
+            h4 Individual Assists ({{ team_short_names.away }})
+            svg#individual-assists-away(width="100%", viewBox="0 0 100 100")
+            
+        div.large
+            h4 Individual Assists ({{ team_short_names.home }})
+            svg#individual-assists-home(width="100%", viewBox="0 0 100 100")
+            
+        div.large
+            h4 Individual Steals ({{ team_short_names.away }})
+            svg#individual-steals-away(width="100%", viewBox="0 0 100 100")
+            
+        div.large
+            h4 Individual Steals ({{ team_short_names.home }})
+            svg#individual-steals-home(width="100%", viewBox="0 0 100 100")
         
-    div#field-goal-percent-deviation
-        h4 Field Goal % Deviation
-        svg.chart(width="100%", viewBox="0 0 100 100")
-        svg.legend(width="100%", viewBox="0 0 100 20")
+        div
+            h4 Score Deviation
+            svg#score-deviation.chart(width="100%", viewBox="0 0 100 100")
+            svg.legend(width="100%", viewBox="0 0 100 20")
+            
+        div
+            h4 Field Goal % Deviation
+            svg#field-goal-percent-deviation.chart(width="100%", viewBox="0 0 100 100")
+            svg.legend(width="100%", viewBox="0 0 100 20")
+            
+        div
+            h4 3-point % Deviation
+            svg#3pt-percent-deviation.chart(width="100%", viewBox="0 0 100 100")
+            svg.legend(width="100%", viewBox="0 0 100 20")
         
-    div#3pt-percent-deviation
-        h4 3-point % Deviation
-        svg.chart(width="100%", viewBox="0 0 100 100")
-        svg.legend(width="100%", viewBox="0 0 100 20")
-    
-    div#scoring-by-period
-        h4 Scoring by Period
-        svg(width="100%", viewBox="0 0 100 100")
+        div
+            h4 Scoring by Period
+            svg#scoring-by-period(width="100%", viewBox="0 0 100 100")
+            
+        div
+            h4 Field Goals
+            svg#field-goals(width="100%", viewBox="0 0 100 100")
         
-    div#field-goals
-        h4 Field Goals
-        svg(width="100%", viewBox="0 0 100 100")
-    
-    div#3-pointers
-        h4 3-point Field Goals
-        svg(width="100%", viewBox="0 0 100 100")
-        
-    div#free-throws
-        h4 Free Throws
-        svg(width="100%", viewBox="0 0 100 100")
+        div
+            h4 3-point Field Goals
+            svg#3-pointers(width="100%", viewBox="0 0 100 100")
+            
+        div
+            h4 Free Throws
+            svg#free-throws(width="100%", viewBox="0 0 100 100")

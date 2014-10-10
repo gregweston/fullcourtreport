@@ -3,13 +3,12 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-contrib-watch'
     grunt.loadNpmTasks 'grunt-contrib-sass'
     grunt.loadNpmTasks 'grunt-contrib-uglify'
-    grunt.loadNpmTasks 'grunt-contrib-concat'
     grunt.initConfig
         pkg: grunt.file.readJSON('package.json')
         watch:
             coffeeFrontEnd:
                 files: './coffee/frontend/**/*.coffee'
-                tasks: ['coffee:compileFrontEnd', 'concat']
+                tasks: ['coffee:compileFrontEnd']
             coffeeRoutes:
                 files: './coffee/backend/routes.coffee'
                 tasks: ['coffee:compileRoutes']
@@ -24,11 +23,14 @@ module.exports = (grunt) ->
                 tasks: ['sass']
         coffee:
             compileFrontEnd:
-                expand: true
-                flatten: false
-                src: './coffee/frontend/**/*.coffee'
-                dest: './coffee/frontend/compiled/'
-                ext: '.js'
+                options:
+                    bare: true
+                files:
+                    'public/js/compiled/scorevision.js': [
+                        './coffee/frontend/app.coffee',
+                        './coffee/frontend/services/*.coffee',
+                        './coffee/frontend/controllers/*.coffee'
+                    ]
             compileRoutes:
                 options:
                     bare: true
@@ -49,21 +51,13 @@ module.exports = (grunt) ->
                 options:
                     bare: true
                 files:
-                    './app.js': ['./coffee/backend/app.coffee']
+                    './server.js': ['./coffee/backend/server.coffee']
         sass:
             dist:
                 options:
                     style: 'compressed'
                 files:
-                    './public/css/compiled/app.css': './sass/app.sass'
-        concat:
-            dist:
-                src:[
-                    './coffee/frontend/compiled/coffee/frontend/classes/SVGBuilder.js'
-                    './coffee/frontend/compiled/coffee/frontend/superscore.js'
-                ]
-                dest:
-                    './public/js/compiled/app.js'
+                    './public/css/compiled/scorevision.css': './sass/scorevision.sass'
         uglify:
             dist:
                 options:
@@ -74,4 +68,4 @@ module.exports = (grunt) ->
                     src: '**/*.js'
                     dest: './public/js/compiled/'
                 }]
-    grunt.registerTask 'default', ['sass', 'coffee', 'concat', 'uglify']
+    grunt.registerTask 'default', ['sass', 'coffee', 'uglify']

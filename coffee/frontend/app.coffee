@@ -1,0 +1,1 @@
+scorevision = angular.module 'ScoreVision', ['ngTouch']

@@ -78,52 +78,66 @@ $small-width: 780px
     
 ul 
     list-style-type: none
-
-h2
-    margin-bottom: 2rem
-    font-size: 1.2rem
-    @include flexbox(row, center)
-    &>span
-        &.team
-            font-size: 1.5rem
-            padding: .5rem 2rem
-            @include max-breakpoint(small)
-                width: 100%
-                text-align: center
-        .score
-            margin-left: 1rem
-            font-size: 1.7rem
-            
-        
 body
     font-family: 'Oswald', sans-serif
-#graphs
-    @include flexbox
-    width: 85%
-    margin: 0 auto
-    &>div
-        position: relative
-        width: 20rem
-        margin: 1rem
-        &.large
-            width: 30rem
-            margin: 0
-        h4
-            font-size: 1.2rem
-            text-align: center
-            margin-bottom: 1rem
-        svg
-            display: block
-            width: 100%
-            text
-                font-size: 6px
-                color: #000
-                &.legend
-                    font-size: 3px
-            polygon, rect, path, circle
-                &:not(.team)
-                    fill: #000
-            line
-                &:not(.team)
-                    stroke: #000
+#game
+    h2
+        margin-bottom: 2rem
+        font-size: 1.2rem
+        @include flexbox(row, center)
+        &>span
+            &.team
+                font-size: 1.5rem
+                padding: .5rem 2rem
+                @include max-breakpoint(small)
+                    width: 100%
+                    text-align: center
+            .score
+                margin-left: 1rem
+                font-size: 1.7rem
+    #graphs
+        @include flexbox
+        width: 95%
+        margin: 0 auto
+        &>div
+            position: relative
+            width: 20rem
+            margin: 1rem
+            &.large
+                width: 30rem
+                margin: 0
+            h4
+                font-size: 1.2rem
+                text-align: center
+                margin-bottom: 1rem
+            svg
+                display: block
+                width: 100%
+                text
+                    font-size: 6px
+                    color: #000
+                    &.legend
+                        font-size: 3px
+                polygon, rect, path, circle
+                    &:not(.team)
+                        fill: #000
+                line
+                    &:not(.team)
+                        stroke: #000
+.schedule
+    h2
+        font-size: 1.4rem
+        margin: 2rem 0
+        text-align: center
+    ul
+        width: 95%
+        margin: 0 auto
+        @include flexbox(row, flex-start)
+        li
+            margin: 1.5rem 1.5rem
+            a
+                white-space: nowrap
+                text-decoration: none
+                span
+                    padding: 1rem 1.5rem
    

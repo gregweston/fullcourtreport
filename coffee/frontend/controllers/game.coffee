@@ -12,6 +12,9 @@ scorevision.controller "GameController", ($http, $timeout, $scope, SVGBuilder, C
         $scope.team_nicknames =
             away: response.box_score.away_team.last_name.toLowerCase()
             home: response.box_score.home_team.last_name.toLowerCase()
+            
+        $scope.team_nicknames.away = 'sixers' if $scope.team_nicknames.away is '76ers'
+        $scope.team_nicknames.home = 'sixers' if $scope.team_nicknames.home is '76ers'
         
         $scope.team_short_names =
             away: response.box_score.away_team.abbreviation

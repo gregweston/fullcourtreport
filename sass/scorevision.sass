@@ -133,11 +133,32 @@ body
         width: 95%
         margin: 0 auto
         @include flexbox(row, flex-start)
+        @include max-breakpoint(small)
+            width: 100%
+            @include prefix(justify-content, space-around)
         li
             margin: 1.5rem 1.5rem
+            @include max-breakpoint(small)
+                margin: 1rem .25rem
+                font-size: .9rem
             a
                 white-space: nowrap
                 text-decoration: none
-                span
+                position: relative
+                &:hover
+                    span.team
+                        text-decoration: underline
+                span.game-time
+                    position: absolute
+                    top: -2.5rem
+                    left: 0
+                    color: #000
+                span.team
+                    text-align: center
+                    display: inline-block
+                    width: 12rem
                     padding: 1rem 1.5rem
+                    @include max-breakpoint(small)
+                        width: 10rem
+                        padding: .75rem 1rem
    

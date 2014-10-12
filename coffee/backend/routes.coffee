@@ -35,10 +35,10 @@ exports.gameData = (req, res) ->
 exports.day = (req, res) ->
     games_for_day = NBADataGetter.getGamesForDay req.params['year'], req.params['month'], req.params['day'], (data) ->
         res.render 'day', {
-            year: req.params['year']
-            month: req.params['month']
-            day: req.params['day']
-            games: data,
-            moment: require('moment')
+            locals:
+                year: req.params['year']
+                month: req.params['month']
+                day: req.params['day']
+                games: data
         }
     

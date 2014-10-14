@@ -16,11 +16,9 @@ app.configure 'development', ->
 
 app.configure 'production', ->
   app.use express.errorHandler()
-  
-app.locals.moment = require 'moment'
 
 app.get('/data/games/:year/:month/:day/:away_team/:home_team', routes.gameData)
-app.get(/^\/games\/\d{4}\/\d{1,2}\/\d{1,2}\/(\w)+\/(\w+)\/?$/, routes.game)
+app.get('/games/:year/:month/:day/:away_team/:home_team', routes.game)
 app.get('/games/:year/:month/:day', routes.day)
 
 app.get '/', routes.index

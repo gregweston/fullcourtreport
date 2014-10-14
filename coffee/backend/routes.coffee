@@ -1,4 +1,5 @@
 NBADataGetter = require './modules/NBADataGetter'
+moment = require 'moment'
 
 gameDataReady = (box_score, away_team_stats, home_team_stats) ->
     if box_score isnt null and away_team_stats isnt null and home_team_stats isnt null
@@ -10,7 +11,28 @@ gameDataReady = (box_score, away_team_stats, home_team_stats) ->
     return false
 
 exports.game = (req, res) ->
-    res.render 'game'
+    games_for_day = NBADataGetter.getGamesForDay req.params['year'], req.params['month'], req.params['day'], (games) ->
+        for event in games.event
+            if (
+                event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1 and
+                event.event_status is 'completed' and
+                (event.season_type is 'regular' or event.season_type is 'post')
+            )
+                res.render 'game'
+                break
+            else if event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1
+                res.render 'future-game', {
+                    locals:
+                        team_nicknames:
+                            away: event.away_team.team_id
+                            home: event.home_team.team_id
+                        team_full_names:
+                            away: event.away_team.full_name
+                            home: event.home_team.full_name
+                        game_date: moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
+                }
+                break
+        # 404
 
 exports.gameData = (req, res) ->
     box_score = null
@@ -33,12 +55,13 @@ exports.gameData = (req, res) ->
         res.json(gameData) if gameData
         
 exports.day = (req, res) ->
-    games_for_day = NBADataGetter.getGamesForDay req.params['year'], req.params['month'], req.params['day'], (data) ->
+    games_for_day = NBADataGetter.getGamesForDay req.params['year'], req.params['month'], req.params['day'], (games) ->
         res.render 'day', {
             locals:
                 year: req.params['year']
                 month: req.params['month']
                 day: req.params['day']
-                games: data
+                games: games
+                moment: moment
         }
     

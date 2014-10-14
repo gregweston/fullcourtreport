@@ -8,10 +8,10 @@ $small-width: 780px
     $primary: map-get($colors, primary)
     $secondary: map-get($colors, secondary)
     $tertiary: map-get($colors, tertiary)
-    .team.#{$team}
+    .team[class*="#{$team}"]
         background-color: map-get($colors, primary)
         color: map-get($colors, secondary)
-    path.team.#{$team}, circle.team.#{$team}, rect.team.#{$team}, polygon.team.#{$team}
+    path.team[class*="#{$team}"], circle.team[class*="#{$team}"], rect.team[class*="#{$team}"], polygon.team[class*="#{$team}"]
         stroke: #FFF
         fill: $primary
         &.secondary
@@ -20,7 +20,7 @@ $small-width: 780px
                     fill: $tertiary
             @else
                 fill: $secondary
-    line.team.#{$team}
+    line.team[class*="#{$team}"]
         stroke: $primary
         &.secondary
             @if $secondary == #FFFFFF or $secondary == #ffffff or $secondary == #FFF or $secondary == #fff
@@ -28,7 +28,7 @@ $small-width: 780px
                     stroke: $tertiary
             @else
                 stroke: $secondary
-    text.team.#{$team}
+    text.team[class*="#{$team}"]
         fill: #FFF
         &.legend
             fill: #000
@@ -83,7 +83,6 @@ body
 #game
     h2
         margin-bottom: 2rem
-        font-size: 1.2rem
         @include flexbox(row, center)
         &>span
             &.team
@@ -95,6 +94,13 @@ body
             .score
                 margin-left: 1rem
                 font-size: 1.7rem
+    &.future
+        text-align: center
+        h3
+            font-size: 1.4rem
+            margin-bottom: 1rem
+        h4
+            font-size: 1.2rem
     #graphs
         @include flexbox
         width: 95%
@@ -139,7 +145,7 @@ body
         li
             margin: 1.5rem 1.5rem
             @include max-breakpoint(small)
-                margin: 1rem .25rem
+                margin: 1.5rem .25rem
                 font-size: .9rem
             a
                 white-space: nowrap
@@ -150,7 +156,7 @@ body
                         text-decoration: underline
                 span.game-time
                     position: absolute
-                    top: -2.5rem
+                    top: -2.3rem
                     left: 0
                     color: #000
                 span.team

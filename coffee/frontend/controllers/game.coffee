@@ -124,27 +124,83 @@ scorevision.controller "GameController", ($http, $timeout, $scope, SVGBuilder, C
         
         # Individual scoring
         
-        ChartBuilder.buildPieChart document.getElementById('individual-scoring-away'), $scope.team_nicknames.away, 60, response.box_score.away_stats, response.box_score.away_totals.points, 'points'
+        ChartBuilder.buildPieChart(
+            document.getElementById('individual-scoring-away'),
+            $scope.team_nicknames.away,
+            60,
+            response.box_score.away_stats,
+            response.box_score.away_totals.points,
+            'points'
+        )
         
-        ChartBuilder.buildPieChart document.getElementById('individual-scoring-home'), $scope.team_nicknames.home, 60, response.box_score.home_stats, response.box_score.home_totals.points, 'points'
+        ChartBuilder.buildPieChart(
+            document.getElementById('individual-scoring-home'),
+            $scope.team_nicknames.home,
+            60,
+            response.box_score.home_stats,
+            response.box_score.home_totals.points,
+            'points'
+        )
         
         # Individual rebounding
         
-        ChartBuilder.buildPieChart document.getElementById('individual-rebounding-away'), $scope.team_nicknames.away, 60, response.box_score.away_stats, response.box_score.away_totals.rebounds, 'rebounds'
+        ChartBuilder.buildPieChart(
+            document.getElementById('individual-rebounding-away'),
+            $scope.team_nicknames.away,
+            60,
+            response.box_score.away_stats,
+            response.box_score.away_totals.rebounds,
+            'rebounds'
+        )
         
-        ChartBuilder.buildPieChart document.getElementById('individual-rebounding-home'), $scope.team_nicknames.home, 60, response.box_score.home_stats, response.box_score.home_totals.rebounds, 'rebounds'
+        ChartBuilder.buildPieChart(
+            document.getElementById('individual-rebounding-home'),
+            $scope.team_nicknames.home,
+            60,
+            response.box_score.home_stats,
+            response.box_score.home_totals.rebounds,
+            'rebounds'
+        )
         
         # Individual assists
         
-        ChartBuilder.buildPieChart document.getElementById('individual-assists-away'), $scope.team_nicknames.away, 60, response.box_score.away_stats, response.box_score.away_totals.assists, 'assists'
+        ChartBuilder.buildPieChart(
+            document.getElementById('individual-assists-away'),
+            $scope.team_nicknames.away,
+            60,
+            response.box_score.away_stats,
+            response.box_score.away_totals.assists,
+            'assists'
+        )
         
-        ChartBuilder.buildPieChart document.getElementById('individual-assists-home'), $scope.team_nicknames.home, 60, response.box_score.home_stats, response.box_score.home_totals.assists, 'assists'
+        ChartBuilder.buildPieChart(
+            document.getElementById('individual-assists-home'),
+            $scope.team_nicknames.home,
+            60,
+            response.box_score.home_stats,
+            response.box_score.home_totals.assists,
+            'assists'
+        )
         
         # Individual steals
         
-        ChartBuilder.buildPieChart document.getElementById('individual-steals-away'), $scope.team_nicknames.away, 60, response.box_score.away_stats, response.box_score.away_totals.steals, 'steals'
+        ChartBuilder.buildPieChart(
+            document.getElementById('individual-steals-away'),
+            $scope.team_nicknames.away,
+            60,
+            response.box_score.away_stats,
+            response.box_score.away_totals.steals,
+            'steals'
+        )
         
-        ChartBuilder.buildPieChart document.getElementById('individual-steals-home'), $scope.team_nicknames.home, 60, response.box_score.home_stats, response.box_score.home_totals.steals, 'steals'
+        ChartBuilder.buildPieChart(
+            document.getElementById('individual-steals-home'),
+            $scope.team_nicknames.home,
+            60,
+            response.box_score.home_stats,
+            response.box_score.home_totals.steals,
+            'steals'
+        )
         
         # Scoring Efficiency
         
@@ -169,8 +225,19 @@ scorevision.controller "GameController", ($http, $timeout, $scope, SVGBuilder, C
                     label: player.rebounds + 'reb/' + player.minutes + 'min'
                 }
                 
-        ChartBuilder.buildBarGraph document.getElementById('scoring-efficiency-away'), $scope.team_nicknames.away, player_efficiencies.away.scoring, 70
-        ChartBuilder.buildBarGraph document.getElementById('rebounding-efficiency-away'), $scope.team_nicknames.away, player_efficiencies.away.rebounding, 70
+        ChartBuilder.buildBarGraph(
+            document.getElementById('scoring-efficiency-away'),
+            $scope.team_nicknames.away,
+            player_efficiencies.away.scoring,
+            70
+        )
+        
+        ChartBuilder.buildBarGraph(
+            document.getElementById('rebounding-efficiency-away'),
+            $scope.team_nicknames.away,
+            player_efficiencies.away.rebounding,
+            70
+        )
         
         for player in response.box_score.home_stats
             if player.minutes > 5
@@ -186,8 +253,19 @@ scorevision.controller "GameController", ($http, $timeout, $scope, SVGBuilder, C
                     label: player.rebounds + 'reb/' + player.minutes + 'min'
                 }
                 
-        ChartBuilder.buildBarGraph document.getElementById('scoring-efficiency-home'), $scope.team_nicknames.home, player_efficiencies.home.scoring, 70
-        ChartBuilder.buildBarGraph document.getElementById('rebounding-efficiency-home'), $scope.team_nicknames.home, player_efficiencies.home.rebounding, 70
+        ChartBuilder.buildBarGraph(
+            document.getElementById('scoring-efficiency-home'),
+            $scope.team_nicknames.home,
+            player_efficiencies.home.scoring,
+            70
+        )
+        
+        ChartBuilder.buildBarGraph(
+            document.getElementById('rebounding-efficiency-home'),
+            $scope.team_nicknames.home,
+            player_efficiencies.home.rebounding,
+            70
+        )
 
         
     dataError = ->

@@ -28,7 +28,7 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                 home: home_path_string
             }
         
-        buildScoringChart: (scoringSVG, teamShortNames, away_period_scores, home_period_scores, away_total_points, home_total_points) ->
+        buildScoringChart: (scoringSVG, teamShortNames, away_period_scores, home_period_scores, away_total_points, home_total_points, color = 'primary') ->
             max_period_score = 0
             bar_height = 100/away_period_scores.length
             for index in [0..3]
@@ -44,10 +44,10 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                     
                 path_strings = this.buildPeriodScoringPathStrings away_period_scores[index], home_period_scores[index], multiplier, vertical_start, bar_height
                 
-                away_path = SVGBuilder.createSVGPath path_strings.away, teamShortNames.away
+                away_path = SVGBuilder.createSVGPath path_strings.away, teamShortNames.away + ' ' + color
                 away_text = SVGBuilder.createSVGText away_period_scores[index], "end", 48, (vertical_start + bar_height/2), teamShortNames.away
                 
-                home_path = SVGBuilder.createSVGPath path_strings.home, teamShortNames.home
+                home_path = SVGBuilder.createSVGPath path_strings.home, teamShortNames.home + ' ' + color
                 home_text = SVGBuilder.createSVGText home_period_scores[index], "start", 52, (vertical_start + bar_height/2), teamShortNames.home
                 
                 scoringSVG.appendChild away_path
@@ -260,7 +260,7 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                 if a.value < b.value then return 1 else return 0
             return leaders
                     
-        buildPieChart: (svg, teamShortName, width, players, total_points, stat) ->
+        buildPieChart: (svg, teamShortName, width, players, total_points, stat, color = 'primary') ->
             radian_converter = (2*Math.PI)/total_points 
             leaders = this.getLeaders players, stat
             next_starting_point =
@@ -287,7 +287,7 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                     arc_string = ' A ' + (width/2) + ' ' + (width/2) + ', 0, 0, 1, ' + ending_point.x + ' ' + ending_point.y
                     
                 path_string = 'M' + next_starting_point.x + ' ' + next_starting_point.y + arc_string + ' L50 50 Z'
-                arc = SVGBuilder.createSVGPath path_string, teamShortName
+                arc = SVGBuilder.createSVGPath path_string, teamShortName + ' ' + color
                 svg.appendChild arc
                 
                 # Halfway point on arc between starting point and ending point
@@ -307,7 +307,7 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                 next_starting_point = ending_point
                 last_angle = angle
                 
-        buildBarGraph: (svg, teamShortName, players, bar_height) ->
+        buildBarGraph: (svg, teamShortName, players, bar_height, color = 'primary') ->
             bar_width = 80/players.length
             max_value = 0
             for player in players
@@ -317,7 +317,7 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
                 height = bar_height - (player.value * height_multiplier)
                 path_string = 'M' + (bar_width * index) + ' ' + bar_height + ' L' + (bar_width * index) + ' ' + height +
                     ' L' + (bar_width * (index + 1)) + ' ' + height + ' L' + (bar_width * (index + 1)) + ' ' + bar_height + ' Z'
-                bar = SVGBuilder.createSVGPath path_string, teamShortName + ' secondary'
+                bar = SVGBuilder.createSVGPath path_string, teamShortName + ' ' + color
                 label = SVGBuilder.createSVGText(
                     player.name + ', ' + player.label,
                     'start',

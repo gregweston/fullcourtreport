@@ -130,7 +130,7 @@ scorevision.controller "GameController", ($http, $timeout, $scope, SVGBuilder, C
             60,
             response.box_score.away_stats,
             response.box_score.away_totals.points,
-            'points'
+            'points',
         )
         
         ChartBuilder.buildPieChart(
@@ -229,14 +229,16 @@ scorevision.controller "GameController", ($http, $timeout, $scope, SVGBuilder, C
             document.getElementById('scoring-efficiency-away'),
             $scope.team_nicknames.away,
             player_efficiencies.away.scoring,
-            70
+            70,
+            'secondary'
         )
         
         ChartBuilder.buildBarGraph(
             document.getElementById('rebounding-efficiency-away'),
             $scope.team_nicknames.away,
             player_efficiencies.away.rebounding,
-            70
+            70,
+            'secondary'
         )
         
         for player in response.box_score.home_stats
@@ -257,14 +259,16 @@ scorevision.controller "GameController", ($http, $timeout, $scope, SVGBuilder, C
             document.getElementById('scoring-efficiency-home'),
             $scope.team_nicknames.home,
             player_efficiencies.home.scoring,
-            70
+            70,
+            'secondary'
         )
         
         ChartBuilder.buildBarGraph(
             document.getElementById('rebounding-efficiency-home'),
             $scope.team_nicknames.home,
             player_efficiencies.home.rebounding,
-            70
+            70,
+            'secondary'
         )
 
         

@@ -1,11 +1,13 @@
 div#game(data-ng-controller="GameController")
-    h2
-        span(class="team {{ team_nicknames.away }}")
-            span.team-name {{ away_full_name }}
-            span.score {{ away_final_score }}
-        span(class="team {{ team_nicknames.home }}")
-            span.team-name {{ home_full_name }}
-            span.score {{ home_final_score }}
+    header
+        h2
+            span(class="team {{ team_nicknames.away }}")
+                span.team-name {{ away_full_name }}
+                span.score {{ away_final_score }}
+            span(class="team {{ team_nicknames.home }}")
+                span.team-name {{ home_full_name }}
+                span.score {{ home_final_score }}
+        h3= game_date
     div#graphs
     
         div.large

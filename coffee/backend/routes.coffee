@@ -18,7 +18,10 @@ exports.game = (req, res) ->
                 event.event_status is 'completed' and
                 (event.season_type is 'regular' or event.season_type is 'post')
             )
-                res.render 'game'
+                res.render 'game', {
+                    locals:
+                        game_date: moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
+                }
                 break
             else if event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1
                 res.render 'future-game', {

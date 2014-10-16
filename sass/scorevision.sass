@@ -81,19 +81,24 @@ ul
 body
     font-family: 'Oswald', sans-serif
 #game
-    h2
-        margin-bottom: 2rem
-        @include flexbox(row, center)
-        &>span
-            &.team
-                font-size: 1.5rem
-                padding: .5rem 2rem
-                @include max-breakpoint(small)
-                    width: 100%
-                    text-align: center
-            .score
-                margin-left: 1rem
-                font-size: 1.7rem
+    header
+        margin-bottom: 3.5rem
+        h2
+            margin-bottom: 1.5rem
+            @include flexbox(row, center)
+            &>span
+                &.team
+                    font-size: 1.5rem
+                    padding: .5rem 2rem
+                    @include max-breakpoint(small)
+                        width: 100%
+                        text-align: center
+                .score
+                    margin-left: 1rem
+                    font-size: 1.8rem
+        h3
+            font-size: 1.4rem
+            text-align: center
     &.future
         text-align: center
         h3

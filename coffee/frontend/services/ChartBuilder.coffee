@@ -261,51 +261,70 @@ scorevision.service 'ChartBuilder', (SVGBuilder) ->
             return leaders
                     
         buildPieChart: (svg, teamShortName, width, players, total_points, stat, color = 'primary') ->
-            radian_converter = (2*Math.PI)/total_points 
             leaders = this.getLeaders players, stat
+            return if leaders.length is 0
+            radian_converter = (2*Math.PI)/total_points 
             next_starting_point =
                 x: 100 - (100 - width)/2
                 y: 50
             last_angle = 0
-            for leader, index in leaders
-                angle = last_angle + (radian_converter * leader.value)
-                
-                # If this "slice" is more than half of the "pie", need to take special measures to get the arc to work correctly
-                if angle - last_angle > Math.PI
-                    interval_point =
-                        x: 50 + ((width/2) * Math.cos(last_angle + Math.PI))
-                        y: 50 + ((width/2) * Math.sin(last_angle + Math.PI))
-                    ending_point =
-                        x: 50 + ((width/2) * Math.cos(angle))
-                        y: 50 + ((width/2) * Math.sin(angle))
-                    arc_string = ' A ' + (width/2) + ' ' + (width/2) + ', 0, 0, 1, ' + interval_point.x + ' ' + interval_point.y +
-                        ' A ' + (width/2) + ' ' + (width/2) + ', 0, 0, 1, ' + ending_point.x + ' ' + ending_point.y
-                else
-                    ending_point =
-                        x: 50 + ((width/2) * Math.cos(angle))
-                        y: 50 + ((width/2) * Math.sin(angle))
-                    arc_string = ' A ' + (width/2) + ' ' + (width/2) + ', 0, 0, 1, ' + ending_point.x + ' ' + ending_point.y
-                    
-                path_string = 'M' + next_starting_point.x + ' ' + next_starting_point.y + arc_string + ' L50 50 Z'
-                arc = SVGBuilder.createSVGPath path_string, teamShortName + ' ' + color
-                svg.appendChild arc
-                
-                # Halfway point on arc between starting point and ending point
+            
+            if leaders.length is 1
+                # Just do a whole circle if there's only one player on the board.
+                leader = leaders[0]
+                arc = SVGBuilder.createSVGCircle 50, 50, width/2, teamShortName + ' ' + color
                 label_spot =
-                    x: 50 + ((width/2.2) * Math.cos(angle - (angle-last_angle)/2))
-                    y: 50 + ((width/2.2) * Math.sin(angle - (angle-last_angle)/2))
-                    
-                # Getting slope of line that will extend from inside of "slice" to label
+                    x: 50 + ((width/2.2) * Math.cos(Math.PI))
+                    y: 50 # Will always be halfway down the chart if using one whole circle
                 line_slope =
                     x: (label_spot.x - 50)/5
                     y: (label_spot.y - 50)/5
                 line = SVGBuilder.createSVGLine label_spot.x, label_spot.y, label_spot.x + line_slope.x, label_spot.y + line_slope.y, .25
-                label_anchor = if label_spot.x + line_slope.x < 50 then 'end' else 'start'
+                label_anchor = 'end'
                 label = SVGBuilder.createSVGText leader.name + ', ' + leader.value, label_anchor, label_spot.x + line_slope.x, label_spot.y + line_slope.y, 'legend'
+                svg.appendChild arc
                 svg.appendChild line
                 svg.appendChild label
-                next_starting_point = ending_point
-                last_angle = angle
+            else
+                for leader, index in leaders
+                    angle = last_angle + (radian_converter * leader.value)
+                    
+                    # If this "slice" is more than half of the "pie", need to take special measures to get the arc to work correctly
+                    if angle - last_angle > Math.PI
+                        interval_point =
+                            x: 50 + ((width/2) * Math.cos(last_angle + Math.PI))
+                            y: 50 + ((width/2) * Math.sin(last_angle + Math.PI))
+                        ending_point =
+                            x: 50 + ((width/2) * Math.cos(angle))
+                            y: 50 + ((width/2) * Math.sin(angle))
+                        arc_string = ' A ' + (width/2) + ' ' + (width/2) + ', 0, 0, 1, ' + interval_point.x + ' ' + interval_point.y +
+                            ' A ' + (width/2) + ' ' + (width/2) + ', 0, 0, 1, ' + ending_point.x + ' ' + ending_point.y
+                    else
+                        ending_point =
+                            x: 50 + ((width/2) * Math.cos(angle))
+                            y: 50 + ((width/2) * Math.sin(angle))
+                        arc_string = ' A ' + (width/2) + ' ' + (width/2) + ', 0, 0, 1, ' + ending_point.x + ' ' + ending_point.y
+                        
+                    path_string = 'M' + next_starting_point.x + ' ' + next_starting_point.y + arc_string + ' L50 50 Z'
+                    arc = SVGBuilder.createSVGPath path_string, teamShortName + ' ' + color
+                    svg.appendChild arc
+                    
+                    # Halfway point on arc between starting point and ending point
+                    label_spot =
+                        x: 50 + ((width/2.2) * Math.cos(angle - (angle-last_angle)/2))
+                        y: 50 + ((width/2.2) * Math.sin(angle - (angle-last_angle)/2))
+                        
+                    # Getting slope of line that will extend from inside of "slice" to label
+                    line_slope =
+                        x: (label_spot.x - 50)/5
+                        y: (label_spot.y - 50)/5
+                    line = SVGBuilder.createSVGLine label_spot.x, label_spot.y, label_spot.x + line_slope.x, label_spot.y + line_slope.y, .25
+                    label_anchor = if label_spot.x + line_slope.x < 50 then 'end' else 'start'
+                    label = SVGBuilder.createSVGText leader.name + ', ' + leader.value, label_anchor, label_spot.x + line_slope.x, label_spot.y + line_slope.y, 'legend'
+                    svg.appendChild line
+                    svg.appendChild label
+                    next_starting_point = ending_point
+                    last_angle = angle
                 
         buildBarGraph: (svg, teamShortName, players, bar_height, color = 'primary') ->
             bar_width = 80/players.length

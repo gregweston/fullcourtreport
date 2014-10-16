@@ -38,11 +38,12 @@ class APIHandler
                 'User-Agent': @userAgent
         https.get options, (res) =>
             chunks = []
-            res.on 'error', (e) ->
-                console.log e
+            res.on 'error', (err) ->
+                return next(err)
             res.on 'data', (chunk) ->
                 chunks.push chunk
             res.on 'end', =>
+                return next('Unexpected response from server') if res.statusCode isnt 200
                 buffer = Buffer.concat chunks
                 encoding = res.headers['content-encoding']
                 if encoding is 'gzip'

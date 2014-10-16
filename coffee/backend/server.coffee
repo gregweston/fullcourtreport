@@ -23,5 +23,11 @@ app.get('/games/:year/:month/:day', routes.day)
 
 app.get '/', routes.index
 
+app.use (req, res, next) ->
+    res.status 404
+    return res.render('404') if req.accepts 'html'
+    return res.json({error: 'Not found'}) if req.accepts 'json'
+    res.type('text').send('Not found')
+
 app.listen 3000, ->
   console.log 'Express server listening on port %d in %s mode', app.address().port, app.settings.env

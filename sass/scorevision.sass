@@ -95,7 +95,9 @@ body
                         text-align: center
                 .score
                     margin-left: 1rem
-                    font-size: 1.8rem
+                    font-size: 2rem
+                    &.winning
+                        border-bottom: 3px solid
         h3
             font-size: 1.4rem
             text-align: center
@@ -110,6 +112,8 @@ body
         @include flexbox
         width: 95%
         margin: 0 auto
+        @include max-breakpoint(small)
+            @include prefix(justify-content, space-around)
         &>div
             position: relative
             width: 20rem

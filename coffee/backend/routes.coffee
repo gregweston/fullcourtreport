@@ -1,5 +1,6 @@
 NBADataGetter = require './modules/NBADataGetter'
 moment = require 'moment'
+crypto = require 'crypto'
 
 gameDataReady = (box_score, away_team_stats, home_team_stats) ->
     if box_score isnt null and away_team_stats isnt null and home_team_stats isnt null
@@ -18,9 +19,11 @@ exports.game = (req, res) ->
                 event.event_status is 'completed' and
                 (event.season_type is 'regular' or event.season_type is 'post')
             )
+                req.session.token = crypto.randomBytes(32).toString('hex')
                 res.render 'game', {
                     locals:
                         game_date: moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
+                        token: req.session.token
                 }
                 break
             else if event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1
@@ -38,6 +41,8 @@ exports.game = (req, res) ->
         # 404
 
 exports.gameData = (req, res) ->
+    return res.json({"error": "Invalid request token"}) if req.query.t isnt req.session.token or !req.session.token?
+    req.session.token = crypto.randomBytes(32).toString('hex')
     box_score = null
     away_team_stats = null
     home_team_stats = null

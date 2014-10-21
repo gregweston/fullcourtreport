@@ -8,7 +8,7 @@ div#game(data-ng-controller="GameController")
                 span.team-name {{ home_full_name }}
                 span.score(data-ng-class="{winning: home_final_score > away_final_score}") {{ home_final_score }}
         h3= game_date
-    div#graphs
+    div#graphs(data-token="#{token}")
     
         div.large
             h4 Individual Scoring ({{ team_short_names.away }})

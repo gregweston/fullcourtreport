@@ -274,6 +274,6 @@ scorevision.controller "GameController", ($http, $timeout, $scope, SVGBuilder, C
         
     dataError = ->
     
-    $http.get('/data' + location.pathname)
+    $http.get('/data' + location.pathname + '?t=' + document.getElementById('graphs').dataset.token)
         .success((data, status, headers, config) -> renderAllGraphs data, status, headers, config)
         .error((data, status, headers, config) -> dataError data, status, headers, config)

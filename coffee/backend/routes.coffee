@@ -72,4 +72,12 @@ exports.day = (req, res) ->
                 games: games
                 moment: moment
         }
+        
+exports.today = (req, res, next) ->
+    yesterday = moment().subtract(1, 'days').toArray()
+    req.params =
+        year: yesterday[0]
+        month: yesterday[1] + 1
+        day: yesterday[2]
+    next()
     

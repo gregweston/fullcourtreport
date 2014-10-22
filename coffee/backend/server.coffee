@@ -1,5 +1,5 @@
 express = require 'express'
-routes = require './routes';
+routes = require './routes'
 config = require './config'
 
 app = module.exports = express.createServer();
@@ -29,11 +29,11 @@ app.configure 'development', ->
 app.configure 'production', ->
   app.use express.errorHandler()
 
-app.get('/data/games/:year/:month/:day/:away_team/:home_team', routes.gameData)
-app.get('/games/:year/:month/:day/:away_team/:home_team', routes.game)
-app.get('/games/:year/:month/:day', routes.day)
+app.get '/data/games/:year/:month/:day/:away_team/:home_team', routes.gameData
+app.get '/games/:year/:month/:day/:away_team/:home_team', routes.game
+app.get '/games/:year/:month/:day', routes.day
 
-app.get '/', routes.index
+app.get '/', routes.today, routes.day
 
 app.use (req, res, next) ->
     res.status 404

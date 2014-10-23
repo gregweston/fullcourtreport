@@ -20,22 +20,26 @@ exports.game = (req, res) ->
                 (event.season_type is 'regular' or event.season_type is 'post')
             )
                 req.session.token = crypto.randomBytes(32).toString('hex')
+                game_date = moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
                 res.render 'game', {
                     locals:
-                        game_date: moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
+                        title: event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date
+                        game_date: game_date
                         token: req.session.token
                 }
                 break
             else if event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1
+                game_date = moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
                 res.render 'future-game', {
                     locals:
+                        title: event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date
                         team_nicknames:
                             away: event.away_team.team_id
                             home: event.home_team.team_id
                         team_full_names:
                             away: event.away_team.full_name
                             home: event.home_team.full_name
-                        game_date: moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
+                        game_date: game_date
                 }
                 break
         # 404

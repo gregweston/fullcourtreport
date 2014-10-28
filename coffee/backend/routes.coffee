@@ -22,16 +22,15 @@ exports.game = (req, res) ->
                 )
                     req.session.token = crypto.randomBytes(32).toString('hex')
                     game_date = moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
-                    res.render 'game', {
+                    return res.render 'game', {
                         locals:
-                            title: event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date
+                            title: ' | ' + event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date
                             game_date: game_date
                             token: req.session.token
                     }
-                    break
                 else if event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1
                     game_date = moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
-                    res.render 'future-game', {
+                    return res.render 'future-game', {
                         locals:
                             title: ' | ' + event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date
                             team_nicknames:
@@ -42,9 +41,9 @@ exports.game = (req, res) ->
                                 home: event.home_team.full_name
                             game_date: game_date
                     }
-                    break
+            res.status(404).render('404')
         else
-            res.render '404'
+            res.status(404).render('404')
 
 exports.gameData = (req, res) ->
     return res.json({"error": "Invalid request token"}) if req.query.t isnt req.session.token or !req.session.token?

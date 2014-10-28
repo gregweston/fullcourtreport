@@ -1,8 +1,9 @@
 
-fullcourt.service 'SVGBuilder', -> 
+fullcourt.service 'SVGBuilder', ->
+    svg_ns = 'http://www.w3.org/2000/svg'
     return {
         createSVGLine: (x1, y1, x2, y2, width = 1, classname = '') ->
-            line = document.createElementNS 'http://www.w3.org/2000/svg', 'line'
+            line = document.createElementNS svg_ns, 'line'
             line.setAttributeNS null, 'x1', x1
             line.setAttributeNS null, 'y1', y1
             line.setAttributeNS null, 'x2', x2
@@ -12,7 +13,7 @@ fullcourt.service 'SVGBuilder', ->
             return line
         
         createSVGCircle: (cx, cy, r, classname) ->
-            circle = document.createElementNS 'http://www.w3.org/2000/svg', 'circle'
+            circle = document.createElementNS svg_ns, 'circle'
             circle.setAttributeNS null, 'cx', cx
             circle.setAttributeNS null, 'cy', cy
             circle.setAttributeNS null, 'r', r
@@ -21,7 +22,7 @@ fullcourt.service 'SVGBuilder', ->
         
         #Create rectangle centered on provided point
         createSVGRect: (x, y, width, height, classname) ->
-            rect = document.createElementNS 'http://www.w3.org/2000/svg', 'rect'
+            rect = document.createElementNS svg_ns, 'rect'
             rect.setAttributeNS null, 'x', x - width/2
             rect.setAttributeNS null, 'y', y - height/2
             rect.setAttributeNS null, 'width', width
@@ -31,13 +32,13 @@ fullcourt.service 'SVGBuilder', ->
         
         #Create triangle centered on provided point
         createSVGTriangle: (x, y, width, height, classname) ->
-            rect = document.createElementNS 'http://www.w3.org/2000/svg', 'polygon'
+            rect = document.createElementNS svg_ns, 'polygon'
             rect.setAttributeNS null, 'points', (x-width/2) + ',' + (y+height/2) + ' ' + x + ',' + (y-height/2) + ' ' + (x+width/2) + ',' + (y+height/2)
             rect.setAttributeNS null, 'class', 'team ' + classname
             return rect
         
         createSVGPath: (pathString, classname) ->
-            path = document.createElementNS 'http://www.w3.org/2000/svg', 'path'
+            path = document.createElementNS svg_ns, 'path'
             path.setAttributeNS null, 'd', pathString
             path.setAttributeNS null, 'class', 'team ' + classname
             path.setAttributeNS null, 'stroke-linecap', 'round'
@@ -45,7 +46,7 @@ fullcourt.service 'SVGBuilder', ->
             return path
         
         createSVGText: (content, anchor, x, y, classname = '', transform = '') ->
-            text = document.createElementNS 'http://www.w3.org/2000/svg', 'text'
+            text = document.createElementNS svg_ns, 'text'
             text.setAttributeNS null, 'class', 'team ' + classname
             text.setAttributeNS null, 'text-anchor', anchor
             text.setAttributeNS null, 'x', x

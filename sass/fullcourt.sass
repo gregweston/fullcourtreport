@@ -22,6 +22,8 @@ $small-width: 780px
                     fill: $tertiary
             @else
                 fill: $secondary
+        &.primary-stroke
+            stroke: $primary
     line.team[class*="#{$team}"]
         stroke: $primary
         &.secondary
@@ -152,7 +154,7 @@ body
     ul
         width: 95%
         margin: 0 auto
-        @include flexbox(row, flex-start)
+        @include flexbox(row, center)
         @include max-breakpoint(small)
             width: 100%
             @include prefix(justify-content, space-around)

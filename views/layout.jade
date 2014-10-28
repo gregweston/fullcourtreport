@@ -1,13 +1,13 @@
 doctype html
 html
   head
-    title SuperScore | #{title}
+    title Fullcourt Report #{title}
     meta(name="viewport",  content="width=device-width")
     link(href='http://fonts.googleapis.com/css?family=Oswald', rel='stylesheet')
     link(rel='stylesheet', href='/css/compiled/scorevision.css')
-    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js")
-    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-touch.js")
-    script(src="/js/compiled/scorevision.js")
-  body(data-ng-app="ScoreVision")
+    script(src="/js/libraries/angular.min.js")
+    script(src="/js/libraries/angular-touch.js")
+    script(src="/js/compiled/fullcourt.js")
+  body(data-ng-app="FullCourtReport")
     main!= body
     

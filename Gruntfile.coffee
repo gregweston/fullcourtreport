@@ -26,7 +26,7 @@ module.exports = (grunt) ->
                 options:
                     bare: true
                 files:
-                    'public/js/compiled/scorevision.js': [
+                    'public/js/compiled/fullcourt.js': [
                         './coffee/frontend/app.coffee',
                         './coffee/frontend/services/*.coffee',
                         './coffee/frontend/controllers/*.coffee'
@@ -57,7 +57,7 @@ module.exports = (grunt) ->
                 options:
                     style: 'compressed'
                 files:
-                    './public/css/compiled/scorevision.css': './sass/scorevision.sass'
+                    './public/css/compiled/fullcourt.css': './sass/fullcourt.sass'
         uglify:
             dist:
                 options:

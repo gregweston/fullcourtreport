@@ -1,4 +1,4 @@
-scorevision.controller "GameController", ($http, $timeout, $scope, SVGBuilder, ChartBuilder) ->
+fullcourt.controller "GameController", ($http, $timeout, $scope, SVGBuilder, ChartBuilder) ->
     
     renderAllGraphs = (response, status, headers, config) ->
         # TODO: Add exception for 76ers -> sixers

@@ -1,1 +1,1 @@
-scorevision = angular.module 'ScoreVision', ['ngTouch']
+fullcourt = angular.module 'FullCourtReport', ['ngTouch']

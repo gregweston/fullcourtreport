@@ -41,5 +41,5 @@ app.use (req, res, next) ->
     return res.json({error: 'Not found'}) if req.accepts 'json'
     res.type('text').send('Not found')
 
-app.listen 3000, ->
+app.listen 3030, ->
   console.log 'Express server listening on port %d in %s mode', app.address().port, app.settings.env

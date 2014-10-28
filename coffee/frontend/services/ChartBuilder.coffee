@@ -1,5 +1,5 @@
 
-scorevision.service 'ChartBuilder', (SVGBuilder) -> 
+fullcourt.service 'ChartBuilder', (SVGBuilder) -> 
     return {
         round: (float, decimal_spaces) ->
             return Math.round(float * (Math.pow(10, decimal_spaces))) / Math.pow(10, decimal_spaces)

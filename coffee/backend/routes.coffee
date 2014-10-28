@@ -12,37 +12,39 @@ gameDataReady = (box_score, away_team_stats, home_team_stats) ->
     return false
 
 exports.game = (req, res) ->
-    games_for_day = NBADataGetter.getGamesForDay req.params['year'], req.params['month'], req.params['day'], (games) ->
-        for event in games.event
-            if (
-                event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1 and
-                event.event_status is 'completed' and
-                (event.season_type is 'regular' or event.season_type is 'post')
-            )
-                req.session.token = crypto.randomBytes(32).toString('hex')
-                game_date = moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
-                res.render 'game', {
-                    locals:
-                        title: event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date
-                        game_date: game_date
-                        token: req.session.token
-                }
-                break
-            else if event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1
-                game_date = moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
-                res.render 'future-game', {
-                    locals:
-                        title: event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date
-                        team_nicknames:
-                            away: event.away_team.team_id
-                            home: event.home_team.team_id
-                        team_full_names:
-                            away: event.away_team.full_name
-                            home: event.home_team.full_name
-                        game_date: game_date
-                }
-                break
-        # 404
+    games_for_day = NBADataGetter.getGamesForDay req.params['year'], req.params['month'], req.params['day'], (day) ->
+        if day.event.length > 0
+            for event in day.event
+                if (
+                    event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1 and
+                    event.event_status is 'completed' and
+                    (event.season_type is 'regular' or event.season_type is 'post')
+                )
+                    req.session.token = crypto.randomBytes(32).toString('hex')
+                    game_date = moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
+                    res.render 'game', {
+                        locals:
+                            title: event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date
+                            game_date: game_date
+                            token: req.session.token
+                    }
+                    break
+                else if event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1
+                    game_date = moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
+                    res.render 'future-game', {
+                        locals:
+                            title: ' | ' + event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date
+                            team_nicknames:
+                                away: event.away_team.team_id
+                                home: event.home_team.team_id
+                            team_full_names:
+                                away: event.away_team.full_name
+                                home: event.home_team.full_name
+                            game_date: game_date
+                    }
+                    break
+        else
+            res.render '404'
 
 exports.gameData = (req, res) ->
     return res.json({"error": "Invalid request token"}) if req.query.t isnt req.session.token or !req.session.token?
@@ -70,6 +72,7 @@ exports.day = (req, res) ->
     games_for_day = NBADataGetter.getGamesForDay req.params['year'], req.params['month'], req.params['day'], (games) ->
         res.render 'day', {
             locals:
+                title: ' | ' + moment(games.events_date).format('dddd, MMMM D, YYYY')
                 year: req.params['year']
                 month: req.params['month']
                 day: req.params['day']

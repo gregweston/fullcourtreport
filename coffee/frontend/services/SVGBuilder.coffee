@@ -1,5 +1,5 @@
 
-scorevision.service 'SVGBuilder', -> 
+fullcourt.service 'SVGBuilder', -> 
     return {
         createSVGLine: (x1, y1, x2, y2, width = 1, classname = '') ->
             line = document.createElementNS 'http://www.w3.org/2000/svg', 'line'

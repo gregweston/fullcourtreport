@@ -55,8 +55,7 @@ fullcourt.service 'ChartBuilder', (SVGBuilder) ->
                 scoringSVG.appendChild away_text
                 scoringSVG.appendChild home_text
                 
-        buildBasketsPathStrings: (attempts, makes, multiplier, horizontal_start, bar_width) ->
-            
+        buildBasketsPathStrings: (attempts, makes, multiplier, horizontal_start, bar_width) ->   
             makes_height = makes * multiplier
             misses_height = (attempts * multiplier) - makes_height
             
@@ -69,6 +68,7 @@ fullcourt.service 'ChartBuilder', (SVGBuilder) ->
                     " L" + (horizontal_start + bar_width) + " " + (100 - (misses_height + makes_height)) +
                     " L" + (horizontal_start + bar_width)  + " " + (100 - makes_height) + " Z"
             return {
+                label_position: 100 - (attempts * multiplier) - 5 # Subtract this 5 to add a little distance between top of bar and label
                 misses:
                     path_string: misses_path_string
                     vertical_center: 100 - makes_height - misses_height/2
@@ -90,7 +90,7 @@ fullcourt.service 'ChartBuilder', (SVGBuilder) ->
                 away.attempts + ' attempts',
                 'middle',
                 away_bar_start + bar_width/2
-                5
+                path_strings.away.label_position
             )
             svg.appendChild away_attempts_text
             
@@ -122,7 +122,7 @@ fullcourt.service 'ChartBuilder', (SVGBuilder) ->
                 home.attempts + ' attempts',
                 'middle',
                 home_bar_start + bar_width/2
-                5
+                path_strings.home.label_position
             )
             svg.appendChild home_attempts_text
             

@@ -176,7 +176,7 @@ fullcourt.service 'ChartBuilder', (SVGBuilder) ->
             }
         
         buildDeviationPoints: (away_stats, home_stats, radius) ->
-            
+            spread = 84 # The range between the lowest point on the chart and the highest, in percent of total SVG height
             highest = Math.max(
                 away_stats.this_game, away_stats.avg_per_game, away_stats.opponent_avg_allowed, home_stats.this_game, home_stats.avg_per_game, home_stats.opponent_avg_allowed
             )
@@ -184,31 +184,33 @@ fullcourt.service 'ChartBuilder', (SVGBuilder) ->
                 away_stats.this_game, away_stats.avg_per_game, away_stats.opponent_avg_allowed, home_stats.this_game, home_stats.avg_per_game, home_stats.opponent_avg_allowed
             )
             difference = highest - lowest
-            multiplier = 84/difference
+            multiplier = spread/difference
+            away_graph_horizontal_position = 30
+            home_graph_horizontal_position = 70
             
             return {
                 labels: this.buildDeviationChartAxis highest, lowest, multiplier
                 points:
                     away:
                         opponent_avg_allowed:
-                            path: [30, 100 - ((away_stats.opponent_avg_allowed * multiplier) - (lowest * multiplier) + 8), radius]
+                            path: [away_graph_horizontal_position, 100 - ((away_stats.opponent_avg_allowed * multiplier) - (lowest * multiplier) + 8), radius]
                             value: this.round away_stats.opponent_avg_allowed, 1
                         avg_per_game:
-                            path: [30, 100 - ((away_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8), radius]
+                            path: [away_graph_horizontal_position, 100 - ((away_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8), radius]
                             value: this.round away_stats.avg_per_game, 1
                         this_game:
-                            path: [30, 100 - ((away_stats.this_game * multiplier) - (lowest * multiplier) + 8), radius]
+                            path: [away_graph_horizontal_position, 100 - ((away_stats.this_game * multiplier) - (lowest * multiplier) + 8), radius]
                             value: this.round away_stats.this_game, 1
                         
                     home:
                         opponent_avg_allowed:
-                            path: [70, 100 - ((home_stats.opponent_avg_allowed * multiplier) - (lowest * multiplier) + 8), radius]
+                            path: [home_graph_horizontal_position, 100 - ((home_stats.opponent_avg_allowed * multiplier) - (lowest * multiplier) + 8), radius]
                             value: this.round home_stats.opponent_avg_allowed, 1
                         avg_per_game:
-                            path: [70, 100 - ((home_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8), radius]
+                            path: [home_graph_horizontal_position, 100 - ((home_stats.avg_per_game * multiplier) - (lowest * multiplier) + 8), radius]
                             value: this.round home_stats.avg_per_game, 1
                         this_game:
-                            path: [70, 100 - ((home_stats.this_game * multiplier) - (lowest * multiplier) + 8), radius]
+                            path: [home_graph_horizontal_position, 100 - ((home_stats.this_game * multiplier) - (lowest * multiplier) + 8), radius]
                             value: this.round home_stats.this_game, 1
             }
             

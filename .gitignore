@@ -3,4 +3,6 @@ public/css/compiled/
 public/js/compiled/
 .sass-cache/
 node_modules/
-*.js
+modules/
+routes.js
+server.js

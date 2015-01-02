@@ -1,6 +1,6 @@
 div.schedule
     h2 All Games for #{month}/#{day}/#{year}
-    if games.event.length > 0
+    if games.event && games.event.length > 0
         ul
             each game in games.event
                 - var away_nickname = game.away_team.last_name.toLowerCase()

@@ -208,4 +208,24 @@ body
     padding: .2rem .5rem
     @include max-breakpoint(small)
         margin: 0
-   
+html,body
+    height: 100%
+#wrapper
+    @include flexbox(column, flex-start, stretch)
+    min-height: 100%
+main
+    flex: 1
+footer
+    background-color: #444
+    color: #DFD
+    font-size: .95rem
+    padding: .2rem .5rem
+    p
+        text-align: right
+        a
+            color: darken(#DFD, 10)
+            text-decoration: none
+            -webkit-transition: color .25s
+            transition: color .25s
+            &:hover
+                color: lighten(#DFD, 10)

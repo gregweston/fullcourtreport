@@ -9,7 +9,10 @@ html
     script(src="/js/libraries/angular-touch.js")
     script(src="/js/compiled/fullcourt.js")
   body(data-ng-app="FullCourtReport")
-    div#topbar
-      h1 Fullcourt Report
-    main!= body
-    
+    div#wrapper
+      div#topbar
+        h1 Fullcourt Report
+      main!= body
+      footer
+        p Built by Greg Weston with the 
+          a(href="https://erikberg.com/api") XMLStats API 

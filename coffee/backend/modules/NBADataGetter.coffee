@@ -39,7 +39,7 @@ team_ids =
     "magic":         "orlando-"
     "76ers":         "philadelphia-"
     "suns":          "phoenix-"
-    "blazers":       "portland-trail-"
+    "trail-blazers": "portland-"
     "kings":         "sacramento-"
     "spurs":         "san-antonio-"
     "raptors":       "toronto-"
@@ -58,7 +58,6 @@ exports.getBoxScoreData = (params, next) ->
         month +
         day + '-' +
         awayTeamId + '-at-' + homeTeamId + '.json'
-        
     handler.retrieveData url, next
     
 exports.getTeamStats = (year, month, day, team, next) ->

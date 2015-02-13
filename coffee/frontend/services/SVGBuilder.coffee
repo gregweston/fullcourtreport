@@ -20,45 +20,45 @@ fullcourt.service 'SVGBuilder', ->
             line.setAttributeNS null, 'x2', x2
             line.setAttributeNS null, 'y2', y2
             line.setAttributeNS null, 'stroke-width', width
-            line.setAttributeNS null, 'class', classname
+            line.setAttributeNS null, 'class', classname.replace(' ', '-')
             return line
         
-        createSVGCircle: (cx, cy, r, classname) ->
+        createSVGCircle: (cx, cy, r, classname = '') ->
             circle = document.createElementNS svg_ns, 'circle'
             circle.setAttributeNS null, 'cx', cx
             circle.setAttributeNS null, 'cy', cy
             circle.setAttributeNS null, 'r', r
-            circle.setAttributeNS null, 'class', 'team ' + classname
+            circle.setAttributeNS null, 'class', 'team ' + classname.replace(' ', '-')
             return circle
         
         #Create rectangle centered on provided point
-        createSVGRect: (x, y, width, height, classname) ->
+        createSVGRect: (x, y, width, height, classname = '') ->
             rect = document.createElementNS svg_ns, 'rect'
             rect.setAttributeNS null, 'x', x - width/2
             rect.setAttributeNS null, 'y', y - height/2
             rect.setAttributeNS null, 'width', width
             rect.setAttributeNS null, 'height', height
-            rect.setAttributeNS null, 'class', 'team ' + classname
+            rect.setAttributeNS null, 'class', 'team ' + classname.replace(' ', '-')
             return rect
         
         #Create triangle centered on provided point
-        createSVGTriangle: (x, y, width, height, classname) ->
+        createSVGTriangle: (x, y, width, height, classname = '') ->
             rect = document.createElementNS svg_ns, 'polygon'
             rect.setAttributeNS null, 'points', (x-width/2) + ',' + (y+height/2) + ' ' + x + ',' + (y-height/2) + ' ' + (x+width/2) + ',' + (y+height/2)
-            rect.setAttributeNS null, 'class', 'team ' + classname
+            rect.setAttributeNS null, 'class', 'team ' + classname.replace(' ', '-')
             return rect
         
-        createSVGPath: (pathString, classname) ->
+        createSVGPath: (pathString, classname = '') ->
             path = document.createElementNS svg_ns, 'path'
             path.setAttributeNS null, 'd', pathString
-            path.setAttributeNS null, 'class', 'team ' + classname
+            path.setAttributeNS null, 'class', 'team ' + classname.replace(' ', '-')
             path.setAttributeNS null, 'stroke-linecap', 'round'
             path.setAttributeNS null, 'stroke-linejoin', 'round'
             return path
         
         createSVGText: (content, anchor, x, y, classname = '', transform = '') ->
             text = document.createElementNS svg_ns, 'text'
-            text.setAttributeNS null, 'class', 'team ' + classname
+            text.setAttributeNS null, 'class', 'team ' + classname.replace(' ', '-')
             text.setAttributeNS null, 'text-anchor', anchor
             text.setAttributeNS null, 'x', x
             text.setAttributeNS null, 'y', y + 2

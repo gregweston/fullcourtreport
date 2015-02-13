@@ -5,10 +5,6 @@ div.schedule
             each game in games.event
                 - var away_nickname = game.away_team.last_name.toLowerCase().replace(' ', '-')
                 - var home_nickname = game.home_team.last_name.toLowerCase().replace(' ', '-')
-                if away_nickname === '76ers'
-                    - away_nickname = 'sixers'
-                else if home_nickname === '76ers'
-                    - home_nickname = 'sixers'
                 li
                     a(href="/games/#{year}/#{month}/#{day}/#{away_nickname}/#{home_nickname}")
                         span.game-time= moment(game.start_date_time).format('h:mm A (ZZ)')

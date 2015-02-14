@@ -220,13 +220,14 @@ fullcourt.controller "GameController", ($http, $timeout, $scope, SVGBuilder, Cha
                 scoring: []
                 rebounding: []
         for player in response.box_score.away_stats
-            if player.minutes > 5
+            if player.points > 0
                 display_name = player.first_name[0] + '. ' + player.last_name
                 player_efficiencies.away.scoring.push {
                     name: display_name
                     value: player.points/player.minutes
                     label: player.points + 'pts/' + player.minutes + 'min'
                 }
+            if player.rebounds > 0
                 player_efficiencies.away.rebounding.push {
                     name: display_name
                     value: player.rebounds/player.minutes
@@ -250,13 +251,14 @@ fullcourt.controller "GameController", ($http, $timeout, $scope, SVGBuilder, Cha
         )
         
         for player in response.box_score.home_stats
-            if player.minutes > 5
+            if player.points > 0
                 display_name = player.first_name[0] + '. ' + player.last_name
                 player_efficiencies.home.scoring.push {
                     name: player.first_name[0] + '. ' + player.last_name
                     value: player.points/player.minutes
                     label: player.points + 'pts/' + player.minutes + 'min'
                 }
+            if player.rebounds > 0
                 player_efficiencies.home.rebounding.push {
                     name: display_name
                     value: player.rebounds/player.minutes

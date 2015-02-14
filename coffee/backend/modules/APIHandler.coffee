@@ -34,7 +34,7 @@ class APIHandler
             @callAPI url, cache, next
     
     handleResponseBody: (cache, url, body, next) ->
-        cache.set url, body, 3600 * 24, (err) ->
+        cache.set url, body, config.apiResponseCacheTime, (err) ->
             return next(err) if err?
         next JSON.parse(body)
     

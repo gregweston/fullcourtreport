@@ -21,8 +21,8 @@ fullcourt.controller "GameController", ($http, $timeout, $scope, SVGBuilder, Cha
         $scope.home_final_score = response.box_score.home_totals.points
         
         $scope.team_nicknames =
-            away: response.box_score.away_team.last_name.toLowerCase()
-            home: response.box_score.home_team.last_name.toLowerCase()
+            away: response.box_score.away_team.last_name.toLowerCase().replace(' ', '-')
+            home: response.box_score.home_team.last_name.toLowerCase().replace(' ', '-')
             
         $scope.team_short_names =
             away: response.box_score.away_team.abbreviation

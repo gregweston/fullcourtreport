@@ -11,7 +11,7 @@
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 NBADataGetter = require './modules/NBADataGetter'
-moment = require 'moment'
+moment = require 'moment-timezone'
 crypto = require 'crypto'
 
 gameDataReady = (box_score, away_team_stats, home_team_stats) ->
@@ -33,7 +33,7 @@ exports.game = (req, res) ->
                     (event.season_type is 'regular' or event.season_type is 'post')
                 )
                     req.session.token = crypto.randomBytes(32).toString('hex')
-                    game_date = moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
+                    game_date = moment.tz(event.start_date_time, 'America/New_York').format('dddd, MMMM D, YYYY [at] h:mm A (z)')
                     return res.render 'game', {
                         locals:
                             title: ' | ' + event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date
@@ -41,7 +41,7 @@ exports.game = (req, res) ->
                             token: req.session.token
                     }
                 else if event.event_id.indexOf(req.params['away_team']) isnt -1 and event.event_id.indexOf(req.params['home_team']) isnt -1
-                    game_date = moment(event.start_date_time).format('dddd, MMMM D, YYYY [at] h:mm A (ZZ)')
+                    game_date = moment.tz(event.start_date_time, 'America/New_York').format('dddd, MMMM D, YYYY [at] h:mm A (z)')
                     return res.render 'future-game', {
                         locals:
                             title: ' | ' + event.away_team.full_name + ' at ' + event.home_team.full_name + ' | ' + game_date

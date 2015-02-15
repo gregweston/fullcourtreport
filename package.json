@@ -8,7 +8,8 @@
     "mongodb": "*",
     "memcached": "*",
     "string": "~2.1.0",
-    "jslint": "~0.6.4"
+    "jslint": "~0.6.4",
+    "moment-timezone": "~0.3.0"
   },
   "devDependencies": {
     "grunt-contrib-coffee": "~0.11.1",

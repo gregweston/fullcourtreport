@@ -2,10 +2,12 @@ div#game(data-ng-controller="GameController")
     header
         h2
             span(class="team {{ team_nicknames.away.replace(' ', '-') }}")
-                span.team-name {{ away_full_name }}
+                span.team-name.full-name {{ away_full_name }}
+                span.team-name.short-name {{ team_short_names.away }}
                 span.score(data-ng-class="{winning: away_final_score > home_final_score}") {{ away_final_score }}
             span(class="team {{ team_nicknames.home.replace(' ', '-') }}")
-                span.team-name {{ home_full_name }}
+                span.team-name.full-name {{ home_full_name }}
+                span.team-name.short-name {{ team_short_names.home }}
                 span.score(data-ng-class="{winning: home_final_score > away_final_score}") {{ home_final_score }}
         h3= game_date
     div#graphs(data-token="#{token}")

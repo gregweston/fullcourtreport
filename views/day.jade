@@ -1,5 +1,14 @@
-div.schedule
-    h2 All Games for #{month}/#{day}/#{year}
+ul.day-select
+    for difference in [-3, -2, -1, 0, 1, 2, 3]
+        li
+            if difference == 0 
+                span= moment(month + '/' + day + '/' + year).add(difference, 'days').format('ddd M/D')
+            else
+                - var day_for_link = moment(month + '/' + day + '/' + year).add(difference, 'days')
+                a(href="/games/#{day_for_link.format('YYYY/M/D')}")= day_for_link.format('ddd M/D')
+div.schedule 
+    h2 All Games for 
+        span= moment(month + '/' + day + '/' + year).format('dddd, MMMM Do, YYYY')
     if games.event && games.event.length > 0
         ul
             each game in games.event

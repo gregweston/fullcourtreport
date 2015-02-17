@@ -14,10 +14,12 @@ div#game(data-ng-controller="GameController")
     
         div.large
             h4 Individual Scoring ({{ team_short_names.away }})
+            h6.graph-total Total: {{ totals.away.points }}
             svg#individual-scoring-away(width="100%", viewBox="0 0 100 100")
             
         div.large
             h4 Individual Scoring ({{ team_short_names.home }})
+            h6.graph-total Total: {{ totals.home.points }}
             svg#individual-scoring-home(width="100%", viewBox="0 0 100 100")
             
         div.large
@@ -30,10 +32,12 @@ div#game(data-ng-controller="GameController")
             
         div.large
             h4 Individual Rebounding ({{ team_short_names.away }})
+            h6.graph-total Total: {{ totals.away.rebounds }}
             svg#individual-rebounding-away(width="100%", viewBox="0 0 100 100")
             
         div.large
             h4 Individual Rebounding ({{ team_short_names.home }})
+            h6.graph-total Total: {{ totals.home.rebounds }}
             svg#individual-rebounding-home(width="100%", viewBox="0 0 100 100")
             
         div.large
@@ -46,18 +50,22 @@ div#game(data-ng-controller="GameController")
             
         div.large
             h4 Individual Assists ({{ team_short_names.away }})
+            h6.graph-total Total: {{ totals.away.assists }}
             svg#individual-assists-away(width="100%", viewBox="0 0 100 100")
             
         div.large
             h4 Individual Assists ({{ team_short_names.home }})
+            h6.graph-total Total: {{ totals.home.assists }}
             svg#individual-assists-home(width="100%", viewBox="0 0 100 100")
             
         div.large
             h4 Individual Steals ({{ team_short_names.away }})
+            h6.graph-total Total: {{ totals.away.steals }}
             svg#individual-steals-away(width="100%", viewBox="0 0 100 100")
             
         div.large
             h4 Individual Steals ({{ team_short_names.home }})
+            h6.graph-total Total: {{ totals.home.steals }}
             svg#individual-steals-home(width="100%", viewBox="0 0 100 100")
         
         div

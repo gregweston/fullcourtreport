@@ -28,6 +28,10 @@ fullcourt.controller "GameController", ($http, $timeout, $scope, SVGBuilder, Cha
             away: response.box_score.away_team.abbreviation
             home: response.box_score.home_team.abbreviation
         
+        $scope.totals =
+            away: response.box_score.away_totals
+            home: response.box_score.home_totals 
+        
         # Scoring
         
         ChartBuilder.buildScoringChart(
@@ -220,6 +224,7 @@ fullcourt.controller "GameController", ($http, $timeout, $scope, SVGBuilder, Cha
                 scoring: []
                 rebounding: []
         for player in response.box_score.away_stats
+            continue if player.minutes < 1
             if player.points > 0
                 display_name = player.first_name[0] + '. ' + player.last_name
                 player_efficiencies.away.scoring.push {
@@ -251,6 +256,7 @@ fullcourt.controller "GameController", ($http, $timeout, $scope, SVGBuilder, Cha
         )
         
         for player in response.box_score.home_stats
+            continue if player.minutes < 1
             if player.points > 0
                 display_name = player.first_name[0] + '. ' + player.last_name
                 player_efficiencies.home.scoring.push {

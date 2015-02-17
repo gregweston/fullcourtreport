@@ -13,6 +13,7 @@
 express = require 'express'
 routes = require './routes'
 config = require './config'
+moment = require 'moment-timezone'
 
 app = module.exports = express.createServer();
 
@@ -45,7 +46,9 @@ app.get '/data/games/:year/:month/:day/:away_team/:home_team', routes.gameData
 app.get '/games/:year/:month/:day/:away_team/:home_team', routes.game
 app.get '/games/:year/:month/:day', routes.day
 
-app.get '/', routes.today, routes.day
+app.get '/', (req, res) =>
+    today = moment().subtract(1, 'days').format('YYYY/M/D')
+    res.redirect('/games/' + today)
 
 app.use (req, res, next) ->
     res.status 404

@@ -158,9 +158,13 @@ body
         &>div
             position: relative
             width: 20rem
+            @include max-breakpoint(small)
+                min-width: 95%
+                max-width: 7rem
+                width: auto
             margin: 1rem
             &.large
-                width: 30rem
+                width: 25rem
                 margin: 0
             h4, h6
                 text-align: center
@@ -172,6 +176,8 @@ body
             svg
                 display: block
                 width: 100%
+                &.bar-graph
+                    margin-bottom: 2rem
                 text
                     font-size: 6px
                     color: #000

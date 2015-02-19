@@ -340,7 +340,7 @@ fullcourt.service 'ChartBuilder', (SVGBuilder) ->
                     last_angle = angle
                 
         buildBarGraph: (svg, teamShortName, players, bar_height, color = 'primary') ->
-            bar_width = 80/players.length
+            bar_width = 100/players.length
             max_value = 0
             for player in players
                 max_value = player.value if player.value > max_value
@@ -356,7 +356,7 @@ fullcourt.service 'ChartBuilder', (SVGBuilder) ->
                     (bar_width * (index + .5)), # X-anchor is in center of corresponding bar
                     bar_height + 2, # Y-anchor is just below bottom of bar 
                     'legend',
-                    'rotate(50 ' + (bar_width * (index + .5)) + ',' + (bar_height + 2) + ')'
+                    'rotate(90 ' + (bar_width * (index + .5)) + ',' + (bar_height + 2) + ')'
                 )
                 svg.appendChild bar
                 svg.appendChild label

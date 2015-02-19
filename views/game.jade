@@ -24,11 +24,11 @@ div#game(data-ng-controller="GameController")
             
         div.large
             h4 Scoring Per Minute ({{ team_short_names.away }})
-            svg#scoring-efficiency-away(width="100%", viewBox="0 0 100 100")
+            svg.bar-graph#scoring-efficiency-away(width="100%", viewBox="0 0 100 100")
             
         div.large
             h4 Scoring Per Minute ({{ team_short_names.home }})
-            svg#scoring-efficiency-home(width="100%", viewBox="0 0 100 100")
+            svg.bar-graph#scoring-efficiency-home(width="100%", viewBox="0 0 100 100")
             
         div.large
             h4 Individual Rebounding ({{ team_short_names.away }})
@@ -42,11 +42,11 @@ div#game(data-ng-controller="GameController")
             
         div.large
             h4 Rebounding Per Minute ({{ team_short_names.away }})
-            svg#rebounding-efficiency-away(width="100%", viewBox="0 0 100 100")
+            svg.bar-graph#rebounding-efficiency-away(width="100%", viewBox="0 0 100 100")
             
         div.large
             h4 Rebounding Per Minute ({{ team_short_names.home }})
-            svg#rebounding-efficiency-home(width="100%", viewBox="0 0 100 100")
+            svg.bar-graph#rebounding-efficiency-home(width="100%", viewBox="0 0 100 100")
             
         div.large
             h4 Individual Assists ({{ team_short_names.away }})

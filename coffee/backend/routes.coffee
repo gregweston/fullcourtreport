@@ -83,7 +83,7 @@ exports.day = (req, res) ->
     games_for_day = NBADataGetter.getGamesForDay(req.params['year'], req.params['month'], req.params['day'], (games) ->
         res.render 'day', {
             locals:
-                title: ' | ' + moment(games.events_date).format('dddd, MMMM D, YYYY')
+                title: ' | ' + moment(new Date(games.events_date)).format('dddd, MMMM D, YYYY')
                 year: req.params['year']
                 month: req.params['month']
                 day: req.params['day']
@@ -91,12 +91,3 @@ exports.day = (req, res) ->
                 moment: moment
         }
     )
-        
-exports.today = (req, res, next) ->
-    yesterday = moment().subtract(1, 'days').toArray()
-    req.params =
-        year: yesterday[0]
-        month: yesterday[1] + 1
-        day: yesterday[2]
-    next()
-    

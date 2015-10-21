@@ -19,7 +19,7 @@ module.exports = (grunt) ->
                 files: './coffee/backend/server.coffee'
                 tasks: ['coffee:compileApp']
             sass:
-                files: './sass/*.sass'
+                files: './sass/*.scss'
                 tasks: ['sass']
         coffee:
             compileFrontEnd:
@@ -57,7 +57,7 @@ module.exports = (grunt) ->
                 options:
                     style: 'compressed'
                 files:
-                    './public/css/compiled/fullcourt.css': './sass/fullcourt.sass'
+                    './public/css/compiled/fullcourt.css': './sass/fullcourt.scss'
         uglify:
             dist:
                 options:

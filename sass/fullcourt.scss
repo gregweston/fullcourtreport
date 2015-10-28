@@ -23,8 +23,8 @@ $small-width: 780px;
   $secondary: map-get($colors, secondary);
   $tertiary: map-get($colors, tertiary);
   .team[class*="#{$team}"] {
-    background-color: map-get($colors, primary);
-    color: map-get($colors, secondary);
+    background-color: $primary;
+    color: $secondary;
   }
   path.team[class*="#{$team}"], circle.team[class*="#{$team}"], rect.team[class*="#{$team}"], polygon.team[class*="#{$team}"] {
     stroke: #FFF;

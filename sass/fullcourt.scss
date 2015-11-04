@@ -133,6 +133,10 @@ body {
   font-family: "Oswald", sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
 #game {
   header {
     margin-bottom: 3.5rem;
@@ -336,6 +340,9 @@ body {
   color: #DFD;
   font-size: 0.95rem;
   padding: 0.2rem 0.5rem;
+  a {
+    color: inherit;
+  }
   @include max-breakpoint(small) {
     margin: 0;
   }

@@ -1,38 +1,32 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const Memcached = require('memcached');
 const https = require('https');
 const zlib = require('zlib');
-const config = require('../config');
 
-class APIHandler {
+class ApiRequest {
 
-    constructor() {
-        this.apiKey = config.apiKey;
-        this.userAgent = config.userAgent;
-        this.timeZone = 'America/New_York';
-        this.host = config.host;
-        this.memcachedServer = config.memcachedServer;
+    constructor(url, config) {
+        this.timeZone = 'America/New_York';//config.timezone;
+				this.url = url;
+				this.config = config;
     }
 
-    retrieveData(url, next) {
-        const cache = new Memcached(this.memcachedServer);
-        return cache.get(url, (err, data) => {
-            if (err != null) { return next(err); }
+    send(next) {
+			return this.callAPI(url, cache, next);
+        /*const cache = new Memcached(this.config.memcachedServer);
+        return cache.get(this.url, (err, data) => {
+            if (err != null) {
+							return next(err);
+						}
             if (data != null) {
                 console.log(`retrieving from cache: ${url}`);
-                return next(JSON.parse(data));
+                return next(null, JSON.parse(data));
             }
             return this.callAPI(url, cache, next);
-        });
+        });*/
     }
 
     handleResponseBody(cache, url, body, next) {
-        cache.set(url, body, config.apiResponseCacheTime, function(err) {
+        cache.set(url, body, this.config.apiResponseCacheTime, function(err) {
             if (err != null) { return next(err); }
         });
         return next(JSON.parse(body));
@@ -41,12 +35,12 @@ class APIHandler {
     callAPI(url, cache, next) {
         console.log(`retrieving from api: ${url}`);
         const options = {
-            host: this.host,
+            host: this.config.host,
             path: url,
             headers: {
                 'Accept-Encoding': 'gzip',
-                'Authorization': `Bearer ${this.apiKey}`,
-                'User-Agent': this.userAgent
+                'Authorization': `Bearer ${this.config.apiKey}`,
+                'User-Agent': this.config.userAgent
             }
         };
         return https.get(options, res => {
@@ -70,4 +64,4 @@ class APIHandler {
     }
 }
 
-module.exports = APIHandler;
+module.exports = ApiRequest;

@@ -1,15 +1,29 @@
 {
-  "name": "fullcourtreport",
-  "version": "2.0.0",
-  "dependencies": {
-    "express": "^4.16.1",
-    "memcached": "^2.2.2",
-    "moment": "^2.18.1",
-    "moment-timezone": "^0.5.13",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-router": "^4.2.0",
-    "string": "^3.3.3",
-    "zlib": "^1.0.5"
-  }
+	"name": "fullcourtreport",
+	"version": "2.0.0",
+	"scripts": {
+		"js": "webpack",
+		"scss": "node-sass src/scss -o public/assets/css",
+		"watch": "npm-watch"
+	},
+	"watch": {
+		"js": "src/js/**/*.js",
+		"scss": {
+			"patterns": [
+				"src/scss"
+			],
+			"extensions": "scss"
+		}
+	},
+	"dependencies": {
+		"express": "^4.16.1",
+		"memcached": "^2.2.2",
+		"moment": "^2.18.1",
+		"moment-timezone": "^0.5.13",
+		"react": "^16.0.0",
+		"react-dom": "^16.0.0",
+		"react-router": "^4.2.0",
+		"string": "^3.3.3",
+		"zlib": "^1.0.5"
+	}
 }

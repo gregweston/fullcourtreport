@@ -1,48 +1,32 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const express = require('express');
-const routes = require('./routes');
 const config = require('./config');
-const moment = require('moment-timezone');
+const ApiUrlBuilder = require('./ApiUrlBuilder');
+const ApiRequest = require('./ApiRequest');
 
-const app = (module.exports = express.createServer());
+const app = express();
 
-app.configure(function() {
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyParser());
+/*app.configure(function() {
+  app.use(express.json());
   app.use(express.methodOverride());
-
-
-  app.use(express.cookieParser(config.cookieSecret));
-  app.use(express.session({
-    secret: config.cookieSecret,
-    cookie: {
-      path: '/',
-      domain: app.settings.domain,
-      maxAge: 1000 * 60
-    }
-  })
-  );
-
-  app.use(express.static(__dirname + '/public'));
   return app.use(app.router);
+});*/
+
+app.use(express.json());
+
+/*app.configure('development', () => app.use(express.errorHandler({ dumpExceptions: true, showStack: true })));
+
+app.configure('production', () => app.use(express.errorHandler()));*/
+
+app.get('/api/date/:year/:month/:day', (req, res) => {
+	const url = ApiUrlBuilder.gamesForDayUrl(req.params.year, req.params.month, req.params.day);
+	const request = new ApiRequest(url, config);
+	request.send((err, response) => {
+		res.send(response);
+	});
 });
 
-app.configure('development', () => app.use(express.errorHandler({ dumpExceptions: true, showStack: true })));
+app.get('/api/game/:year/:month/:day/:awayTeam/:homeTeam', () => {
 
-app.configure('production', () => app.use(express.errorHandler()));
-
-app.get('/data/games/:year/:month/:day/:away_team/:home_team', routes.gameData);
-app.get('/games/:year/:month/:day/:away_team/:home_team', routes.game);
-app.get('/games/:year/:month/:day', routes.day);
-
-app.get('/', (req, res) => {
-    const today = moment().subtract(1, 'days').format('YYYY/M/D');
-    return res.redirect(`/games/${today}`);
 });
 
 app.use(function(req, res, next) {
@@ -52,4 +36,4 @@ app.use(function(req, res, next) {
     return res.type('text').send('Not found');
 });
 
-app.listen(3030, () => console.log('Express server listening on port %d in %s mode', app.address().port, app.settings.env));
+app.listen(3030, () => console.log('Express server listening on port 3030 in %s mode', app.settings.env));

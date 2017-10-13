@@ -21,6 +21,7 @@ app.get('/api/date/:year/:month/:day', (req, res) => {
 	const url = ApiUrlBuilder.gamesForDayUrl(req.params.year, req.params.month, req.params.day);
 	const request = new ApiRequest(url, config);
 	request.send((err, response) => {
+		console.log(response);
 		res.send(response);
 	});
 });

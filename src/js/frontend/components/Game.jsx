@@ -12,7 +12,9 @@ export class Game extends React.Component {
 	}
 
 	render() {
-		<p>Game</p>
+		return (
+			<p>Game</p>
+		);
 	}
 
 }

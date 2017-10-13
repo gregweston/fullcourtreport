@@ -61,7 +61,6 @@ exports.teamStatsUrl = function(year, month, day, team) {
 };
 
 exports.gamesForDayUrl = function(year, month, day) {
-	const handler = new APIHandler();
 	month = str(month).padLeft(2, '0');
 	day = str(day).padLeft(2, '0');
 	const url = '/events.json?date=' +

@@ -18,12 +18,14 @@ export class Date extends React.Component {
 			.then((response) => {
 				response.json().then((responseJson) => {
 					console.log(responseJson);
-				}
-			}
+				});
+			});
 	}
 
 	render() {
-		<p>Today is {this.date.month} {this.date.day}, {this.date.year}.</p>
+		return (
+			<p>Today is {this.date.month} {this.date.day}, {this.date.year}.</p>
+		);
 	}
 
 }

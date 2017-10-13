@@ -1,5 +1,5 @@
 config.json
-public/css/compiled/
-public/js/compiled/
+public/css/
+public/js/
 .sass-cache/
 node_modules/

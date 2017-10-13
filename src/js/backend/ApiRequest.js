@@ -5,38 +5,36 @@ const zlib = require('zlib');
 class ApiRequest {
 
     constructor(url, config) {
-        this.timeZone = 'America/New_York';//config.timezone;
 				this.url = url;
 				this.config = config;
+				this.cache = new Memcached(this.config.memcachedServer);
     }
 
     send(next) {
-			return this.callAPI(url, cache, next);
-        /*const cache = new Memcached(this.config.memcachedServer);
-        return cache.get(this.url, (err, data) => {
+        return this.cache.get(this.url, (err, data) => {
             if (err != null) {
 							return next(err);
 						}
             if (data != null) {
-                console.log(`retrieving from cache: ${url}`);
+                console.log(`retrieving from cache: ${this.url}`);
                 return next(null, JSON.parse(data));
             }
-            return this.callAPI(url, cache, next);
-        });*/
+            return this.callAPI(next);
+        });
     }
 
-    handleResponseBody(cache, url, body, next) {
-        cache.set(url, body, this.config.apiResponseCacheTime, function(err) {
+    handleResponseBody(body, next) {
+        this.cache.set(this.url, body, this.config.apiResponseCacheTime, function(err) {
             if (err != null) { return next(err); }
         });
         return next(JSON.parse(body));
     }
 
-    callAPI(url, cache, next) {
-        console.log(`retrieving from api: ${url}`);
+    callAPI(next) {
+        console.log(`retrieving from api: ${this.url}`);
         const options = {
             host: this.config.host,
-            path: url,
+            path: this.url,
             headers: {
                 'Accept-Encoding': 'gzip',
                 'Authorization': `Bearer ${this.config.apiKey}`,
@@ -53,11 +51,13 @@ class ApiRequest {
                 const encoding = res.headers['content-encoding'];
                 if (encoding === 'gzip') {
                     return zlib.gunzip(buffer, (err, body) => {
-                        if (err != null) { return next(err); }
-                        return this.handleResponseBody(cache, url, body, next);
+                        if (err != null) {
+													return next(err);
+												}
+                        return this.handleResponseBody(body, next);
                     });
                 } else {
-                    return this.handleResponseBody(cache, url, buffer, next);
+                    return this.handleResponseBody(buffer, next);
                 }
             });
         });

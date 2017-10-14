@@ -1,7 +1,7 @@
 const express = require('express');
 const config = require('./config');
-const ApiUrlBuilder = require('./ApiUrlBuilder');
-const ApiRequest = require('./ApiRequest');
+const DataUrlBuilder = require('./DataUrlBuilder');
+const DataRequest = require('./DataRequest');
 
 const app = express();
 
@@ -18,8 +18,8 @@ app.use(express.json());
 app.configure('production', () => app.use(express.errorHandler()));*/
 
 app.get('/api/date/:year/:month/:day', (req, res) => {
-	const url = ApiUrlBuilder.gamesForDayUrl(req.params.year, req.params.month, req.params.day);
-	const request = new ApiRequest(url, config);
+	const url = DataUrlBuilder.gamesForDayUrl(req.params.year, req.params.month, req.params.day);
+	const request = new DataRequest(url, config);
 	request.send((err, response) => {
 		console.log(response);
 		res.send(response);

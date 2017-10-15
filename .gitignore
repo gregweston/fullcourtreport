@@ -1,5 +1,4 @@
 config.json
-public/css/
-public/js/
+public/assets/
 .sass-cache/
 node_modules/

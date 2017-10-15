@@ -17,8 +17,8 @@ app.use(express.json());
 
 app.configure('production', () => app.use(express.errorHandler()));*/
 
-app.get('/api/date/:year/:month/:day', (req, res) => {
-	const url = DataUrlBuilder.gamesForDayUrl(req.params.year, req.params.month, req.params.day);
+app.get('/api/games-on-date', (req, res) => {
+	const url = DataUrlBuilder.gamesForDayUrl(req.query.year, req.query.month, req.query.day);
 	const request = new DataRequest(url, config);
 	request.send((err, response) => {
 		console.log(response);

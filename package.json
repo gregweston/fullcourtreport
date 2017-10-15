@@ -7,7 +7,10 @@
 		"watch": "npm-watch"
 	},
 	"watch": {
-		"js": "src/js/**/*.js",
+		"js": {
+			"patterns": ["src/js/frontend"],
+			"extensions": ["js", "jsx"]
+		},
 		"scss": {
 			"patterns": [
 				"src/scss"

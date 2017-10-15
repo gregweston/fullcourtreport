@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export class Date extends React.Component {
+import GameList from './GameList.jsx';
+
+export default class Date extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -13,19 +15,8 @@ export class Date extends React.Component {
 		};
 	}
 
-	componentWillMount() {
-		fetch("/api/date/" + this.date.year + "/" + this.date.month + "/" + this.date.day)
-			.then((response) => {
-				response.json().then((responseJson) => {
-					console.log(responseJson);
-				});
-			});
-	}
-
 	render() {
-		return (
-			<p>Today is {this.date.month} {this.date.day}, {this.date.year}.</p>
-		);
+		return <GameList date={this.date} />
 	}
 
 }

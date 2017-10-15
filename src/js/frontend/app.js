@@ -8,8 +8,8 @@ import Game from './components/Game.jsx'
 ReactDOM.render(
 	<BrowserRouter>
 		<Switch>
-			<Route path="/date/:year/:month/:day" component={Date} />
-			<Route path="/game/:gameId" component={Game} />
+			<Route path="/date/:date" component={Date} />
+			<Route path="/game/:date/:awayTeamId/:homeTeamId" component={Game} />
 		</Switch>
 	</BrowserRouter>,
 	document.getElementById("app")

@@ -13,11 +13,7 @@ export default class GameList extends React.Component {
 	}
 
 	componentWillMount() {
-		const params = new URLSearchParams();
-		params.append("year", this.props.date.year);
-		params.append("month", this.props.date.month);
-		params.append("day", this.props.date.day);
-		fetch("/api/games-on-date?" + params.toString()).then((response) => {
+		fetch("/api/games?date=" + this.props.date).then((response) => {
 			response.json().then((responseJson) => {
 				this.setState({
 					"games": responseJson.event
@@ -34,9 +30,11 @@ export default class GameList extends React.Component {
 			return (
 				<li key={game.event_id}>
 					<GameLink
-						eventId={game.event_id}
+						date={this.props.date}
+						awayTeamId={game.away_team.team_id}
 						awayTeamAbbreviation={game.away_team.abbreviation}
 						awayTeamFullName={game.away_team.full_name}
+						homeTeamId={game.home_team.team_id}
 						homeTeamAbbreviation={game.home_team.abbreviation}
 						homeTeamFullName={game.home_team.full_name} />
 				</li>

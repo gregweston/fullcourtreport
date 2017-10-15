@@ -9,7 +9,7 @@ export default class GameLink extends React.Component {
 
 	render() {
 		return (
-			<Link className="game-link" to={"/game/" + this.props.eventId}>
+			<Link className="game-link" to={"/game/" + this.props.date + "/" + this.props.awayTeamId + "/" + this.props.homeTeamId}>
 				<span className="game-time">{this.props.time}</span>
 				<span className={"team " + this.props.awayTeamAbbreviation}>{this.props.awayTeamFullName}</span>
 				<span className={"team " + this.props.homeTeamAbbreviation}>{this.props.homeTeamFullName}</span>

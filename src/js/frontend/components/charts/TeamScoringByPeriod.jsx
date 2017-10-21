@@ -21,7 +21,7 @@ export default class TeamScoringByPeriod extends React.Component {
 
 	componentDidMount() {
 		const Chartist = require('chartist');
-		new Chartist.Bar('#scoring-per-quarter', {
+		new Chartist.Bar('.team-scoring-by-period', {
 			labels: this.generateLabels(this.props.homeTeamScores.length),
 			series: [
 				{
@@ -38,9 +38,9 @@ export default class TeamScoringByPeriod extends React.Component {
 
 	render() {
 		return (
-			<div id="scoring-per-quarter-container">
+			<div className="team-scoring-by-period-container">
 				<h3>Team Scoring By Period</h3>
-				<div id="scoring-per-quarter"></div>
+				<div className="team-scoring-by-period"></div>
 			</div>
 		)
 	}

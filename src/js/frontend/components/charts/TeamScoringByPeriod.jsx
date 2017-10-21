@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default class ScoringPerQuarter extends React.Component {
+export default class TeamScoringByPeriod extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -39,7 +39,7 @@ export default class ScoringPerQuarter extends React.Component {
 	render() {
 		return (
 			<div id="scoring-per-quarter-container">
-				<h3>Scoring Per Quarter</h3>
+				<h3>Team Scoring By Period</h3>
 				<div id="scoring-per-quarter"></div>
 			</div>
 		)

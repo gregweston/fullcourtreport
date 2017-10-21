@@ -23,7 +23,6 @@ app.get('/api/games', (req, res) => {
 		if (err) {
 			console.log(err);
 		}
-		console.log(response);
 		res.send(response);
 	});
 });
@@ -35,7 +34,6 @@ app.get('/api/box-score', (req, res) => {
 		if (err) {
 			console.log(err);
 		}
-		console.log(response);
 		res.send(response);
 	});
 });
@@ -47,7 +45,6 @@ app.get('/api/team-stats', (req, res) => {
 		if (err) {
 			console.log(err);
 		}
-		console.log(response);
 		res.send(response);
 	});
 });

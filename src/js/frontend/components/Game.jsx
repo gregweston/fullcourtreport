@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ScoringPerQuarter from './charts/ScoringPerQuarter.jsx';
+import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
+import GameHeading from './GameHeading.jsx';
 
 export default class Game extends React.Component {
 
@@ -52,14 +53,16 @@ export default class Game extends React.Component {
 		const homeTeamAbbr = this.state.boxScore.home_team.abbreviation;
 		return (
 			<div className="game-info">
-				<h2>
-					<span className={"team " + awayTeamAbbr}>{this.state.boxScore.away_team.full_name}</span>
-					@
-					<span className={"team " + homeTeamAbbr}>{this.state.boxScore.home_team.full_name}</span>
-				</h2>
-				<ScoringPerQuarter
-					awayTeamAbbreviation={this.state.boxScore.away_team.abbreviation}
-					homeTeamAbbreviation={this.state.boxScore.home_team.abbreviation}
+				<GameHeading
+					awayTeamFullName={this.state.boxScore.away_team.full_name}
+					homeTeamFullName={this.state.boxScore.home_team.full_name}
+					awayTeamAbbreviation={awayTeamAbbr}
+					homeTeamAbbreviation={homeTeamAbbr}
+					awayTeamTotalPoints={this.state.boxScore.away_totals.points}
+					homeTeamTotalPoints={this.state.boxScore.home_totals.points} />
+				<TeamScoringByPeriod
+					awayTeamAbbreviation={awayTeamAbbr}
+					homeTeamAbbreviation={homeTeamAbbr}
 					awayTeamScores={this.state.boxScore.away_period_scores || null}
 					homeTeamScores={this.state.boxScore.home_period_scores || null} />
 			</div>

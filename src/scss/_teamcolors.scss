@@ -37,6 +37,12 @@ $teamcolors: (
 	$tertiary: map-get($colors, tertiary);
 	.team.#{$team} {
 		color: $primary;
+		.total-points {
+			color: $secondary;
+			&.winner {
+				border-bottom: 6px solid $primary;
+			}
+		}
 	}
 	.ct-series.team.#{$team} .ct-bar {
 		stroke: $primary;

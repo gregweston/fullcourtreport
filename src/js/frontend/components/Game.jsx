@@ -51,7 +51,7 @@ export default class Game extends React.Component {
 		const awayTeamAbbr = this.state.boxScore.away_team.abbreviation;
 		const homeTeamAbbr = this.state.boxScore.home_team.abbreviation;
 		return (
-			<div class="game-info">
+			<div className="game-info">
 				<h2>
 					<span className={"team " + awayTeamAbbr}>{this.state.boxScore.away_team.full_name}</span>
 					@

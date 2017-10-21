@@ -20,6 +20,9 @@ app.get('/api/games', (req, res) => {
 	const url = '/events.json?date=' + req.query.date + '&sport=nba';
 	const dataRequest = new DataRequest(url, config);
 	dataRequest.send((err, response) => {
+		if (err) {
+			console.log(err);
+		}
 		console.log(response);
 		res.send(response);
 	});
@@ -29,6 +32,9 @@ app.get('/api/box-score', (req, res) => {
 	const url = "/nba/boxscore/" + req.query.gameId + ".json";
 	const dataRequest = new DataRequest(url, config);
 	dataRequest.send((err, response) => {
+		if (err) {
+			console.log(err);
+		}
 		console.log(response);
 		res.send(response);
 	});
@@ -38,6 +44,9 @@ app.get('/api/team-stats', (req, res) => {
 	const url = "/nba/team-stats/" + req.query.date + ".json?team_id=" + req.query.teamId;
 	const dataRequest = new DataRequest(url, config);
 	dataRequest.send((err, response) => {
+		if (err) {
+			console.log(err);
+		}
 		console.log(response);
 		res.send(response);
 	});

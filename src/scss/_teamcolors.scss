@@ -30,3 +30,15 @@ $teamcolors: (
 	UTA: (primary: #002b5c, secondary: #f9a01b, tertiary: #00471b, quaternary: #bec0c2),
 	WAS: (primary: #C60C30, secondary: #FFFFFF, tertiary: #002244, quaternary: #BCC4CC)
 );
+
+@each $team, $colors in $teamcolors {
+	$primary: map-get($colors, primary);
+	$secondary: map-get($colors, secondary);
+	$tertiary: map-get($colors, tertiary);
+	.team.#{$team} {
+		color: $primary;
+	}
+	.ct-series.team.#{$team} .ct-bar {
+		stroke: $primary;
+	}
+}

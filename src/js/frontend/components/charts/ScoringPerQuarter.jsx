@@ -26,7 +26,12 @@ export default class ScoringPerQuarter extends React.Component {
 	}
 
 	render() {
-		return <div id="scoring-per-quarter" className=""></div>
+		return (
+			<div id="scoring-per-quarter-container">
+				<h3>Scoring Per Quarter</h3>
+				<div id="scoring-per-quarter"></div>
+			</div>
+		)
 	}
 
 }

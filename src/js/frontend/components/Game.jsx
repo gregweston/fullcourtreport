@@ -48,12 +48,21 @@ export default class Game extends React.Component {
 		if (this.state.boxScore === null) {
 			return "";
 		}
+		const awayTeamAbbr = this.state.boxScore.away_team.abbreviation;
+		const homeTeamAbbr = this.state.boxScore.home_team.abbreviation;
 		return (
-			<ScoringPerQuarter
-				awayTeamAbbreviation={this.state.boxScore.away_team.abbreviation}
-				homeTeamAbbreviation={this.state.boxScore.home_team.abbreviation}
-				awayTeamScores={this.state.boxScore.away_period_scores || null}
-				homeTeamScores={this.state.boxScore.home_period_scores || null} />
+			<div class="game-info">
+				<h2>
+					<span className={"team " + awayTeamAbbr}>{this.state.boxScore.away_team.full_name}</span>
+					@
+					<span className={"team " + homeTeamAbbr}>{this.state.boxScore.home_team.full_name}</span>
+				</h2>
+				<ScoringPerQuarter
+					awayTeamAbbreviation={this.state.boxScore.away_team.abbreviation}
+					homeTeamAbbreviation={this.state.boxScore.home_team.abbreviation}
+					awayTeamScores={this.state.boxScore.away_period_scores || null}
+					homeTeamScores={this.state.boxScore.home_period_scores || null} />
+			</div>
 		);
 	}
 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
 import GameHeading from './GameHeading.jsx';
+import FieldGoalTotals from './charts/FieldGoalTotals.jsx';
 
 export default class Game extends React.Component {
 
@@ -63,8 +64,15 @@ export default class Game extends React.Component {
 				<TeamScoringByPeriod
 					awayTeamAbbreviation={awayTeamAbbr}
 					homeTeamAbbreviation={homeTeamAbbr}
-					awayTeamScores={this.state.boxScore.away_period_scores || null}
-					homeTeamScores={this.state.boxScore.home_period_scores || null} />
+					awayTeamScores={this.state.boxScore.away_period_scores}
+					homeTeamScores={this.state.boxScore.home_period_scores} />
+				<FieldGoalTotals
+					awayTeamAbbreviation={awayTeamAbbr}
+					homeTeamAbbreviation={homeTeamAbbr}
+					awayFieldGoalsMade={this.state.boxScore.away_totals.field_goals_made}
+					awayFieldGoalsAttempted={this.state.boxScore.away_totals.field_goals_attempted}
+					homeFieldGoalsMade={this.state.boxScore.home_totals.field_goals_made}
+					homeFieldGoalsAttempted={this.state.boxScore.home_totals.field_goals_attempted} />
 			</div>
 		);
 	}

@@ -18,11 +18,11 @@ $teamcolors: (
 	MIL: (primary: #00471B, secondary: #F0EBD2, tertiary: #061922, quaternary: #007DC5),
 	MIN: (primary: #0F4D92, secondary: #000000, tertiary: #8c92ac, quaternary: #50c878),
 	NO: (primary: #002b5c, secondary: #b4975a, tertiary: #e31836, quaternary: #FFFFFF),
-	NYK: (primary: #0953a0, secondary: #FF7518, tertiary: #C0C0C0),
+	NY: (primary: #0953a0, secondary: #FF7518, tertiary: #C0C0C0),
 	OKC: (primary: #007DC3, secondary: #F05133, tertiary: #FDBB30, quaternary: #002D62),
 	ORL: (primary: #0047AB, secondary: #000000, tertiary: #708090, quaternary: #FFFFFF),
 	PHI: (primary: #0046AD, secondary: #D0103A, tertiary: #FFFFFF),
-	PHX: (primary: #1c105e, secondary: #e65f20, tertiary: #000000, quaternary: #FFFFFF, quinary: #b1b3b3),
+	PHO: (primary: #1c105e, secondary: #e65f20, tertiary: #000000, quaternary: #FFFFFF, quinary: #b1b3b3),
 	POR: (primary: #F0163A, secondary: #B6BFBF, tertiary: #000000, quaternary: #FFFFFF),
 	SAC: (primary: #753BBD, secondary: #000000, tertiary: #8A8D8F, quaternary: #FFFFFF),
 	SA: (primary: #000000, secondary: #BEC8C9, tertiary: #FFFFFF),
@@ -44,7 +44,8 @@ $teamcolors: (
 			}
 		}
 	}
-	.ct-series.team.#{$team} .ct-bar {
+	.ct-series.team.#{$team} .ct-bar,
+	.ct-bar.team.#{$team} {
 		stroke: $primary;
 	}
 }

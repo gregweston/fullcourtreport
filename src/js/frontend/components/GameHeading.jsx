@@ -15,7 +15,7 @@ export default class GameHeading extends React.Component {
 
 	render() {
 		return (
-			<h2>
+			<h2 class="width-3">
 				<span className={"team " + this.props.awayTeamAbbreviation}>
 					<span className={"total-points " + this.winnerClassIfApplicable("away")}>
 						{this.props.awayTeamTotalPoints}

@@ -35,7 +35,7 @@ export default class FieldGoalTotals extends React.Component {
 
 	render() {
 		return (
-			<div className="field-goal-totals-container">
+			<div>
 				<h3>Field Goal Totals</h3>
 				<div className="field-goal-totals"></div>
 			</div>

@@ -38,7 +38,7 @@ export default class TeamScoringByPeriod extends React.Component {
 
 	render() {
 		return (
-			<div className="team-scoring-by-period-container">
+			<div className="width-2">
 				<h3>Team Scoring By Period</h3>
 				<div className="team-scoring-by-period"></div>
 			</div>

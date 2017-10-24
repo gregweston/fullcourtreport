@@ -37,6 +37,11 @@ $teamcolors: (
 	$tertiary: map-get($colors, tertiary);
 	.team.#{$team} {
 		color: $primary;
+		&.pie-chart-slice {
+			fill: $primary;
+			stroke: #FFF;
+			stroke-width: 3px;
+		}
 		.total-points {
 			color: $secondary;
 			&.winner {

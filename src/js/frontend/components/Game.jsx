@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
 import GameHeading from './GameHeading.jsx';
 import FieldGoalTotals from './charts/FieldGoalTotals.jsx';
+import ScoringShare from './charts/ScoringShare.jsx';
 
 export default class Game extends React.Component {
 
@@ -73,6 +74,9 @@ export default class Game extends React.Component {
 					awayFieldGoalsAttempted={this.state.boxScore.away_totals.field_goals_attempted}
 					homeFieldGoalsMade={this.state.boxScore.home_totals.field_goals_made}
 					homeFieldGoalsAttempted={this.state.boxScore.home_totals.field_goals_attempted} />
+				<ScoringShare
+					teamAbbreviation={awayTeamAbbr}
+					stats={this.state.boxScore.away_stats} />
 			</div>
 		);
 	}

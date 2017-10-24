@@ -21,6 +21,9 @@ export default class FieldGoalTotals extends React.Component {
 				}
 			]
 		}, {
+			axisX: {
+				showGrid: false
+			},
 			stackBars: true
 		}).on('draw', (data) => {
 			if (data.type === "bar" && data.element.parent().classes().includes("made-field-goals")) {

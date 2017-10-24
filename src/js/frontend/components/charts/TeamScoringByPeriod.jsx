@@ -33,6 +33,10 @@ export default class TeamScoringByPeriod extends React.Component {
 					data: this.props.homeTeamScores
 				}
 			]
+		}, {
+			axisX: {
+				showGrid: false
+			}
 		});
 	}
 

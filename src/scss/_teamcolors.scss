@@ -14,7 +14,7 @@ $teamcolors: (
 	LAC: (primary: #ed174c, secondary: #006bb6, tertiary: #bec0c2),
 	LAL: (primary: #4A2583, secondary: #F5AF1B, tertiary: #FFFFFF),
 	MEM: (primary: #0f586c, secondary: #7399C6, tertiary: #BED4E9, quaternary: #FDB927),
-	MIA: (primary: #000000, secondary: #B62630, tertiary: #FFFFFF, quaternary: #FF9F00),
+	MIA: (primary: #B62630, secondary: #000000, tertiary: #FFFFFF, quaternary: #FF9F00),
 	MIL: (primary: #00471B, secondary: #F0EBD2, tertiary: #061922, quaternary: #007DC5),
 	MIN: (primary: #0F4D92, secondary: #000000, tertiary: #8c92ac, quaternary: #50c878),
 	NO: (primary: #002b5c, secondary: #b4975a, tertiary: #e31836, quaternary: #FFFFFF),
@@ -37,10 +37,17 @@ $teamcolors: (
 	$tertiary: map-get($colors, tertiary);
 	.team.#{$team} {
 		color: $primary;
-		&.pie-chart-slice {
-			fill: $primary;
-			stroke: #FFF;
-			stroke-width: 3px;
+		&.pie-chart {
+			@for $i from 1 through 5 {
+				.ct-series:nth-child(#{$i}) path {
+					fill: darken($primary, (5 - $i) * 7);
+				}
+			}
+			@for $i from 6 through 10 {
+				.ct-series:nth-child(#{$i}) path {
+					fill: lighten($primary, ($i - 5) * 7);
+				}
+			}
 		}
 		.total-points {
 			color: $secondary;

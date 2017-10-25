@@ -7,10 +7,10 @@ export default class ScoringShare extends React.Component {
 		const labels = [];
 		const series = [];
 		stats.sort((a, b) => {
-			if (a.points < b.points) {
+			if (a.points > b.points) {
 				return -1;
 			}
-			if (a.points > b.points) {
+			if (a.points < b.points) {
 				return 1;
 			}
 			return 0;
@@ -30,12 +30,12 @@ export default class ScoringShare extends React.Component {
 	componentDidMount() {
 		const Chartist = require('chartist');
 		const scoringData = this.formatScoringData(this.props.stats);
-		new Chartist.Pie('.scoring-share', {
+		new Chartist.Pie('.scoring-share.' + this.props.teamAbbreviation, {
 			labels: scoringData.labels,
 			series: scoringData.series
 		}, {
 			classNames: {
-				slicePie: 'team pie-chart-slice ' + this.props.teamAbbreviation
+				chartPie: 'pie-chart team ' + this.props.teamAbbreviation
 			},
 			width: 400,
 			height: 400
@@ -46,7 +46,7 @@ export default class ScoringShare extends React.Component {
 		return (
 			<div className="grid-width-half">
 				<h3>Scoring Share ({this.props.teamAbbreviation})</h3>
-				<div className="scoring-share"></div>
+				<div className={"scoring-share " + this.props.teamAbbreviation}></div>
 			</div>
 		)
 	}

@@ -77,6 +77,9 @@ export default class Game extends React.Component {
 				<ScoringShare
 					teamAbbreviation={awayTeamAbbr}
 					stats={this.state.boxScore.away_stats} />
+				<ScoringShare
+					teamAbbreviation={homeTeamAbbr}
+					stats={this.state.boxScore.home_stats} />
 			</div>
 		);
 	}

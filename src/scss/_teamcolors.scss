@@ -37,17 +37,10 @@ $teamcolors: (
 	$tertiary: map-get($colors, tertiary);
 	.team.#{$team} {
 		color: $primary;
-		&.pie-chart {
-			@for $i from 1 through 5 {
-				.ct-series:nth-child(#{$i}) path {
-					fill: darken($primary, (5 - $i) * 7);
-				}
-			}
-			@for $i from 6 through 10 {
-				.ct-series:nth-child(#{$i}) path {
-					fill: lighten($primary, ($i - 5) * 7);
-				}
-			}
+		&.pie-chart-slice {
+			fill: $primary;
+			stroke: #FFF;
+			stroke-width: 3px;
 		}
 		.total-points {
 			color: $secondary;

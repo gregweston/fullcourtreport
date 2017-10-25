@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default class ScoringShare extends React.Component {
+export default class ScoringDistribution extends React.Component {
 
 	formatScoringData(stats) {
 		const labels = [];
@@ -35,17 +35,20 @@ export default class ScoringShare extends React.Component {
 			series: scoringData.series
 		}, {
 			classNames: {
-				chartPie: 'pie-chart team ' + this.props.teamAbbreviation
+				slicePie: 'pie-chart-slice team ' + this.props.teamAbbreviation
 			},
-			width: 400,
-			height: 400
+			chartPadding: 75,
+			width: 320,
+			height: 320,
+			labelPosition: 'center',
+			labelOffset: 120
 		});
 	}
 
 	render() {
 		return (
 			<div className="grid-width-half">
-				<h3>Scoring Share ({this.props.teamAbbreviation})</h3>
+				<h3>Scoring Distribution ({this.props.teamAbbreviation})</h3>
 				<div className={"scoring-share " + this.props.teamAbbreviation}></div>
 			</div>
 		)

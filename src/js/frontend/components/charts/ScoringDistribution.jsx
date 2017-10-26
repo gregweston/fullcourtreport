@@ -47,7 +47,7 @@ export default class ScoringDistribution extends React.Component {
 
 	render() {
 		return (
-			<div className="grid-width-half">
+			<div className="grid-width-third">
 				<h3>Scoring Distribution ({this.props.teamAbbreviation})</h3>
 				<div className={"scoring-share " + this.props.teamAbbreviation}></div>
 			</div>

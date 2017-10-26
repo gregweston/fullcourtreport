@@ -24,12 +24,12 @@ class DataRequest {
 	}
 
 	handleResponseBody(body, next) {
-		this.cache.set(this.url, body, this.config.apiResponseCacheTime, function(err) {
+		this.cache.set(this.url, body, this.config.apiResponseCacheTime, (err) => {
 			if (err != null) {
 				return next(err);
 			}
 		});
-		return next(JSON.parse(body));
+		return next(null, JSON.parse(body));
 	}
 
 	callAPI(next) {

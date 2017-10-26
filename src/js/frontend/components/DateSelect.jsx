@@ -26,7 +26,7 @@ export default class DateSelect extends React.Component {
 				<Link to={"/date/" + date.value}>{date.display}</Link>
 			</li>
 		);
-		return <ul>{dateListItems}</ul>
+		return <ul className="date-select">{dateListItems}</ul>
 	}
 
 }

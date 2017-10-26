@@ -27,11 +27,16 @@ header {
 ul.game-list {
 	display: flex;
 	flex-wrap: wrap;
-	width: 90vw;
-	margin: 0 auto;
 	justify-content: center;
 	li {
 		margin: 1.5rem;
+	}
+}
+ul.date-select {
+	display: flex;
+	justify-content: center;
+	li {
+		margin: 1rem 2rem;
 	}
 }
 a.game-link {

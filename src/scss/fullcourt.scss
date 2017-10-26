@@ -72,6 +72,9 @@ a.game-link {
 			}
 		}
 	}
+	&>* {
+		align-self: center;
+	}
 	&>.grid-width-full {
 		grid-column: auto / span 12;
 	}
@@ -87,7 +90,7 @@ a.game-link {
 	&>.grid-width-quarter {
 		grid-column: auto / span 3;
 	}
-	.missed-field-goals {
+	.missed-baskets {
 		stroke: #999;
 	}
 }

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
 import GameHeading from './GameHeading.jsx';
-import FieldGoalTotals from './charts/FieldGoalTotals.jsx';
+import BasketTotals from './charts/BasketTotals.jsx';
 import ScoringDistribution from './charts/ScoringDistribution.jsx';
 
 export default class Game extends React.Component {
@@ -55,6 +55,7 @@ export default class Game extends React.Component {
 		const homeTeamAbbr = this.state.boxScore.home_team.abbreviation;
 		return (
 			<div className="game-info">
+
 				<GameHeading
 					awayTeamFullName={this.state.boxScore.away_team.full_name}
 					homeTeamFullName={this.state.boxScore.home_team.full_name}
@@ -62,24 +63,38 @@ export default class Game extends React.Component {
 					homeTeamAbbreviation={homeTeamAbbr}
 					awayTeamTotalPoints={this.state.boxScore.away_totals.points}
 					homeTeamTotalPoints={this.state.boxScore.home_totals.points} />
+
 				<TeamScoringByPeriod
 					awayTeamAbbreviation={awayTeamAbbr}
 					homeTeamAbbreviation={homeTeamAbbr}
 					awayTeamScores={this.state.boxScore.away_period_scores}
 					homeTeamScores={this.state.boxScore.home_period_scores} />
-				<FieldGoalTotals
+
+				<BasketTotals
+					type="Field Goal"
 					awayTeamAbbreviation={awayTeamAbbr}
 					homeTeamAbbreviation={homeTeamAbbr}
-					awayFieldGoalsMade={this.state.boxScore.away_totals.field_goals_made}
-					awayFieldGoalsAttempted={this.state.boxScore.away_totals.field_goals_attempted}
-					homeFieldGoalsMade={this.state.boxScore.home_totals.field_goals_made}
-					homeFieldGoalsAttempted={this.state.boxScore.home_totals.field_goals_attempted} />
+					awayBasketsMade={this.state.boxScore.away_totals.field_goals_made}
+					awayBasketsAttempted={this.state.boxScore.away_totals.field_goals_attempted}
+					homeBasketsMade={this.state.boxScore.home_totals.field_goals_made}
+					homeBasketsAttempted={this.state.boxScore.home_totals.field_goals_attempted} />
+
 				<ScoringDistribution
 					teamAbbreviation={awayTeamAbbr}
 					stats={this.state.boxScore.away_stats} />
+
 				<ScoringDistribution
 					teamAbbreviation={homeTeamAbbr}
 					stats={this.state.boxScore.home_stats} />
+
+				<BasketTotals
+					type="Free Throw"
+					awayTeamAbbreviation={awayTeamAbbr}
+					homeTeamAbbreviation={homeTeamAbbr}
+					awayBasketsMade={this.state.boxScore.away_totals.free_throws_made}
+					awayBasketsAttempted={this.state.boxScore.away_totals.free_throws_attempted}
+					homeBasketsMade={this.state.boxScore.home_totals.free_throws_made}
+					homeBasketsAttempted={this.state.boxScore.home_totals.free_throws_attempted} />
 			</div>
 		);
 	}

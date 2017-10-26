@@ -17,7 +17,7 @@ export default class ScoringDistribution extends React.Component {
 		})
 		for (let player of stats) {
 			if (player.points > 0) {
-				labels.push(player.display_name);
+				labels.push(player.first_name.substring(0, 1) + '. ' + player.last_name + ' (' + player.points + ')');
 				series.push(player.points);
 			}
 		}

@@ -13,7 +13,15 @@ export default class GameList extends React.Component {
 	}
 
 	componentWillMount() {
-		fetch("/api/games?date=" + this.props.date).then((response) => {
+		this.getGamesForDate(this.props.date);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.getGamesForDate(nextProps.date);
+	}
+
+	getGamesForDate(date) {
+		fetch("/api/games?date=" + date).then((response) => {
 			response.json().then((responseJson) => {
 				this.setState({
 					"games": responseJson.event

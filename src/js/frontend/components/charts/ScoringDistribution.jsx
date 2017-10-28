@@ -35,7 +35,8 @@ export default class ScoringDistribution extends React.Component {
 			series: scoringData.series
 		}, {
 			classNames: {
-				slicePie: 'pie-chart-slice team ' + this.props.teamAbbreviation
+				slicePie: 'pie-chart-slice team ' + this.props.teamAbbreviation,
+				label: 'ct-label pie-chart-label'
 			},
 			chartPadding: 75,
 			width: 320,

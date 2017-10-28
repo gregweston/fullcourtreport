@@ -1,6 +1,7 @@
 const express = require('express');
 const config = require('./config');
 const DataRequest = require('./DataRequest');
+const moment = require('moment');
 
 const app = express();
 
@@ -39,7 +40,17 @@ app.get('/api/box-score', (req, res) => {
 });
 
 app.get('/api/team-stats', (req, res) => {
-	const url = "/nba/team-stats/" + req.query.date + ".json?team_id=" + req.query.teamId;
+	const date = moment(req.query.date, "YYYYMMDD");
+	const month = date.format("M");
+	let seasonEndYear;
+	let seasonEndDateString;
+	if (month >= 10) {
+		seasonEndYear = date.add(1, 'year').format("YYYY");
+	} else {
+		seasonEndYear = date.format("YYYY");
+	}
+	seasonEndDateString = seasonEndYear + "0601";
+	const url = "/nba/team-stats/" + seasonEndDateString + ".json?team_id=" + req.query.teamId;
 	const dataRequest = new DataRequest(url, config);
 	dataRequest.send((err, response) => {
 		if (err) {

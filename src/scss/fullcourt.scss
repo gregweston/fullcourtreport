@@ -28,6 +28,8 @@ ul.game-list {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	width: 90vw;
+	margin: 0 auto;
 	li {
 		margin: 1.5rem;
 	}
@@ -105,4 +107,7 @@ a.game-link {
 .ct-chart-pie {
 	display: block;
 	margin: 1rem auto;
+}
+.pie-chart-label {
+	font-size: .7rem;
 }

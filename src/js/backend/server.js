@@ -61,9 +61,9 @@ app.get('/api/team-stats', (req, res) => {
 });
 
 app.use(function(req, res, next) {
-    res.status(404);
-    if (req.accepts('json')) { return res.json({error: 'Not found'}); }
-    return res.type('text').send('Not found');
+	res.status(404);
+	if (req.accepts('json')) { return res.json({error: 'Not found'}); }
+	return res.type('text').send('Not found');
 });
 
 app.listen(3030, () => console.log('Express server listening on port 3030 in %s mode', app.settings.env));

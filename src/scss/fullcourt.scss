@@ -10,6 +10,9 @@
 	font-weight: normal;
 	box-sizing: border-box;
 }
+.hidden {
+	display: none !important;
+}
 ul {
 	list-style-type: none;
 }
@@ -110,4 +113,15 @@ a.game-link {
 }
 .pie-chart-label {
 	font-size: .7rem;
+}
+.team-scoring-chart-bar {
+	stroke-width: 20px;
+}
+.element-value-popup {
+	position: absolute;
+	padding: .5rem;
+	background-color: rgba(0, 0, 0, .75);
+	font-size: .8rem;
+	color: #FDFDFD;
+	transform: translate(10%, 10%);
 }

@@ -1,10 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default class BasketTotals extends React.Component {
+import Chart from './Chart.jsx';
+import ElementValuePopup from './ElementValuePopup.jsx';
+
+export default class BasketTotals extends Chart {
 
 	formatTypeAsClassName(type) {
 		return type.toLowerCase().replace(" ", "-");
+	}
+
+	getSeriesPopupContent(hoverEvent) {
+		const element = event.target;
+		const value = element.getAttribute("ct:value");
+		const team = element.dataset.team;
+		if (element.parentElement.classList.contains("made-baskets")) {
+			return team + ": " + value + " made";
+		} else {
+			return team + ": " + value + " missed";
+		}
 	}
 
 	componentDidMount() {
@@ -30,12 +44,21 @@ export default class BasketTotals extends React.Component {
 			},
 			stackBars: true
 		}).on('draw', (data) => {
-			if (data.type === "bar" && data.element.parent().classes().includes("made-baskets")) {
+			if (data.type === "bar") {
+				let isMadeBasketsBar = data.element.parent().classes().includes("made-baskets");
+				let bar = data.element.getNode();
 				if (data.index === 0) {
-					data.element.addClass("team " + this.props.awayTeamAbbreviation);
+					if (isMadeBasketsBar) {
+						data.element.addClass("team " + this.props.awayTeamAbbreviation);
+					}
+					bar.dataset.team = this.props.awayTeamAbbreviation;
 				} else {
-					data.element.addClass("team " + this.props.homeTeamAbbreviation);
+					if (isMadeBasketsBar) {
+						data.element.addClass("team " + this.props.homeTeamAbbreviation);
+					}
+					bar.dataset.team = this.props.homeTeamAbbreviation;
 				}
+				this.addHoverEventHandlersToSeries(bar);
 			}
 		});
 	}
@@ -45,6 +68,7 @@ export default class BasketTotals extends React.Component {
 			<div className="grid-width-third">
 				<h3>{this.props.type} Totals</h3>
 				<div className={"basket-totals " + this.formatTypeAsClassName(this.props.type)}></div>
+				<ElementValuePopup text={this.state.popupText} position={this.state.popupPosition} />
 			</div>
 		)
 	}

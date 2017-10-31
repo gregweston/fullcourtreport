@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Chart from './Chart.jsx';
 import ElementValuePopup from './ElementValuePopup.jsx';
 
-export default class TeamScoringByPeriod extends React.Component {
+export default class TeamScoringByPeriod extends Chart {
 
 	constructor(props) {
 		super(props);
@@ -28,36 +29,11 @@ export default class TeamScoringByPeriod extends React.Component {
 		return labels;
 	}
 
-	showSeriesValue(event) {
+	getSeriesPopupContent(hoverEvent) {
 		const element = event.target;
 		const value = element.getAttribute("ct:value");
 		const team = element.dataset.team;
-		this.setState({
-			popupText: team + ": " + value,
-			popupPosition: {
-				x: window.scrollX + event.clientX,
-				y: window.scrollY + event.clientY
-			}
-		});
-	}
-
-	moveSeriesValue(event) {
-		this.setState({
-			popupPosition: {
-				x: window.scrollX + event.clientX,
-				y: window.scrollY + event.clientY
-			}
-		});
-	}
-
-	hideSeriesValue(event) {
-		this.setState({
-			popupText: null,
-			popupPosition: {
-				x: 0,
-				y: 0
-			}
-		});
+		return team + ": " + value;
 	}
 
 	componentDidMount() {
@@ -90,9 +66,7 @@ export default class TeamScoringByPeriod extends React.Component {
 				} else {
 					bar.dataset.team = this.props.homeTeamAbbreviation;
 				}
-				bar.addEventListener("mouseover", this.showSeriesValue.bind(this));
-				bar.addEventListener("mousemove", this.moveSeriesValue.bind(this));
-				bar.addEventListener("mouseout", this.hideSeriesValue.bind(this));
+				this.addHoverEventHandlersToSeries(bar);
 			}
 		});
 	}
@@ -104,7 +78,7 @@ export default class TeamScoringByPeriod extends React.Component {
 				<div className="team-scoring-by-period"></div>
 				<ElementValuePopup text={this.state.popupText} position={this.state.popupPosition} />
 			</div>
-		)
+		);
 	}
 
 }

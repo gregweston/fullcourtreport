@@ -9,11 +9,30 @@ export default class Date extends React.Component {
 	constructor(props) {
 		super(props);
 		this.games = null;
-		if (this.props.match.params.date) {
-			this.dateString = this.props.match.params.date;
+		this.state = {
+			dateString: null
+		};
+
+	}
+
+	setDateString(props) {
+		if (props.match.params.date) {
+			this.setState({
+				dateString: props.match.params.date
+			});
 		} else {
-			this.dateString = this.getCurrentDateString();
+			this.setState({
+				dateString: this.getCurrentDateString()
+			});
 		}
+	}
+
+	componentWillMount() {
+		this.setDateString(this.props);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.setDateString(nextProps);
 	}
 
 	getCurrentDateString() {
@@ -25,8 +44,8 @@ export default class Date extends React.Component {
 	render() {
 		return (
 			<div>
-				<DateSelect date={this.dateString} />
-				<GameList date={this.dateString} />
+				<DateSelect date={this.state.dateString} />
+				<GameList date={this.state.dateString} />
 			</div>
 		);
 	}

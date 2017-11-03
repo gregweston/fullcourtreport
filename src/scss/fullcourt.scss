@@ -26,7 +26,11 @@ header {
 	text-align: center;
 	margin: 1rem 0;
 	color: #555;
+	a {
+		color: inherit;
+	}
 }
+
 ul.game-list {
 	display: flex;
 	flex-wrap: wrap;
@@ -35,6 +39,14 @@ ul.game-list {
 	margin: 0 auto;
 	li {
 		margin: 1.5rem;
+		a.game-link {
+			span {
+				padding: .25rem .5rem;
+				display: block;
+				text-align: center;
+				transition: background-color .25s;
+			}
+		}
 	}
 }
 ul.date-select {
@@ -42,15 +54,12 @@ ul.date-select {
 	justify-content: center;
 	li {
 		margin: 1rem 2rem;
+		a {
+			color: #555;
+		}
 	}
 }
-a.game-link {
-	span {
-		padding: .25rem .5rem;
-		display: block;
-		text-align: center;
-	}
-}
+
 .game-info {
 	margin: 0 auto;
 	width: 90vw;

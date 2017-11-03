@@ -10,6 +10,7 @@ ReactDOM.render(
 		<Switch>
 			<Route path="/date/:date" component={Date} />
 			<Route path="/game/:date/:awayTeamId/:homeTeamId" component={Game} />
+			<Route path="/" component={Date} />
 		</Switch>
 	</BrowserRouter>,
 	document.getElementById("app")

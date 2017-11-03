@@ -107,12 +107,24 @@ a.game-link {
 		stroke: #999;
 	}
 }
+.ct-label {
+	&.ct-vertical {
+		color: #777;
+	}
+	&.ct-horizontal {
+		color: #555;
+	}
+}
+.ct-grids line {
+	stroke: rgba(0, 0, 0, .3);
+}
 .ct-chart-pie {
 	display: block;
 	margin: 1rem auto;
 }
 .pie-chart-label {
-	font-size: .7rem;
+	font-size: .6rem;
+	fill: #555;
 }
 .ct-bar {
 	stroke-width: 20px;

@@ -7,7 +7,7 @@ import ElementValuePopup from './ElementValuePopup.jsx';
 export default class BasketTotals extends Chart {
 
 	formatTypeAsClassName(type) {
-		return type.toLowerCase().replace(" ", "-");
+		return type.toLowerCase().replace(/\s/g, "-");
 	}
 
 	getSeriesPopupContent(hoverEvent) {

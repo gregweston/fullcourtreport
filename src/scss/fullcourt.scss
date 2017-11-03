@@ -103,7 +103,7 @@ a.game-link {
 	&>.grid-width-quarter {
 		grid-column: auto / span 3;
 	}
-	.missed-baskets {
+	.missed-baskets, .opponent-average-points-allowed {
 		stroke: #999;
 	}
 }

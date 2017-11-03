@@ -5,6 +5,7 @@ import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
 import GameHeading from './GameHeading.jsx';
 import BasketTotals from './charts/BasketTotals.jsx';
 import ScoringDistribution from './charts/ScoringDistribution.jsx';
+import ScoringDeviation from './charts/ScoringDeviation.jsx';
 
 export default class Game extends React.Component {
 
@@ -34,21 +35,21 @@ export default class Game extends React.Component {
 		fetch("/api/team-stats?date=" + this.props.match.params.date + "&teamId=" + this.props.match.params.awayTeamId).then((response) => {
 			response.json().then((responseJson) => {
 				this.setState({
-					awayTeamStats: responseJson
+					awayTeamStats: responseJson.team_stats[0]
 				});
 			});
 		});
 		fetch("/api/team-stats?date=" + this.props.match.params.date + "&teamId=" + this.props.match.params.homeTeamId).then((response) => {
 			response.json().then((responseJson) => {
 				this.setState({
-					homeTeamStats: responseJson
+					homeTeamStats: responseJson.team_stats[0]
 				});
 			});
 		});
 	}
 
 	render() {
-		if (this.state.boxScore === null) {
+		if (this.state.boxScore === null || this.state.awayTeamStats === null || this.state.homeTeamStats === null) {
 			return "";
 		}
 		const awayTeamAbbr = this.state.boxScore.away_team.abbreviation;
@@ -95,6 +96,30 @@ export default class Game extends React.Component {
 					awayBasketsAttempted={this.state.boxScore.away_totals.free_throws_attempted}
 					homeBasketsMade={this.state.boxScore.home_totals.free_throws_made}
 					homeBasketsAttempted={this.state.boxScore.home_totals.free_throws_attempted} />
+
+				<ScoringDeviation
+					teamAbbreviation={awayTeamAbbr}
+					otherTeamAbbreviation={homeTeamAbbr}
+					pointsInThisGame={this.state.boxScore.away_totals.points}
+					averagePointsPerGame={this.state.awayTeamStats.stats.points_per_game_string}
+					opponentAveragePointsAllowed={this.state.homeTeamStats.stats_opponent.points_per_game_string} />
+
+				<ScoringDeviation
+					teamAbbreviation={homeTeamAbbr}
+					otherTeamAbbreviation={awayTeamAbbr}
+					pointsInThisGame={this.state.boxScore.home_totals.points}
+					averagePointsPerGame={this.state.homeTeamStats.stats.points_per_game_string}
+					opponentAveragePointsAllowed={this.state.awayTeamStats.stats_opponent.points_per_game_string} />
+
+				<BasketTotals
+					type="Three Point Field Goal"
+					awayTeamAbbreviation={awayTeamAbbr}
+					homeTeamAbbreviation={homeTeamAbbr}
+					awayBasketsMade={this.state.boxScore.away_totals.three_point_field_goals_made}
+					awayBasketsAttempted={this.state.boxScore.away_totals.three_point_field_goals_attempted}
+					homeBasketsMade={this.state.boxScore.home_totals.three_point_field_goals_made}
+					homeBasketsAttempted={this.state.boxScore.home_totals.three_point_field_goals_attempted} />
+
 			</div>
 		);
 	}

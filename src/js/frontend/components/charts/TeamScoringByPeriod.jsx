@@ -9,13 +9,6 @@ export default class TeamScoringByPeriod extends Chart {
 	constructor(props) {
 		super(props);
 		this.games = null;
-		this.state = {
-			popupText: null,
-			popupPosition: {
-				x: 0,
-				y: 0
-			}
-		};
 	}
 
 	generateLabels(periodCount) {
@@ -57,7 +50,7 @@ export default class TeamScoringByPeriod extends Chart {
 			classNames: {
 				bar: 'ct-bar team-scoring-chart-bar'
 			},
-			seriesBarDistance: 30
+			seriesBarDistance: 20
 		}).on('draw', (data) => {
 			if (data.type === "bar") {
 				let bar = data.element.getNode();

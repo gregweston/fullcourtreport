@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
 import GameHeading from './GameHeading.jsx';
 import BasketTotals from './charts/BasketTotals.jsx';
-import ScoringDistribution from './charts/ScoringDistribution.jsx';
+import ScoringLeaders from './charts/ScoringLeaders.jsx';
 import ScoringDeviation from './charts/ScoringDeviation.jsx';
 
 export default class Game extends React.Component {
@@ -80,11 +80,11 @@ export default class Game extends React.Component {
 					homeBasketsMade={this.state.boxScore.home_totals.field_goals_made}
 					homeBasketsAttempted={this.state.boxScore.home_totals.field_goals_attempted} />
 
-				<ScoringDistribution
+				<ScoringLeaders
 					teamAbbreviation={awayTeamAbbr}
 					stats={this.state.boxScore.away_stats} />
 
-				<ScoringDistribution
+				<ScoringLeaders
 					teamAbbreviation={homeTeamAbbr}
 					stats={this.state.boxScore.home_stats} />
 

@@ -40,9 +40,11 @@ export default class BasketTotals extends Chart {
 			]
 		}, {
 			axisX: {
-				showGrid: false
+				showGrid: false,
+				onlyInteger: true
 			},
-			stackBars: true
+			stackBars: true,
+			horizontalBars: true
 		}).on('draw', (data) => {
 			if (data.type === "bar") {
 				let isMadeBasketsBar = data.element.parent().classes().includes("made-baskets");

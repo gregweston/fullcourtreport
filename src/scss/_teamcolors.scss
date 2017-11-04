@@ -43,9 +43,9 @@ $teamcolors: (
 			stroke-width: 3px;
 		}
 		.total-points {
-			color: $secondary;
+			color: $primary;
 			&.winner {
-				border-bottom: 6px solid $primary;
+				border-bottom: 6px solid $secondary;
 			}
 		}
 	}

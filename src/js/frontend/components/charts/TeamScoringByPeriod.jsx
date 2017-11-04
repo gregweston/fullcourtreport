@@ -47,9 +47,6 @@ export default class TeamScoringByPeriod extends Chart {
 			axisX: {
 				showGrid: false
 			},
-			classNames: {
-				bar: 'ct-bar team-scoring-chart-bar'
-			},
 			seriesBarDistance: 20
 		}).on('draw', (data) => {
 			if (data.type === "bar") {

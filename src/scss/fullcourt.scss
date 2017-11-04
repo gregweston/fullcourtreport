@@ -1,6 +1,7 @@
 @import "../../node_modules/chartist/dist/scss/chartist.scss";
 @import "teamcolors";
 @import "setup";
+@import "charts";
 
 * {
 	margin: 0;
@@ -112,37 +113,4 @@ ul.date-select {
 	&>.grid-width-quarter {
 		grid-column: auto / span 3;
 	}
-	.missed-baskets, .opponent-average-points-allowed {
-		stroke: #999;
-	}
-}
-.ct-label {
-	&.ct-vertical {
-		color: #777;
-	}
-	&.ct-horizontal {
-		color: #555;
-	}
-}
-.ct-grids line {
-	stroke: rgba(0, 0, 0, .3);
-}
-.ct-chart-pie {
-	display: block;
-	margin: 1rem auto;
-}
-.pie-chart-label {
-	font-size: .6rem;
-	fill: #555;
-}
-.ct-bar {
-	stroke-width: 20px;
-}
-.element-value-popup {
-	position: absolute;
-	padding: .5rem;
-	background-color: rgba(0, 0, 0, .75);
-	font-size: .8rem;
-	color: #FDFDFD;
-	transform: translate(10%, 10%);
 }

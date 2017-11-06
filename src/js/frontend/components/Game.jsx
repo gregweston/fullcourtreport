@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
 import GameHeading from './GameHeading.jsx';
+import GameDetails from './GameDetails.jsx';
+import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
 import BasketTotals from './charts/BasketTotals.jsx';
 import ScoringLeaders from './charts/ScoringLeaders.jsx';
 import ScoringDeviation from './charts/ScoringDeviation.jsx';
@@ -64,6 +65,11 @@ export default class Game extends React.Component {
 					homeTeamAbbreviation={homeTeamAbbr}
 					awayTeamTotalPoints={this.state.boxScore.away_totals.points}
 					homeTeamTotalPoints={this.state.boxScore.home_totals.points} />
+
+				<GameDetails
+					timestamp={this.state.boxScore.event_information.start_date_time}
+					city={this.state.boxScore.event_information.site.city}
+					state={this.state.boxScore.event_information.site.state} />
 
 				<TeamScoringByPeriod
 					awayTeamAbbreviation={awayTeamAbbr}

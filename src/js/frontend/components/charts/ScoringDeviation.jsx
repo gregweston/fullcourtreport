@@ -30,7 +30,8 @@ export default class ScoringDeviation extends Chart {
 		}, {
 			classNames: {
 				bar: 'ct-bar team ' + this.props.teamAbbreviation
-			}
+			},
+			low: 50
 		}).on('draw', (data) => {
 			if (data.type === "bar") {
 				let bar = data.element.getNode();
@@ -42,7 +43,7 @@ export default class ScoringDeviation extends Chart {
 	render() {
 		return (
 			<div className="grid-width-third">
-				<h3>Scoring Deviation ({this.props.teamAbbreviation})</h3>
+				<h4>Scoring Deviation ({this.props.teamAbbreviation})</h4>
 				<div className={"scoring-deviation " + this.props.teamAbbreviation}></div>
 				<ElementValuePopup text={this.state.popupText} position={this.state.popupPosition} />
 			</div>

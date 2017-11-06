@@ -9,13 +9,13 @@
 .ct-grids line {
 	stroke: rgba(0, 0, 0, .3);
 }
-.ct-chart-pie {
+.ct-chart-donut {
 	display: block;
-	margin: 1rem auto;
-}
-.pie-chart-label {
-	font-size: .6rem;
-	fill: #555;
+	margin: 0 auto;
+	.ct-label {
+		font-size: .7rem;
+		fill: #555;
+	}
 }
 .ct-bar {
 	stroke-width: 20px;

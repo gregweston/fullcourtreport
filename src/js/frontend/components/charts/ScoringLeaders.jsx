@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const scorersToInclude = 6;
+const scorersToInclude = 5;
 
 export default class ScoringLeaders extends React.Component {
 
@@ -17,24 +17,20 @@ export default class ScoringLeaders extends React.Component {
 			}
 			return 0;
 		});
-		let pointsByOtherScorers = 0;
+		let totalPoints = 0;
 		for (let player of stats) {
 			if (player.points > 0) {
 				if (series.length < scorersToInclude) {
 					labels.push(player.first_name.substring(0, 1) + '. ' + player.last_name + ' (' + player.points + ')');
 					series.push(player.points);
-				} else {
-					if (series.length === scorersToInclude) {
-						labels.push("Other");
-					}
-					pointsByOtherScorers += player.points;
 				}
+				totalPoints += player.points;
 			}
 		}
-		series.push(pointsByOtherScorers);
 		return {
 			labels: labels,
-			series: series
+			series: series,
+			totalPoints: totalPoints
 		};
 	}
 
@@ -46,21 +42,23 @@ export default class ScoringLeaders extends React.Component {
 			series: scoringData.series
 		}, {
 			classNames: {
-				slicePie: 'pie-chart-slice team ' + this.props.teamAbbreviation,
-				label: 'ct-label pie-chart-label'
+				sliceDonutSolid: 'pie-chart-slice team ' + this.props.teamAbbreviation
 			},
+			total: scoringData.totalPoints,
 			chartPadding: 75,
 			width: 320,
 			height: 320,
 			labelPosition: 'center',
-			labelOffset: 120
+			labelOffset: 120,
+			donut: true,
+			donutSolid: true
 		});
 	}
 
 	render() {
 		return (
 			<div className="grid-width-third">
-				<h3>Scoring Leaders ({this.props.teamAbbreviation})</h3>
+				<h4>Scoring Leaders ({this.props.teamAbbreviation})</h4>
 				<div className={"scoring-share " + this.props.teamAbbreviation}></div>
 			</div>
 		)

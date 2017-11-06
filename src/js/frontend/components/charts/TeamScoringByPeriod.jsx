@@ -64,7 +64,7 @@ export default class TeamScoringByPeriod extends Chart {
 	render() {
 		return (
 			<div className="grid-width-two-thirds">
-				<h3>Team Scoring By Period</h3>
+				<h4>Team Scoring By Period</h4>
 				<div className="team-scoring-by-period"></div>
 				<ElementValuePopup text={this.state.popupText} position={this.state.popupPosition} />
 			</div>

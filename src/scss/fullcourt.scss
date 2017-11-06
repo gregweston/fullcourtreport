@@ -67,12 +67,11 @@ ul.date-select {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 	grid-template-rows: auto;
-	h2, h3 {
+	h2, h3, h4 {
 		text-align: center;
 		margin: 1rem 0;
 	}
 	h2 {
-		padding-bottom: 1rem;
 		font-size: 1.3rem;
 		display: flex;
 		justify-content: center;
@@ -94,6 +93,10 @@ ul.date-select {
 				margin: 0 .5rem;
 			}
 		}
+	}
+	h3 {
+		font-size: 1.1rem;
+		color: #333;
 	}
 	&>* {
 		align-self: center;

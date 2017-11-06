@@ -68,7 +68,7 @@ export default class BasketTotals extends Chart {
 	render() {
 		return (
 			<div className="grid-width-third">
-				<h3>{this.props.type} Totals</h3>
+				<h4>{this.props.type} Totals</h4>
 				<div className={"basket-totals " + this.formatTypeAsClassName(this.props.type)}></div>
 				<ElementValuePopup text={this.state.popupText} position={this.state.popupPosition} />
 			</div>

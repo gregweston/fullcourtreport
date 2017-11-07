@@ -7,6 +7,7 @@ import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
 import BasketTotals from './charts/BasketTotals.jsx';
 import StatLeaders from './charts/StatLeaders.jsx';
 import ScoringDeviation from './charts/ScoringDeviation.jsx';
+import ReboundTotals from './charts/ReboundTotals.jsx';
 
 export default class Game extends React.Component {
 
@@ -129,6 +130,12 @@ export default class Game extends React.Component {
 					awayBasketsAttempted={this.state.boxScore.away_totals.three_point_field_goals_attempted}
 					homeBasketsMade={this.state.boxScore.home_totals.three_point_field_goals_made}
 					homeBasketsAttempted={this.state.boxScore.home_totals.three_point_field_goals_attempted} />
+
+				<ReboundTotals
+					awayTeamAbbreviation={awayTeamAbbr}
+					homeTeamAbbreviation={homeTeamAbbr}
+					awayRebounds={this.state.boxScore.away_totals.rebounds}
+					homeRebounds={this.state.boxScore.home_totals.rebounds} />
 
 				<StatLeaders
 					teamAbbreviation={awayTeamAbbr}

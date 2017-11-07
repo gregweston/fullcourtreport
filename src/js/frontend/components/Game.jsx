@@ -5,7 +5,7 @@ import GameHeading from './GameHeading.jsx';
 import GameDetails from './GameDetails.jsx';
 import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
 import BasketTotals from './charts/BasketTotals.jsx';
-import ScoringLeaders from './charts/ScoringLeaders.jsx';
+import StatLeaders from './charts/StatLeaders.jsx';
 import ScoringDeviation from './charts/ScoringDeviation.jsx';
 
 export default class Game extends React.Component {
@@ -86,12 +86,16 @@ export default class Game extends React.Component {
 					homeBasketsMade={this.state.boxScore.home_totals.field_goals_made}
 					homeBasketsAttempted={this.state.boxScore.home_totals.field_goals_attempted} />
 
-				<ScoringLeaders
+				<StatLeaders
 					teamAbbreviation={awayTeamAbbr}
+					category="points"
+					categoryDisplayName="Scoring"
 					stats={this.state.boxScore.away_stats} />
 
-				<ScoringLeaders
+				<StatLeaders
 					teamAbbreviation={homeTeamAbbr}
+					category="points"
+					categoryDisplayName="Scoring"
 					stats={this.state.boxScore.home_stats} />
 
 				<BasketTotals
@@ -125,6 +129,18 @@ export default class Game extends React.Component {
 					awayBasketsAttempted={this.state.boxScore.away_totals.three_point_field_goals_attempted}
 					homeBasketsMade={this.state.boxScore.home_totals.three_point_field_goals_made}
 					homeBasketsAttempted={this.state.boxScore.home_totals.three_point_field_goals_attempted} />
+
+				<StatLeaders
+					teamAbbreviation={awayTeamAbbr}
+					category="rebounds"
+					categoryDisplayName="Rebounding"
+					stats={this.state.boxScore.away_stats} />
+
+				<StatLeaders
+					teamAbbreviation={homeTeamAbbr}
+					category="rebounds"
+					categoryDisplayName="Rebounding"
+					stats={this.state.boxScore.home_stats} />
 
 			</div>
 		);

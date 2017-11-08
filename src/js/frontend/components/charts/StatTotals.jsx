@@ -16,9 +16,9 @@ export default class StatTotals extends Chart {
 	generateChart(props) {
 		const Chartist = require('chartist');
 		new Chartist.Bar('.stat-totals.' + this.props.category, {
-			labels: [props.awayTeamAbbreviation, props.homeTeamAbbreviation],
+			labels: [props.homeTeamAbbreviation, props.awayTeamAbbreviation],
 			series: [
-				[props.awayStatTotal, props.homeStatTotal]
+				[props.homeStatTotal, props.awayStatTotal]
 			]
 		}, {
 			axisX: {
@@ -29,7 +29,7 @@ export default class StatTotals extends Chart {
 		}).on('draw', (data) => {
 			if (data.type === "bar") {
 				let bar = data.element.getNode();
-				if (data.index === 0) {
+				if (data.index === 1) {
 					data.element.addClass("team " + props.awayTeamAbbreviation);
 					bar.dataset.team = props.awayTeamAbbreviation;
 				} else {

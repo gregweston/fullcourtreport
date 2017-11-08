@@ -24,17 +24,17 @@ export default class BasketTotals extends Chart {
 	generateChart(props) {
 		const Chartist = require('chartist');
 		new Chartist.Bar('.basket-totals.' + this.formatTypeAsClassName(props.type), {
-			labels: [props.awayTeamAbbreviation, props.homeTeamAbbreviation],
+			labels: [props.homeTeamAbbreviation, props.awayTeamAbbreviation],
 			series: [
 				{
 					className: 'made-baskets',
-					data: [props.awayBasketsMade, props.homeBasketsMade]
+					data: [props.homeBasketsMade, props.awayBasketsMade]
 				},
 				{
 					className: 'missed-baskets',
 					data: [
-						props.awayBasketsAttempted - props.awayBasketsMade,
-						props.homeBasketsAttempted - props.homeBasketsMade
+						props.homeBasketsAttempted - props.homeBasketsMade,
+						props.awayBasketsAttempted - props.awayBasketsMade
 					]
 				}
 			]
@@ -49,7 +49,7 @@ export default class BasketTotals extends Chart {
 			if (data.type === "bar") {
 				let isMadeBasketsBar = data.element.parent().classes().includes("made-baskets");
 				let bar = data.element.getNode();
-				if (data.index === 0) {
+				if (data.index === 1) {
 					if (isMadeBasketsBar) {
 						data.element.addClass("team " + props.awayTeamAbbreviation);
 					}

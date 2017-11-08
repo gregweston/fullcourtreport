@@ -1,59 +1,57 @@
 $teamcolors: (
-	ATL: (primary: #E13A3E, secondary: #c4d600, tertiary: #061922),
-	BOS: (primary: #009E60, secondary: #EFE196, tertiary: #FFFFFF, quaternary: #000000),
+	ATL: (primary: #E13A3E, secondary: #c4d600),
+	BOS: (primary: #009E60, secondary: #EFE196),
 	BKN: (primary: #000000, secondary: #FFFFFF),
-	CHA: (primary: #1D1160, secondary: #008ca8, tertiary: #a1a1a4),
-	CHI: (primary: #D4001F, secondary: #000000, tertiary: #FFFFFF),
-	CLE: (primary: #860038, secondary: #fdbb30, tertiary: #002d62, quaternary: #FFFFFF),
-	DAL: (primary: #0b60ad, secondary: #072156, tertiary: #A9A9A9, quaternary: #FFFFFF),
-	DEN: (primary: #4b90cd, secondary: #fdb827, tertiary: #FFFFFF, quaternary: #002D62),
-	DET: (primary: #00519a, secondary: #EB003C, tertiary: #041e40, quaternary: #FFFFFF),
+	CHA: (primary: #1D1160, secondary: #008ca8),
+	CHI: (primary: #D4001F, secondary: #000000),
+	CLE: (primary: #860038, secondary: #fdbb30),
+	DAL: (primary: #0b60ad, secondary: #072156),
+	DEN: (primary: #4b90cd, secondary: #fdb827),
+	DET: (primary: #00519a, secondary: #EB003C),
 	GS: (primary: #04529c, secondary: #FFCC33),
-	HOU: (primary: #CE1138, secondary: #CCCCCC, tertiary: #000000),
-	IND: (primary: #092c57, secondary: #ffc322, tertiary: #C0C0C0),
-	LAC: (primary: #ed174c, secondary: #006bb6, tertiary: #bec0c2),
-	LAL: (primary: #4A2583, secondary: #F5AF1B, tertiary: #FFFFFF),
-	MEM: (primary: #0f586c, secondary: #7399C6, tertiary: #BED4E9, quaternary: #FDB927),
-	MIA: (primary: #B62630, secondary: #000000, tertiary: #FFFFFF, quaternary: #FF9F00),
-	MIL: (primary: #00471B, secondary: #F0EBD2, tertiary: #061922, quaternary: #007DC5),
-	MIN: (primary: #002B5C, secondary: #7AC143, tertiary: #005083, quaternary: #C6CFD4),
-	NO: (primary: #002b5c, secondary: #b4975a, tertiary: #e31836, quaternary: #FFFFFF),
-	NY: (primary: #0953a0, secondary: #FF7518, tertiary: #C0C0C0),
-	OKC: (primary: #007DC3, secondary: #F05133, tertiary: #FDBB30, quaternary: #002D62),
-	ORL: (primary: #007DC5, secondary: #C4CED3, tertiary: #FFFFFF, quaternary: #000000),
-	PHI: (primary: #0046AD, secondary: #D0103A, tertiary: #FFFFFF),
-	PHO: (primary: #1c105e, secondary: #e65f20, tertiary: #000000, quaternary: #FFFFFF, quinary: #b1b3b3),
-	POR: (primary: #F0163A, secondary: #B6BFBF, tertiary: #000000, quaternary: #FFFFFF),
-	SAC: (primary: #753BBD, secondary: #000000, tertiary: #8A8D8F, quaternary: #FFFFFF),
-	SA: (primary: #000000, secondary: #BEC8C9, tertiary: #FFFFFF),
-	TOR: (primary: #ce1141, secondary: #061922, tertiary: #a1a1a4),
-	UTA: (primary: #002b5c, secondary: #f9a01b, tertiary: #00471b, quaternary: #bec0c2),
-	WAS: (primary: #C60C30, secondary: #002244, tertiary: #FFFFFF, quaternary: #BCC4CC)
+	HOU: (primary: #CE1138, secondary: #CCCCCC),
+	IND: (primary: #092c57, secondary: #ffc322),
+	LAC: (primary: #ed174c, secondary: #006bb6),
+	LAL: (primary: #4A2583, secondary: #F5AF1B),
+	MEM: (primary: #0f586c, secondary: #7399C6),
+	MIA: (primary: #B62630, secondary: #000000),
+	MIL: (primary: #00471B, secondary: #F0EBD2),
+	MIN: (primary: #002B5C, secondary: #7AC143),
+	NO: (primary: #002b5c, secondary: #b4975a),
+	NY: (primary: #0953a0, secondary: #FF7518),
+	OKC: (primary: #007DC3, secondary: #F05133),
+	ORL: (primary: #007DC5, secondary: #C4CED3),
+	PHI: (primary: #0046AD, secondary: #D0103A),
+	PHO: (primary: #1c105e, secondary: #e65f20),
+	POR: (primary: #F0163A, secondary: #B6BFBF),
+	SAC: (primary: #753BBD, secondary: #000000),
+	SA: (primary: #000000, secondary: #BEC8C9),
+	TOR: (primary: #ce1141, secondary: #061922),
+	UTA: (primary: #002b5c, secondary: #f9a01b),
+	WAS: (primary: #C60C30, secondary: #002244)
 );
+
+@mixin apply-team-color($color) {
+	color: $color;
+	fill: $color;
+	stroke: $color;
+	* {
+		color: inherit;
+		fill: inherit;
+		stroke: inherit;
+	}
+}
 
 @each $team, $colors in $teamcolors {
 	$primary: map-get($colors, primary);
 	$secondary: map-get($colors, secondary);
-	$tertiary: map-get($colors, tertiary);
 	.team.#{$team} {
-		color: $primary;
-		&.pie-chart-slice {
-			fill: $primary;
-			stroke: #FFF;
-			stroke-width: 2px;
-		}
-		.total-points {
-			color: $primary;
-			&.winner {
-				border-bottom: 6px solid $secondary;
-			}
-		}
+		@include apply-team-color($primary);
+	}
+	.secondary-team-color-#{$team} .team.#{$team} {
+		@include apply-team-color($secondary);
 	}
 	.game-link:hover .team.#{$team} {
 		background-color: $secondary;
-	}
-	.ct-series.team.#{$team} .ct-bar,
-	.ct-bar.team.#{$team} {
-		stroke: $primary;
 	}
 }

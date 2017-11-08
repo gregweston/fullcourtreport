@@ -7,7 +7,7 @@ import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
 import BasketTotals from './charts/BasketTotals.jsx';
 import StatLeaders from './charts/StatLeaders.jsx';
 import ScoringDeviation from './charts/ScoringDeviation.jsx';
-import ReboundTotals from './charts/ReboundTotals.jsx';
+import StatTotals from './charts/StatTotals.jsx';
 
 export default class Game extends React.Component {
 
@@ -91,12 +91,14 @@ export default class Game extends React.Component {
 					teamAbbreviation={awayTeamAbbr}
 					category="points"
 					categoryDisplayName="Scoring"
+					leaderCount="5"
 					stats={this.state.boxScore.away_stats} />
 
 				<StatLeaders
 					teamAbbreviation={homeTeamAbbr}
 					category="points"
 					categoryDisplayName="Scoring"
+					leaderCount="5"
 					stats={this.state.boxScore.home_stats} />
 
 				<BasketTotals
@@ -131,22 +133,48 @@ export default class Game extends React.Component {
 					homeBasketsMade={this.state.boxScore.home_totals.three_point_field_goals_made}
 					homeBasketsAttempted={this.state.boxScore.home_totals.three_point_field_goals_attempted} />
 
-				<ReboundTotals
+				<StatTotals
+					category="rebounds"
+					categoryDisplayName="Rebounding"
 					awayTeamAbbreviation={awayTeamAbbr}
 					homeTeamAbbreviation={homeTeamAbbr}
-					awayRebounds={this.state.boxScore.away_totals.rebounds}
-					homeRebounds={this.state.boxScore.home_totals.rebounds} />
+					awayStatTotal={this.state.boxScore.away_totals.rebounds}
+					homeStatTotal={this.state.boxScore.home_totals.rebounds} />
 
 				<StatLeaders
 					teamAbbreviation={awayTeamAbbr}
 					category="rebounds"
 					categoryDisplayName="Rebounding"
+					leaderCount="5"
 					stats={this.state.boxScore.away_stats} />
 
 				<StatLeaders
 					teamAbbreviation={homeTeamAbbr}
 					category="rebounds"
 					categoryDisplayName="Rebounding"
+					leaderCount="5"
+					stats={this.state.boxScore.home_stats} />
+
+				<StatTotals
+					category="assists"
+					categoryDisplayName="Assist"
+					awayTeamAbbreviation={awayTeamAbbr}
+					homeTeamAbbreviation={homeTeamAbbr}
+					awayStatTotal={this.state.boxScore.away_totals.assists}
+					homeStatTotal={this.state.boxScore.home_totals.assists} />
+
+				<StatLeaders
+					teamAbbreviation={awayTeamAbbr}
+					category="assists"
+					categoryDisplayName="Assist"
+					leaderCount="3"
+					stats={this.state.boxScore.away_stats} />
+
+				<StatLeaders
+					teamAbbreviation={homeTeamAbbr}
+					category="assists"
+					categoryDisplayName="Assist"
+					leaderCount="3"
 					stats={this.state.boxScore.home_stats} />
 
 			</div>

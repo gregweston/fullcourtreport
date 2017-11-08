@@ -29,18 +29,18 @@ export default class TeamScoringByPeriod extends Chart {
 		return team + ": " + value;
 	}
 
-	componentDidMount() {
+	generateChart(props) {
 		const Chartist = require('chartist');
 		new Chartist.Bar('.team-scoring-by-period', {
-			labels: this.generateLabels(this.props.homeTeamScores.length),
+			labels: this.generateLabels(props.homeTeamScores.length),
 			series: [
 				{
-					className: 'team ' + this.props.awayTeamAbbreviation,
-					data: this.props.awayTeamScores
+					className: 'team ' + props.awayTeamAbbreviation,
+					data: props.awayTeamScores
 				},
 				{
-					className: 'team ' + this.props.homeTeamAbbreviation,
-					data: this.props.homeTeamScores
+					className: 'team ' + props.homeTeamAbbreviation,
+					data: props.homeTeamScores
 				}
 			]
 		}, {
@@ -52,9 +52,9 @@ export default class TeamScoringByPeriod extends Chart {
 			if (data.type === "bar") {
 				let bar = data.element.getNode();
 				if (data.seriesIndex === 0) {
-					bar.dataset.team = this.props.awayTeamAbbreviation;
+					bar.dataset.team = props.awayTeamAbbreviation;
 				} else {
-					bar.dataset.team = this.props.homeTeamAbbreviation;
+					bar.dataset.team = props.homeTeamAbbreviation;
 				}
 				this.addHoverEventHandlersToSeries(bar);
 			}

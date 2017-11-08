@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const scorersToInclude = 5;
+import Chart from './Chart.jsx';
 
-export default class StatLeaders extends React.Component {
+export default class StatLeaders extends Chart {
 
 	formatData(stats) {
 		const labels = [];
@@ -20,7 +20,7 @@ export default class StatLeaders extends React.Component {
 		let total = 0;
 		for (let player of stats) {
 			if (player[this.props.category] > 0) {
-				if (series.length < scorersToInclude) {
+				if (series.length < this.props.leaderCount) {
 					labels.push(player.first_name.substring(0, 1) + '. ' + player.last_name + ' (' + player[this.props.category] + ')');
 					series.push(player[this.props.category]);
 				}
@@ -34,15 +34,15 @@ export default class StatLeaders extends React.Component {
 		};
 	}
 
-	componentDidMount() {
+	generateChart(props) {
 		const Chartist = require('chartist');
-		const data = this.formatData(this.props.stats);
-		new Chartist.Pie('.stat-leaders.' + this.props.category + '.' + this.props.teamAbbreviation, {
+		const data = this.formatData(props.stats);
+		new Chartist.Pie('.stat-leaders.' + props.category + '.' + props.teamAbbreviation, {
 			labels: data.labels,
 			series: data.series
 		}, {
 			classNames: {
-				sliceDonutSolid: 'pie-chart-slice team ' + this.props.teamAbbreviation
+				sliceDonutSolid: 'pie-chart-slice team ' + props.teamAbbreviation
 			},
 			total: data.total,
 			chartPadding: 75,

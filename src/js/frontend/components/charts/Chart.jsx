@@ -14,6 +14,14 @@ export default class Chart extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		this.generateChart(this.props);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.generateChart(nextProps);
+	}
+
 	addHoverEventHandlersToSeries(element) {
 		element.addEventListener("mouseover", this.showSeriesValue.bind(this));
 		element.addEventListener("mousemove", this.moveSeriesValue.bind(this));

@@ -21,20 +21,20 @@ export default class BasketTotals extends Chart {
 		}
 	}
 
-	componentDidMount() {
+	generateChart(props) {
 		const Chartist = require('chartist');
-		new Chartist.Bar('.basket-totals.' + this.formatTypeAsClassName(this.props.type), {
-			labels: [this.props.awayTeamAbbreviation, this.props.homeTeamAbbreviation],
+		new Chartist.Bar('.basket-totals.' + this.formatTypeAsClassName(props.type), {
+			labels: [props.awayTeamAbbreviation, props.homeTeamAbbreviation],
 			series: [
 				{
 					className: 'made-baskets',
-					data: [this.props.awayBasketsMade, this.props.homeBasketsMade]
+					data: [props.awayBasketsMade, props.homeBasketsMade]
 				},
 				{
 					className: 'missed-baskets',
 					data: [
-						this.props.awayBasketsAttempted - this.props.awayBasketsMade,
-						this.props.homeBasketsAttempted - this.props.homeBasketsMade
+						props.awayBasketsAttempted - props.awayBasketsMade,
+						props.homeBasketsAttempted - props.homeBasketsMade
 					]
 				}
 			]
@@ -51,14 +51,14 @@ export default class BasketTotals extends Chart {
 				let bar = data.element.getNode();
 				if (data.index === 0) {
 					if (isMadeBasketsBar) {
-						data.element.addClass("team " + this.props.awayTeamAbbreviation);
+						data.element.addClass("team " + props.awayTeamAbbreviation);
 					}
-					bar.dataset.team = this.props.awayTeamAbbreviation;
+					bar.dataset.team = props.awayTeamAbbreviation;
 				} else {
 					if (isMadeBasketsBar) {
-						data.element.addClass("team " + this.props.homeTeamAbbreviation);
+						data.element.addClass("team " + props.homeTeamAbbreviation);
 					}
-					bar.dataset.team = this.props.homeTeamAbbreviation;
+					bar.dataset.team = props.homeTeamAbbreviation;
 				}
 				this.addHoverEventHandlersToSeries(bar);
 			}

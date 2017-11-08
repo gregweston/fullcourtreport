@@ -12,24 +12,24 @@ export default class ScoringDeviation extends Chart {
 		return value;
 	}
 
-	componentDidMount() {
+	generateChart(props) {
 		const Chartist = require('chartist');
-		new Chartist.Bar('.scoring-deviation.' + this.props.teamAbbreviation, {
+		new Chartist.Bar('.scoring-deviation.' + props.teamAbbreviation, {
 			labels: [
 				'This Game',
 				'Avg Per Game',
-				this.props.otherTeamAbbreviation + ' Avg Allowed'
+				props.otherTeamAbbreviation + ' Avg Allowed'
 			],
 			series: [
 				[
-					this.props.pointsInThisGame,
-					this.props.averagePointsPerGame,
-					this.props.opponentAveragePointsAllowed
+					props.pointsInThisGame,
+					props.averagePointsPerGame,
+					props.opponentAveragePointsAllowed
 				]
 			]
 		}, {
 			classNames: {
-				bar: 'ct-bar team ' + this.props.teamAbbreviation
+				bar: 'ct-bar team ' + props.teamAbbreviation
 			},
 			low: 50
 		}).on('draw', (data) => {

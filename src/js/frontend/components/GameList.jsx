@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Spinner from './Spinner.jsx';
 import GameLink from './GameLink.jsx';
 
 export default class GameList extends React.Component {
@@ -21,6 +22,9 @@ export default class GameList extends React.Component {
 	}
 
 	getGamesForDate(date) {
+		this.setState({
+			"games": null
+		});
 		fetch("/api/games?date=" + date).then((response) => {
 			response.json().then((responseJson) => {
 				this.setState({
@@ -32,7 +36,7 @@ export default class GameList extends React.Component {
 
 	render() {
 		if (this.state.games === null) {
-			return null;
+			return <Spinner />;
 		}
 		const gameLinks = this.state.games.map((game) => {
 			return (

@@ -1,0 +1,17 @@
+@keyframes spin {
+	0% {
+		transform: none;
+	}
+	100% {
+		transform: rotateZ(360deg);
+	}
+}
+.spinner {
+	position: fixed;
+	top: 30vh;
+	left: calc(50vw - 50px);
+	width: 100px;
+	height: 100px;
+	background-image: url('/assets/img/spinner.svg');
+	animation: spin 2s linear infinite;
+}

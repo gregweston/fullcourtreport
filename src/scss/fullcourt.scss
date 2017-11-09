@@ -1,5 +1,6 @@
 @import "../../node_modules/chartist/dist/scss/chartist.scss";
 @import "teamcolors";
+@import "spinner";
 @import "setup";
 @import "charts";
 
@@ -119,25 +120,4 @@ ul.date-select {
 	&>.grid-width-quarter {
 		grid-column: auto / span 3;
 	}
-}
-@keyframes spinner-bounce {
-	0% {
-		transform: translate(-50%, calc(-50% - 200px));
-	}
-	50% {
-		transform: translate(-50%, -50%);
-	}
-	100% {
-		transform: translate(-50%, calc(-50% - 200px));
-	}
-}
-.spinner {
-	position: fixed;
-	top: 50vh;
-	left: 50vw;
-	width: 100px;
-	height: 100px;
-	transform: translate(-50%, -50%);
-	background-image: url('/assets/img/spinner.svg');
-	animation: spinner-bounce 1s infinite;
 }

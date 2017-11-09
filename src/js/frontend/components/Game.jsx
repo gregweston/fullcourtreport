@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Spinner from './Spinner.jsx';
 import GameHeading from './GameHeading.jsx';
 import GameDetails from './GameDetails.jsx';
 import TeamScoringByPeriod from './charts/TeamScoringByPeriod.jsx';
@@ -52,7 +53,7 @@ export default class Game extends React.Component {
 
 	render() {
 		if (this.state.boxScore === null || this.state.awayTeamStats === null || this.state.homeTeamStats === null) {
-			return "";
+			return <Spinner />;
 		}
 		const awayTeamAbbr = this.state.boxScore.away_team.abbreviation;
 		const homeTeamAbbr = this.state.boxScore.home_team.abbreviation;

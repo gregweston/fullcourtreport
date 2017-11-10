@@ -20,6 +20,8 @@ export default class Game extends React.Component {
 			"at",
 			this.props.match.params.homeTeamId
 		].join("-");
+		this.secondaryColorCombos = require("../secondary-color-combos.json");
+		this.secondaryColorClass = "";
 		this.state = {
 			boxScore: null,
 			awayTeamStats: null,
@@ -28,21 +30,36 @@ export default class Game extends React.Component {
 	}
 
 	componentWillMount() {
+		this.getGameData(this.props);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.getGameData(nextProps);
+	}
+
+	getGameData(props) {
 		fetch("/api/box-score?gameId=" + this.gameId).then((response) => {
 			response.json().then((responseJson) => {
+				let boxScore = responseJson;
+				this.secondaryColorClass = "";
+				for (let combo of this.secondaryColorCombos) {
+					if (combo.includes(boxScore.away_team.abbreviation) && combo.includes(boxScore.home_team.abbreviation)) {
+						this.secondaryColorClass = " secondary-team-color-" + combo[0];
+					}
+				}
 				this.setState({
-					boxScore: responseJson
+					boxScore: boxScore
 				});
 			});
 		});
-		fetch("/api/team-stats?date=" + this.props.match.params.date + "&teamId=" + this.props.match.params.awayTeamId).then((response) => {
+		fetch("/api/team-stats?date=" + props.match.params.date + "&teamId=" + props.match.params.awayTeamId).then((response) => {
 			response.json().then((responseJson) => {
 				this.setState({
 					awayTeamStats: responseJson.team_stats[0]
 				});
 			});
 		});
-		fetch("/api/team-stats?date=" + this.props.match.params.date + "&teamId=" + this.props.match.params.homeTeamId).then((response) => {
+		fetch("/api/team-stats?date=" + props.match.params.date + "&teamId=" + props.match.params.homeTeamId).then((response) => {
 			response.json().then((responseJson) => {
 				this.setState({
 					homeTeamStats: responseJson.team_stats[0]
@@ -58,7 +75,7 @@ export default class Game extends React.Component {
 		const awayTeamAbbr = this.state.boxScore.away_team.abbreviation;
 		const homeTeamAbbr = this.state.boxScore.home_team.abbreviation;
 		return (
-			<div className="game-info">
+			<div className={"game-info" + this.secondaryColorClass}>
 
 				<GameHeading
 					awayTeamFullName={this.state.boxScore.away_team.full_name}

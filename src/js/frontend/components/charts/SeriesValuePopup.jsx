@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default class ElementValuePopup extends React.Component {
+export default class SeriesValuePopup extends React.Component {
 
 	render() {
 		let hidden;

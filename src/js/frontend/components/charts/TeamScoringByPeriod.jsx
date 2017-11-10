@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Chart from './Chart.jsx';
-import ElementValuePopup from './ElementValuePopup.jsx';
+import SeriesValuePopup from './SeriesValuePopup.jsx';
 
 export default class TeamScoringByPeriod extends Chart {
 
@@ -66,7 +66,7 @@ export default class TeamScoringByPeriod extends Chart {
 			<div className="grid-width-two-thirds">
 				<h4>Team Scoring By Period</h4>
 				<div className="team-scoring-by-period"></div>
-				<ElementValuePopup text={this.state.popupText} position={this.state.popupPosition} />
+				<SeriesValuePopup text={this.state.popupText} position={this.state.popupPosition} />
 			</div>
 		);
 	}

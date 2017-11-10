@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Chart from './Chart.jsx';
-import ElementValuePopup from './ElementValuePopup.jsx';
+import SeriesValuePopup from './SeriesValuePopup.jsx';
 
 export default class BasketTotals extends Chart {
 
@@ -70,7 +70,7 @@ export default class BasketTotals extends Chart {
 			<div className="grid-width-third">
 				<h4>{this.props.type} Totals</h4>
 				<div className={"basket-totals " + this.formatTypeAsClassName(this.props.type)}></div>
-				<ElementValuePopup text={this.state.popupText} position={this.state.popupPosition} />
+				<SeriesValuePopup text={this.state.popupText} position={this.state.popupPosition} />
 			</div>
 		)
 	}

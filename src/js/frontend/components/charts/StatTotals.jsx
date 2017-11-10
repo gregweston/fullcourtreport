@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Chart from './Chart.jsx';
-import ElementValuePopup from './ElementValuePopup.jsx';
+import SeriesValuePopup from './SeriesValuePopup.jsx';
 
 export default class StatTotals extends Chart {
 
@@ -46,7 +46,7 @@ export default class StatTotals extends Chart {
 			<div className="grid-width-third">
 				<h4>{this.props.categoryDisplayName} Totals</h4>
 				<div className={"stat-totals " + this.props.category}></div>
-				<ElementValuePopup text={this.state.popupText} position={this.state.popupPosition} />
+				<SeriesValuePopup text={this.state.popupText} position={this.state.popupPosition} />
 			</div>
 		)
 	}

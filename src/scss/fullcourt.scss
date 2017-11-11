@@ -68,6 +68,7 @@ ul.date-select {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 	grid-template-rows: auto;
+	grid-row-gap: 1.5rem;
 	h2, h3, h4 {
 		text-align: center;
 		margin: 1rem 0;
@@ -105,19 +106,33 @@ ul.date-select {
 	&>* {
 		align-self: center;
 	}
+	.stat-leaders {
+		margin: -2rem auto 0;
+	}
 	&>.grid-width-full {
 		grid-column: auto / span 12;
 	}
 	&>.grid-width-two-thirds {
 		grid-column: auto / span 8;
+		@include max-breakpoint(medium) {
+			grid-column: auto / span 12;
+		}
 	}
 	&>.grid-width-half {
 		grid-column: auto / span 6;
 	}
 	&>.grid-width-third {
 		grid-column: auto / span 4;
+		@include max-breakpoint(medium) {
+			grid-column: auto / span 6;
+		}
 	}
 	&>.grid-width-quarter {
 		grid-column: auto / span 3;
+	}
+	@include max-breakpoint(small) {
+		&>[class^="grid-width-"] {
+			grid-column: auto / span 12;
+		}
 	}
 }

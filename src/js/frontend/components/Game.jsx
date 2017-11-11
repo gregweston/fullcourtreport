@@ -45,6 +45,7 @@ export default class Game extends React.Component {
 				for (let combo of this.secondaryColorCombos) {
 					if (combo.includes(boxScore.away_team.abbreviation) && combo.includes(boxScore.home_team.abbreviation)) {
 						this.secondaryColorClass = " secondary-team-color-" + combo[0];
+						break;
 					}
 				}
 				this.setState({

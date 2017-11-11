@@ -16,15 +16,16 @@ export default class Date extends React.Component {
 	}
 
 	setDateString(props) {
+		let dateString;
 		if (props.match.params.date) {
-			this.setState({
-				dateString: props.match.params.date
-			});
+			dateString = props.match.params.date;
 		} else {
-			this.setState({
-				dateString: this.getCurrentDateString()
-			});
+			dateString = this.getCurrentDateString();
 		}
+		this.setPageTitle(dateString);
+		this.setState({
+			dateString: dateString
+		});
 	}
 
 	componentWillMount() {
@@ -33,6 +34,13 @@ export default class Date extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.setDateString(nextProps);
+	}
+
+	setPageTitle(dateString) {
+		const moment = require("moment");
+		const date = moment(dateString, "YYYYMMDD");
+		const formattedDate = date.format("MMM D, YYYY");
+		document.title = `Fullcourt Report - All Games for ${formattedDate}`;
 	}
 
 	getCurrentDateString() {

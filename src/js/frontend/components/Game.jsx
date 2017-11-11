@@ -37,6 +37,13 @@ export default class Game extends React.Component {
 		this.getGameData(nextProps);
 	}
 
+	setPageTitle(awayTeamName, homeTeamName, dateString) {
+		const moment = require("moment");
+		const date = moment(dateString, "YYYYMMDD");
+		const formattedDate = date.format("MMM D, YYYY");
+		document.title = `Fullcourt Report - ${awayTeamName} at ${homeTeamName} - ${formattedDate}`;
+	}
+
 	getGameData(props) {
 		fetch("/api/box-score?gameId=" + this.gameId).then((response) => {
 			response.json().then((responseJson) => {
@@ -51,6 +58,13 @@ export default class Game extends React.Component {
 				this.setState({
 					boxScore: boxScore
 				});
+
+				this.setPageTitle(
+					boxScore.away_team.full_name,
+					boxScore.home_team.full_name,
+					this.props.match.params.date
+				);
+
 			});
 		});
 		fetch("/api/team-stats?date=" + props.match.params.date + "&teamId=" + props.match.params.awayTeamId).then((response) => {

@@ -37,8 +37,11 @@ ul.game-list {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	width: 90vw;
+	width: 70vw;
 	margin: 0 auto;
+	@include max-breakpoint(small) {
+		width: 90vw;
+	}
 	li {
 		margin: 1.5rem;
 		a.game-link {

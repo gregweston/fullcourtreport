@@ -52,7 +52,7 @@ export default class Date extends React.Component {
 	render() {
 		return (
 			<div>
-				<DateSelect date={this.state.dateString} />
+				<DateSelect date={this.state.dateString} numberOfDatesToDisplay="5" />
 				<GameList date={this.state.dateString} />
 			</div>
 		);

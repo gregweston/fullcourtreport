@@ -17,12 +17,12 @@ export default class GameHeading extends React.Component {
 		return (
 			<h2 className="grid-width-full">
 				<span className={"team " + this.props.awayTeamAbbreviation}>
+					{this.props.awayTeamFullName}
 					<span className={"total-points " + this.winnerClassIfApplicable("away")}>
 						{this.props.awayTeamTotalPoints}
 					</span>
-					{this.props.awayTeamFullName}
 				</span>
-				<span>@</span>
+				<span className="at">@</span>
 				<span className={"team " + this.props.homeTeamAbbreviation}>
 					{this.props.homeTeamFullName}
 					<span className={"total-points " + this.winnerClassIfApplicable("home")}>

@@ -125,6 +125,7 @@ export default class Game extends React.Component {
 					category="points"
 					categoryDisplayName="Scoring"
 					leaderCount="5"
+					teamStatTotal={this.state.boxScore.away_totals.points}
 					stats={this.state.boxScore.away_stats} />
 
 				<StatLeaders
@@ -132,6 +133,7 @@ export default class Game extends React.Component {
 					category="points"
 					categoryDisplayName="Scoring"
 					leaderCount="5"
+					teamStatTotal={this.state.boxScore.home_totals.points}
 					stats={this.state.boxScore.home_stats} />
 
 				<BasketTotals
@@ -179,6 +181,7 @@ export default class Game extends React.Component {
 					category="rebounds"
 					categoryDisplayName="Rebounding"
 					leaderCount="5"
+					teamStatTotal={this.state.boxScore.away_totals.rebounds}
 					stats={this.state.boxScore.away_stats} />
 
 				<StatLeaders
@@ -186,6 +189,7 @@ export default class Game extends React.Component {
 					category="rebounds"
 					categoryDisplayName="Rebounding"
 					leaderCount="5"
+					teamStatTotal={this.state.boxScore.home_totals.rebounds}
 					stats={this.state.boxScore.home_stats} />
 
 				<StatTotals
@@ -201,6 +205,7 @@ export default class Game extends React.Component {
 					category="assists"
 					categoryDisplayName="Assist"
 					leaderCount="3"
+					teamStatTotal={this.state.boxScore.away_totals.assists}
 					stats={this.state.boxScore.away_stats} />
 
 				<StatLeaders
@@ -208,6 +213,7 @@ export default class Game extends React.Component {
 					category="assists"
 					categoryDisplayName="Assist"
 					leaderCount="3"
+					teamStatTotal={this.state.boxScore.home_totals.assists}
 					stats={this.state.boxScore.home_stats} />
 
 			</div>

@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Chart from './Chart.jsx';
-import SeriesValuePopup from './SeriesValuePopup.jsx';
 
 export default class BasketTotals extends Chart {
 
-	formatTypeAsClassName(type) {
-		return type.toLowerCase().replace(/\s/g, "-");
+	constructor(props) {
+		super(props);
+		this.title = props.type + " Totals";
+		this.gridWidth = "third";
+		this.chartType = "Bar";
 	}
 
 	getSeriesPopupContent(hoverEvent) {
@@ -21,9 +23,8 @@ export default class BasketTotals extends Chart {
 		}
 	}
 
-	generateChart(props) {
-		const Chartist = require('chartist');
-		new Chartist.Bar('.basket-totals.' + this.formatTypeAsClassName(props.type), {
+	chartData(props) {
+		return {
 			labels: [props.homeTeamAbbreviation, props.awayTeamAbbreviation],
 			series: [
 				{
@@ -38,41 +39,44 @@ export default class BasketTotals extends Chart {
 					]
 				}
 			]
-		}, {
+		};
+	}
+
+	chartOptions(props) {
+		return {
 			axisX: {
 				showGrid: false,
 				onlyInteger: true
 			},
 			stackBars: true,
 			horizontalBars: true
-		}).on('draw', (data) => {
-			if (data.type === "bar") {
-				let isMadeBasketsBar = data.element.parent().classes().includes("made-baskets");
-				let bar = data.element.getNode();
-				if (data.index === 1) {
-					if (isMadeBasketsBar) {
-						data.element.addClass("team " + props.awayTeamAbbreviation);
-					}
-					bar.dataset.team = props.awayTeamAbbreviation;
-				} else {
-					if (isMadeBasketsBar) {
-						data.element.addClass("team " + props.homeTeamAbbreviation);
-					}
-					bar.dataset.team = props.homeTeamAbbreviation;
-				}
-				this.addHoverEventHandlersToSeries(bar);
-			}
-		});
+		};
 	}
 
-	render() {
-		return (
-			<div className="grid-width-third">
-				<h4>{this.props.type} Totals</h4>
-				<div className={"basket-totals " + this.formatTypeAsClassName(this.props.type)}></div>
-				<SeriesValuePopup text={this.state.popupText} position={this.state.popupPosition} />
-			</div>
-		)
+	chartCallbacks(props) {
+		return [
+			{
+				event: 'draw',
+				function: (data) => {
+					if (data.type === "bar") {
+						let isMadeBasketsBar = data.element.parent().classes().includes("made-baskets");
+						let bar = data.element.getNode();
+						if (data.index === 1) {
+							if (isMadeBasketsBar) {
+								data.element.addClass("team " + props.awayTeamAbbreviation);
+							}
+							bar.dataset.team = props.awayTeamAbbreviation;
+						} else {
+							if (isMadeBasketsBar) {
+								data.element.addClass("team " + props.homeTeamAbbreviation);
+							}
+							bar.dataset.team = props.homeTeamAbbreviation;
+						}
+						this.addHoverEventHandlersToSeries(bar);
+					}
+				}
+			}
+		];
 	}
 
 }

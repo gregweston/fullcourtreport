@@ -20,7 +20,7 @@ export default class Date extends React.Component {
 		if (props.match.params.date) {
 			dateString = props.match.params.date;
 		} else {
-			dateString = this.getCurrentDateString();
+			dateString = this.getDateStringForPreviousDay();
 		}
 		this.setPageTitle(dateString);
 		this.setState({
@@ -43,10 +43,10 @@ export default class Date extends React.Component {
 		document.title = `Fullcourt Report - All Games for ${formattedDate}`;
 	}
 
-	getCurrentDateString() {
+	getDateStringForPreviousDay() {
 		const moment = require('moment');
 		const date = moment();
-		return date.format("YYYYMMDD");
+		return date.subtract(1, "days").format("YYYYMMDD");
 	}
 
 	render() {

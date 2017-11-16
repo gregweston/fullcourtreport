@@ -22,7 +22,8 @@ app.get('/api/games', (req, res) => {
 	const dataRequest = new DataRequest(url, config);
 	dataRequest.send((err, response) => {
 		if (err) {
-			console.log(err);
+			res.status(err).send();
+			return;
 		}
 		res.send(response);
 	});
@@ -33,7 +34,8 @@ app.get('/api/box-score', (req, res) => {
 	const dataRequest = new DataRequest(url, config);
 	dataRequest.send((err, response) => {
 		if (err) {
-			console.log(err);
+			res.status(err).send();
+			return;
 		}
 		res.send(response);
 	});
@@ -49,12 +51,13 @@ app.get('/api/team-stats', (req, res) => {
 	} else {
 		seasonEndYear = date.format("YYYY");
 	}
-	seasonEndDateString = seasonEndYear + "0601";
+	seasonEndDateString = seasonEndYear + "0601"; // First day of June, always after the end of the regular season
 	const url = "/nba/team-stats/" + seasonEndDateString + ".json?team_id=" + req.query.teamId;
 	const dataRequest = new DataRequest(url, config);
 	dataRequest.send((err, response) => {
 		if (err) {
-			console.log(err);
+			res.status(err).send();
+			return;
 		}
 		res.send(response);
 	});

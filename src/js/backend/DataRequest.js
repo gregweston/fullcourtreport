@@ -49,8 +49,7 @@ class DataRequest {
 			res.on('data', chunk => chunks.push(chunk));
 			return res.on('end', () => {
 				if (res.statusCode !== 200) {
-					console.log(res.statusCode);
-					return next('Unexpected response from server');
+					return next(res.statusCode);
 				}
 				const buffer = Buffer.concat(chunks);
 				const encoding = res.headers['content-encoding'];

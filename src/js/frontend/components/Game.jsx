@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import ApiComponent from './ApiComponent.jsx';
 import Spinner from './Spinner.jsx';
 import GameHeading from './GameHeading.jsx';
 import GameDetails from './GameDetails.jsx';
@@ -10,7 +11,7 @@ import StatLeaders from './charts/StatLeaders.jsx';
 import ScoringDeviation from './charts/ScoringDeviation.jsx';
 import StatTotals from './charts/StatTotals.jsx';
 
-export default class Game extends React.Component {
+export default class Game extends ApiComponent {
 
 	constructor(props) {
 		super(props);
@@ -25,7 +26,8 @@ export default class Game extends React.Component {
 		this.state = {
 			boxScore: null,
 			awayTeamStats: null,
-			homeTeamStats: null
+			homeTeamStats: null,
+			errorMessage: null
 		};
 	}
 
@@ -45,8 +47,8 @@ export default class Game extends React.Component {
 	}
 
 	getGameData(props) {
-		fetch("/api/box-score?gameId=" + this.gameId).then((response) => {
-			response.json().then((responseJson) => {
+
+		this.callApi("/api/box-score?gameId=" + this.gameId, (responseJson) => {
 				let boxScore = responseJson;
 				this.secondaryColorClass = "";
 				for (let combo of this.secondaryColorCombos) {
@@ -64,9 +66,11 @@ export default class Game extends React.Component {
 					boxScore.home_team.full_name,
 					this.props.match.params.date
 				);
+			}, [
+				{status: 404, text: "This game does not appear to exist!!"}
+			]
+		);
 
-			});
-		});
 		fetch("/api/team-stats?date=" + props.match.params.date + "&teamId=" + props.match.params.awayTeamId).then((response) => {
 			response.json().then((responseJson) => {
 				this.setState({
@@ -74,6 +78,7 @@ export default class Game extends React.Component {
 				});
 			});
 		});
+
 		fetch("/api/team-stats?date=" + props.match.params.date + "&teamId=" + props.match.params.homeTeamId).then((response) => {
 			response.json().then((responseJson) => {
 				this.setState({
@@ -84,6 +89,9 @@ export default class Game extends React.Component {
 	}
 
 	render() {
+		if (this.state.errorMessage) {
+			return <div className="error">{this.state.errorMessage}</div>
+		}
 		if (this.state.boxScore === null || this.state.awayTeamStats === null || this.state.homeTeamStats === null) {
 			return <Spinner />;
 		}

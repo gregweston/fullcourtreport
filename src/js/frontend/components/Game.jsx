@@ -20,7 +20,7 @@ export default class Game extends React.Component {
 			"at",
 			this.props.match.params.homeTeamId
 		].join("-");
-		this.secondaryColorCombos = require("../secondary-color-combos.json");
+		this.secondaryColorCombos = require("../data/secondary-color-combos.json");
 		this.secondaryColorClass = "";
 		this.state = {
 			boxScore: null,

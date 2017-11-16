@@ -23,14 +23,14 @@ body {
 }
 a {
 	text-decoration: none;
+	color: #555;
+	&:hover {
+		color: #222;
+	}
 }
 header {
 	text-align: center;
 	margin: 1rem 0;
-	color: #555;
-	a {
-		color: inherit;
-	}
 }
 
 ul.game-list {
@@ -60,9 +60,6 @@ ul.date-select {
 	align-items: center;
 	li {
 		margin: 1rem 2rem;
-		a {
-			color: #555;
-		}
 		&.date-current a {
 			color: #222;
 			border-bottom: 2px solid;
@@ -90,6 +87,7 @@ ul.date-select {
 		display: flex;
 		justify-content: center;
 		align-items: baseline;
+		margin: .75rem 0;
 		.team {
 			flex: 1;
 			&:first-child {

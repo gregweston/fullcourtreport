@@ -67,7 +67,7 @@ export default class TeamScoringByPeriod extends Chart {
 		];
 	}
 
-	getSeriesPopupContent(hoverEvent) {
+	getSeriesPopupContent(event) {
 		const element = event.target;
 		const value = element.getAttribute("ct:value");
 		const team = element.dataset.team;

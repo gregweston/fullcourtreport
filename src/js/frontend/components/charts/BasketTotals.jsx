@@ -12,7 +12,7 @@ export default class BasketTotals extends Chart {
 		this.chartType = "Bar";
 	}
 
-	getSeriesPopupContent(hoverEvent) {
+	getSeriesPopupContent(event) {
 		const element = event.target;
 		const value = element.getAttribute("ct:value");
 		const team = element.dataset.team;

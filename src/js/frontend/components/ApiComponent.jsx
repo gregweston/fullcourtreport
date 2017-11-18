@@ -8,7 +8,7 @@ export default class ApiComponent extends React.Component {
 			if (!response.ok) {
 				if (response.status === 429) {
 					this.setState({
-						errorMessage: "Unable to retrieve game data right now. Please try again later."
+						errorMessage: "Unable to retrieve game data right this second. Please try again shortly."
 					});
 				} else if (errorMessages && errorMessages.length > 0) {
 					for (let errorMessage of errorMessages) {

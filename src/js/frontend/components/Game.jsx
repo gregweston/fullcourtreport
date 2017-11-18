@@ -67,7 +67,7 @@ export default class Game extends ApiComponent {
 					this.props.match.params.date
 				);
 			}, [
-				{status: 404, text: "This game does not appear to exist!!"}
+				{status: 404, text: "This game either hasn't happened yet, or doesn't exist."}
 			]
 		);
 

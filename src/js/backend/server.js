@@ -5,17 +5,7 @@ const moment = require('moment');
 
 const app = express();
 
-/*app.configure(function() {
-  app.use(express.json());
-  app.use(express.methodOverride());
-  return app.use(app.router);
-});*/
-
 app.use(express.json());
-
-/*app.configure('development', () => app.use(express.errorHandler({ dumpExceptions: true, showStack: true })));
-
-app.configure('production', () => app.use(express.errorHandler()));*/
 
 app.get('/api/games', (req, res) => {
 	const url = '/events.json?date=' + req.query.date + '&sport=nba';

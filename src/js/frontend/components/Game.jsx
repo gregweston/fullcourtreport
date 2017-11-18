@@ -48,6 +48,13 @@ export default class Game extends ApiComponent {
 
 	getGameData(props) {
 
+		this.setState({
+			boxScore: null,
+			awayTeamStats: null,
+			homeTeamStats: null,
+			errorMessage: null
+		});
+
 		this.callApi("/api/box-score?gameId=" + this.gameId, (responseJson) => {
 				let boxScore = responseJson;
 				this.secondaryColorClass = "";
@@ -71,19 +78,15 @@ export default class Game extends ApiComponent {
 			]
 		);
 
-		fetch("/api/team-stats?date=" + props.match.params.date + "&teamId=" + props.match.params.awayTeamId).then((response) => {
-			response.json().then((responseJson) => {
-				this.setState({
-					awayTeamStats: responseJson.team_stats[0]
-				});
+		this.callApi("/api/team-stats?date=" + props.match.params.date + "&teamId=" + props.match.params.awayTeamId, (responseJson) => {
+			this.setState({
+				awayTeamStats: responseJson.team_stats[0]
 			});
 		});
 
-		fetch("/api/team-stats?date=" + props.match.params.date + "&teamId=" + props.match.params.homeTeamId).then((response) => {
-			response.json().then((responseJson) => {
-				this.setState({
-					homeTeamStats: responseJson.team_stats[0]
-				});
+		this.callApi("/api/team-stats?date=" + props.match.params.date + "&teamId=" + props.match.params.homeTeamId, (responseJson) => {
+			this.setState({
+				homeTeamStats: responseJson.team_stats[0]
 			});
 		});
 	}

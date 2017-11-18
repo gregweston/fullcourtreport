@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import ApiComponent from './ApiComponent.jsx';
 import Spinner from './Spinner.jsx';
 import GameLink from './GameLink.jsx';
 
-export default class GameList extends React.Component {
+export default class GameList extends ApiComponent {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			games: null
+			games: null,
+			errorMessage: null
 		};
 	}
 
@@ -22,19 +24,24 @@ export default class GameList extends React.Component {
 	}
 
 	getGamesForDate(date) {
+
 		this.setState({
-			"games": null
+			games: null,
+			errorMessage: null
 		});
-		fetch("/api/games?date=" + date).then((response) => {
-			response.json().then((responseJson) => {
-				this.setState({
-					"games": responseJson.event
-				});
-			});
+
+		this.callApi("/api/games?date=" + date, (responseJson) => {
+			if (responseJson.event.length === 0) {
+				this.setState({errorMessage: "No games found for this day."});
+			}
+			this.setState({games: responseJson.event});
 		});
 	}
 
 	render() {
+		if (this.state.errorMessage) {
+			return <div className="error">{this.state.errorMessage}</div>
+		}
 		if (this.state.games === null) {
 			return <Spinner />;
 		}

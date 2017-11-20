@@ -1,12 +1,19 @@
+const webpack = require('webpack');
+
 module.exports = {
 	entry: __dirname + "/src/frontend/app.js",
 	output: {
 		path: __dirname + "/public/assets/js",
 		filename: "bundle.js"
 	},
-	resolve: {
-		extensions: [".js", ".jsx"]
-	},
+	plugins: [
+		new webpack.DefinePlugin({
+			"process.env": {
+				NODE_ENV: JSON.stringify("production")
+			}
+		}),
+		new webpack.optimize.UglifyJsPlugin({minimize: true})
+	],
 	module: {
 		loaders: [
 			{

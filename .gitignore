@@ -2,3 +2,4 @@ config.json
 public/assets/js/
 public/assets/css/
 node_modules/
+package-lock.json

@@ -4,6 +4,11 @@ $medium-width: 1280px;
 $medium-small-width: 1024px;
 $small-width: 780px;
 
+$color-links: #555;
+$color-links-hover: #222;
+$color-headings: #333;
+$font-family-body: "Oswald", sans-serif;
+
 @mixin max-breakpoint($size) {
 	@if $size == large {
 		@media (max-width: $large-width) {

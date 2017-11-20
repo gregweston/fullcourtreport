@@ -3,17 +3,22 @@
 	"version": "2.0.0",
 	"scripts": {
 		"js": "webpack",
-		"scss": "node-sass src/scss -o public/assets/css",
+		"scss": "node-sass src/frontend/styles -o public/assets/css",
 		"watch": "npm-watch"
 	},
 	"watch": {
 		"js": {
-			"patterns": ["src/js/frontend"],
-			"extensions": ["js", "jsx"]
+			"patterns": [
+				"src/frontend"
+			],
+			"extensions": [
+				"js",
+				"jsx"
+			]
 		},
 		"scss": {
 			"patterns": [
-				"src/scss"
+				"src/frontend/styles"
 			],
 			"extensions": "scss"
 		}

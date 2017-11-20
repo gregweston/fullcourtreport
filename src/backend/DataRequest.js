@@ -35,7 +35,7 @@ class DataRequest {
 	callAPI(next) {
 		console.log(`retrieving from api: ${this.url}`);
 		const options = {
-			host: this.config.host,
+			host: this.config.apiHost,
 			path: this.url,
 			headers: {
 				'Accept-Encoding': 'gzip',
